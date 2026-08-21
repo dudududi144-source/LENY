@@ -26,7 +26,7 @@ function renderHub(){
  LEN.hub.sync(S.items.map(w=>WORLDS[w].reward));LEN.hub.play('idle');
  const n=S.name.trim();
  $('#hubHello').textContent=n?('הַי '+n+'! בְּחֲרִי עוֹלָם'):'הַי לֶנִי! בְּחֲרִי עוֹלָם';
- $('#hubProgress').textContent='⭐ '+S.items.length+'/5';
+ $('#hubProgress').textContent='⭐ '+S.items.length+'/'+WORLDS.length;
  const box=$('#hubBubbles');box.innerHTML='';
  WORLDS.forEach((w,i)=>{
   const unlocked=i===0||S.items.includes(i-1);
@@ -77,7 +77,7 @@ function showGameOver(){
 
 function showWin(){
  RT.screen='win';$('#wrap').classList.remove('show');showScreen('win');
- LEN.win.sync(['hearts','hat','bow','tutu','boots']);LEN.win.play('dance');
+ LEN.win.sync(['hearts','hat','bow','tutu','boots','crown']);LEN.win.play('dance');
  $('#winScore').textContent=RT.score;confetti();AU.sfx('goal');later(confetti,1200);
  TTS.say('כָּל הַכָּבוֹד! לֶנִי נִצְּחָה!')}
 
