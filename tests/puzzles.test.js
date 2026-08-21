@@ -34,4 +34,9 @@ describe('בניית חידות',()=>{
   const box=document.getElementById('pzBox');
   pzGate(box);
   expect(box.querySelectorAll('.pz-opt').length).toBeGreaterThanOrEqual(2);});
+ it('pzGate בונה חידת צבעים לעולם 7',()=>{
+  RT.level=6;
+  const box=document.getElementById('pzBox');
+  pzGate(box);
+  expect(box.querySelectorAll('.pz-opt').length).toBeGreaterThanOrEqual(3);});
 });
