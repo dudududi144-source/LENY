@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/dudududi144-source/LENY/actions/workflows/ci.yml/badge.svg)
 ![Deploy](https://github.com/dudududi144-source/LENY/actions/workflows/deploy-pages.yml/badge.svg)
-![Version](https://img.shields.io/badge/version-2.3.0-7c4dff)
+![Version](https://img.shields.io/badge/version-2.4.0-7c4dff)
 ![License](https://img.shields.io/badge/license-MIT-22c55e)
 
 **משחק היברידי לילדים: פלטפורמות × למידה** — כל שער נפתח בחידה חינוכית, והידע הופך לכוח (מגן, מגנט, כוכב). **Production-ready:** PWA עם offline, בדיקות, CI/CD, תיעוד מלא.
@@ -22,6 +22,7 @@
 | 💜 מבצר הרגשות | רגשות + **קרב בוס** | 👢 המגפיים |
 | 🧮 מעבדת המספרים | ספירה וחשבון | 👑 הכתר |
 | 🌈 גן הצבעים | התאמת צבעים | 🦋 הכנפיים |
+| 🐘 עמק הגדלים | גדול/קטן + סדרות | 👓 המשקפיים |
 
 ### מכניקות מפתח
 - **שערי חוכמה** — חידה פותחת דרך **ומעניקה כוח** (Power-Learning)
