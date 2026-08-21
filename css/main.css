@@ -87,6 +87,7 @@ body.night #cv{filter:brightness(.85) saturate(.92)}
 .hatb,.hatd{fill:#D9B380}.hatr{fill:#F2549A}
 .crn{fill:#FFD76A;stroke:#d9a520;stroke-width:2}.crn-j{fill:#ff2e88}
 .wing{fill:#ffb1d6;opacity:.85;stroke:#ff8bd4;stroke-width:2}.wing-dot{fill:#b967ff}
+.gls{fill:rgba(124,77,255,.18);stroke:#7c4dff;stroke-width:3}.gls-b{stroke:#7c4dff;stroke-width:3;fill:none;stroke-linecap:round}
 .bow,.bowk{fill:#F2549A}
 .petal{fill:#F26B4E}.fcenter{fill:#FFD76A}
 .hdress{fill:#CFE8D5}.hheart{fill:#fff}
