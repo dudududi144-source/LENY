@@ -77,7 +77,7 @@ function showGameOver(){
 
 function showWin(){
  RT.screen='win';$('#wrap').classList.remove('show');showScreen('win');
- LEN.win.sync(['hearts','hat','bow','tutu','boots','crown','wings','glasses']);LEN.win.play('dance');
+ LEN.win.sync(['hearts','hat','bow','tutu','boots','crown','wings','glasses','necklace']);LEN.win.play('dance');
  $('#winScore').textContent=RT.score;confetti();AU.sfx('goal');later(confetti,1200);
  TTS.say('כָּל הַכָּבוֹד! לֶנִי נִצְּחָה!')}
 
