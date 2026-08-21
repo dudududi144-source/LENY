@@ -44,4 +44,10 @@ describe('בניית חידות',()=>{
   const box=document.getElementById('pzBox');
   pzGate(box);
   expect(box.querySelectorAll('.pz-opt').length).toBeGreaterThanOrEqual(3);});
+ it('pzGate בונה חידת שעון לעולם 9',()=>{
+  RT.level=8;
+  const box=document.getElementById('pzBox');
+  pzGate(box);
+  expect(box.querySelectorAll('.pz-opt').length).toBeGreaterThanOrEqual(3);
+  expect(box.querySelector('svg')).not.toBeNull();});
 });
