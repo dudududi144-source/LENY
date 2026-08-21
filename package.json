@@ -1,10 +1,23 @@
 {
   "name": "leny-world",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "LENY — hybrid platformer × learning game for kids (Hebrew, RTL)",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "start": "npx --yes serve -l 8000 ."
+    "start": "npx --yes serve -l 8000 .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0",
+    "jsdom": "^24.1.0",
+    "vitest": "^2.0.5"
   }
 }
