@@ -170,5 +170,28 @@ function pzSize(box){let round=0;const R=2;
   box.appendChild(row);}
  next();TTS.say(round===0?'מִי הַכִּי גָּדוֹל?':'מָה מַמְשִׁיךְ אֶת הַסִּדְרָה?')}
 
-export function pzGate(box){const builders=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor,pzSize];builders[RT.level](box)}
+function clockSVG(h){const a=((h%12)*30-90)*Math.PI/180;
+ const hx=(50+Math.cos(a)*20).toFixed(1),hy=(50+Math.sin(a)*20).toFixed(1);
+ return '<svg viewBox="0 0 100 100" width="110" height="110"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#7c4dff" stroke-width="4"/>'
+ +'<line x1="50" y1="8" x2="50" y2="16" stroke="#b967ff" stroke-width="3"/><line x1="92" y1="50" x2="84" y2="50" stroke="#b967ff" stroke-width="3"/>'
+ +'<line x1="50" y1="92" x2="50" y2="84" stroke="#b967ff" stroke-width="3"/><line x1="8" y1="50" x2="16" y2="50" stroke="#b967ff" stroke-width="3"/>'
+ +'<line x1="50" y1="50" x2="'+hx+'" y2="'+hy+'" stroke="#7c4dff" stroke-width="6" stroke-linecap="round"/>'
+ +'<line x1="50" y1="50" x2="50" y2="20" stroke="#F2549A" stroke-width="3" stroke-linecap="round"/>'
+ +'<circle cx="50" cy="50" r="4" fill="#7c4dff"/></svg>'}
+function pzTime(box){let round=0;const R=2;
+ function next(){if(round>=R){closePuzzle(true);return}
+  box.innerHTML='';
+  const target=round===0?[12,3,6,9][rnd(4)]:[1,2,4,5,7,8,10,11][rnd(8)];
+  $('#pzHint').textContent='כמה השעה בשעון? ('+(round+1)+'/2)';
+  box.appendChild(el('div','pz-word',clockSVG(target)));
+  const row=el('div','pz-row');
+  const pool=shuffle([1,2,3,4,5,6,7,8,9,10,11,12].filter(x=>x!==target)).slice(0,Math.max(2,numOpts()-1));
+  shuffle([target,...pool]).forEach(n=>{const b=el('button','pz-opt letters',String(n));
+   b.onclick=()=>{if(n===target){AU.sfx('select');round++;next()}
+    else wrongFx(b,b,'המחוג הקצר מצביע על '+target)};
+   row.appendChild(b)});
+  box.appendChild(row);}
+ next();TTS.say('כַּמָּה הַשָּׁעָה?')}
+
+export function pzGate(box){const builders=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor,pzSize,pzTime];builders[RT.level](box)}
 export function pzBoss(box){const pool=[pzAnimals,pzLetters,pzEmo];pool[rnd(pool.length)](box)}
