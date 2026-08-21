@@ -116,5 +116,34 @@ function pzMath(box){let round=0;const R=2;
    row.appendChild(b2)});}
  next();TTS.say(round===0?'כַּמָּה תַּפּוּחִים יֵשׁ?':'כַּמָּה זֶה בְּיַחַד?')}
 
-export function pzGate(box){const builders=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath];builders[RT.level](box)}
+function pzColor(box){let round=0;const R=2;
+ const PAL=['#ff2e88','#7dffb8','#4dc9ff','#ffd23e','#b967ff','#ff7a3c'];
+ function colorBtn(col,ansCol){const b=el('button','pz-opt');
+  b.innerHTML='<span style="display:block;width:52px;height:52px;border-radius:50%;background:'+col+'"></span>';
+  b.onclick=()=>{if(col===ansCol){AU.sfx('select');round++;next()}
+   else wrongFx(b,b,'הסתכלי טוב על הצבע 🎨')};
+  return b}
+ function next(){if(round>=R){closePuzzle(true);return}
+  box.innerHTML='';
+  const row=el('div','pz-row');
+  if(round===0){
+   $('#pzHint').textContent='מצאי את הצבע הזהה! ('+(round+1)+'/'+R+')';
+   const target=PAL[rnd(PAL.length)];
+   const big=el('div','pz-word');
+   big.innerHTML='<span style="display:inline-block;width:80px;height:80px;border-radius:50%;background:'+target+';box-shadow:0 0 24px '+target+'"></span>';
+   box.appendChild(big);
+   const opts=shuffle([target,...shuffle(PAL.filter(c=>c!==target)).slice(0,Math.max(2,numOpts()-1))]);
+   opts.forEach(c=>row.appendChild(colorBtn(c,target)));
+  }else{
+   const pairs=[['🍌','#ffd23e'],['🐸','#7dff5e'],['🍓','#ff2e88'],['🌊','#4dc9ff']];
+   const p=pairs[rnd(pairs.length)];
+   $('#pzHint').textContent='באיזה צבע זה? ('+(round+1)+'/'+R+')';
+   box.appendChild(el('div','pz-word',p[0]));
+   const opts=shuffle([p[1],...shuffle(PAL.filter(c=>c!==p[1])).slice(0,Math.max(2,numOpts()-1))]);
+   opts.forEach(c=>row.appendChild(colorBtn(c,p[1])));
+  }
+  box.appendChild(row);}
+ next();TTS.say(round===0?'מִצְאִי אֶת הַצֶּבַע הַזֶּהֶה':'בְּאֵיזֶה צֶבַע?')}
+
+export function pzGate(box){const builders=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor];builders[RT.level](box)}
 export function pzBoss(box){const pool=[pzAnimals,pzLetters,pzEmo];pool[rnd(pool.length)](box)}
