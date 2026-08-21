@@ -145,5 +145,30 @@ function pzColor(box){let round=0;const R=2;
   box.appendChild(row);}
  next();TTS.say(round===0?'מִצְאִי אֶת הַצֶּבַע הַזֶּהֶה':'בְּאֵיזֶה צֶבַע?')}
 
-export function pzGate(box){const builders=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor];builders[RT.level](box)}
+function pzSize(box){let round=0;const R=2;
+ const TRIPLES=[['🐭','🐰','🐘'],['🐜','🐱','🦁'],['🐟','🐬','🐋']];
+ const PATTERNS=[['🔴','🔵','🟢'],['🟡','🟣','🔵']];
+ function next(){if(round>=R){closePuzzle(true);return}
+  box.innerHTML='';
+  const row=el('div','pz-row');
+  if(round===0){
+   $('#pzHint').textContent='מי הכי גדול? ('+(round+1)+'/2)';
+   box.appendChild(el('div','pz-word','מי הכי גדול?'));
+   const t=TRIPLES[rnd(TRIPLES.length)];const ans=t[2];
+   shuffle(t).forEach(e2=>{const b=el('button','pz-opt',e2);
+    b.onclick=()=>{if(e2===ans){AU.sfx('select');round++;next()}
+     else wrongFx(b,b,'הסתכלי מי הכי גדול 🐘')};
+    row.appendChild(b)});}
+  else{
+   $('#pzHint').textContent='מה ממשיך את הסדרה? ('+(round+1)+'/2)';
+   const p=PATTERNS[rnd(PATTERNS.length)];const a=p[0],b2=p[1];
+   box.appendChild(el('div','pz-word',a+' '+b2+' '+a+' '+b2+' ❓'));
+   shuffle([a,b2,p[2]]).forEach(e2=>{const b=el('button','pz-opt',e2);
+    b.onclick=()=>{if(e2===a){AU.sfx('select');round++;next()}
+     else wrongFx(b,b,'הסדרה מתחלפת: '+a+' '+b2)};
+    row.appendChild(b)});}
+  box.appendChild(row);}
+ next();TTS.say(round===0?'מִי הַכִּי גָּדוֹל?':'מָה מַמְשִׁיךְ אֶת הַסִּדְרָה?')}
+
+export function pzGate(box){const builders=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor,pzSize];builders[RT.level](box)}
 export function pzBoss(box){const pool=[pzAnimals,pzLetters,pzEmo];pool[rnd(pool.length)](box)}
