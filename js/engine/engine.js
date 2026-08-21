@@ -109,7 +109,7 @@ function levelDone(){AU.sfx('goal');RT.score+=500;
  if(first)S.items.push(RT.level);
  S.stars[RT.level]=Math.max(S.stars[RT.level]||0,RT.gatesSolvedNow);
  S.best=Math.max(S.best,RT.score);save();
- const allDone=[0,1,2,3].every(i=>S.items.includes(i))&&RT.level===4;
+ const allDone=[0,1,2,3,4].every(i=>S.items.includes(i))&&RT.level===5;
  if(allDone)emit('win');else emit('level-done',{first})}
 
 function gameOver(){S.best=Math.max(S.best,RT.score);save();emit('game-over')}
