@@ -100,5 +100,21 @@ function pzEmo(box){let round=0;const rounds=shuffle(EMO).slice(0,2);
   TTS.say('מָה הִיא מַרְגִּישָׁה?')}
  next()}
 
-export function pzGate(box){const builders=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo];builders[RT.level](box)}
+function pzMath(box){let round=0;const R=2;
+ function next(){if(round>=R){closePuzzle(true);return}
+  box.innerHTML='';let ans=0,prompt='';
+  if(round===0){const N=2+rnd(4);ans=N;prompt='🍎'.repeat(N);
+   $('#pzHint').textContent='כמה תפוחים יש? ('+(round+1)+'/'+R+')';}
+  else{const a=1+rnd(4),b=1+rnd(4);ans=a+b;prompt=a+' + '+b+' = ?';
+   $('#pzHint').textContent='כמה זה ביחד? ('+(round+1)+'/'+R+')';}
+  box.appendChild(el('div','pz-word',prompt));
+  const row=el('div','pz-row');box.appendChild(row);
+  const pool=shuffle([ans-1,ans+1,ans+2].filter(x=>x>0&&x!==ans)).slice(0,Math.max(1,numOpts()-1));
+  shuffle([ans,...pool]).forEach(n=>{const b2=el('button','pz-opt letters',String(n));
+   b2.onclick=()=>{if(n===ans){AU.sfx('select');round++;next()}
+    else wrongFx(b2,b2,'ספרי שוב 🧮')};
+   row.appendChild(b2)});}
+ next();TTS.say(round===0?'כַּמָּה תַּפּוּחִים יֵשׁ?':'כַּמָּה זֶה בְּיַחַד?')}
+
+export function pzGate(box){const builders=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath];builders[RT.level](box)}
 export function pzBoss(box){const pool=[pzAnimals,pzLetters,pzEmo];pool[rnd(pool.length)](box)}
