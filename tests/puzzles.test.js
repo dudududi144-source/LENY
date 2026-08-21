@@ -39,4 +39,9 @@ describe('בניית חידות',()=>{
   const box=document.getElementById('pzBox');
   pzGate(box);
   expect(box.querySelectorAll('.pz-opt').length).toBeGreaterThanOrEqual(3);});
+ it('pzGate בונה חידת גדלים וסדרות לעולם 8',()=>{
+  RT.level=7;
+  const box=document.getElementById('pzBox');
+  pzGate(box);
+  expect(box.querySelectorAll('.pz-opt').length).toBeGreaterThanOrEqual(3);});
 });
