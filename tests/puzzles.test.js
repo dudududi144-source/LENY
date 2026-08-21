@@ -29,4 +29,9 @@ describe('בניית חידות',()=>{
   const box=document.getElementById('pzBox');
   pzGate(box);
   expect(box.querySelectorAll('.pz-opt').length).toBeGreaterThanOrEqual(2);});
+ it('pzGate בונה חידת חשבון לעולם 6',()=>{
+  RT.level=5;
+  const box=document.getElementById('pzBox');
+  pzGate(box);
+  expect(box.querySelectorAll('.pz-opt').length).toBeGreaterThanOrEqual(2);});
 });
