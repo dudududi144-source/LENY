@@ -8,7 +8,7 @@ import {TTS} from '../core/tts.js';
 import {toast,confetti} from './fx.js';
 import {RT,LEN} from '../game/runtime.js';
 import {WORLDS} from '../game/levels.js';
-import {startWorld} from '../engine/engine.js';
+import {startWorld,togglePause} from '../engine/engine.js';
 
 function showScreen(id){$$('.scr').forEach(s=>s.classList.remove('show'));
  if(id)$('#scr-'+id).classList.add('show')}
@@ -93,6 +93,6 @@ export function initScenes(){
  $('#btnWinHome').onclick=()=>{AU.sfx('tap');goHub()};
  $('#btnResume').onclick=()=>{$('#pauseM').classList.remove('show');RT.paused=false;AU.sfx('tap')};
  $('#btnPauseHome').onclick=()=>{$('#pauseM').classList.remove('show');RT.paused=false;goHub()};
- $('#hudPause').onclick=()=>{import('../engine/engine.js').then(m=>m.togglePause())};
+ $('#hudPause').onclick=()=>togglePause();
  $('#hubStickers').onclick=()=>{AU.ensure();showStickers()};
  $('#stickersBack').onclick=()=>{AU.sfx('tap');goHub()}}
