@@ -1,6 +1,6 @@
 /* sw.js — Service Worker: offline-first PWA
    אסטרטגיה: precache לנכסי ליבה + cache-first עם נפילה לרשת */
-const CACHE='leny-v2.1.0';
+const CACHE='leny-v2.2.0';
 const CORE=['/','/index.html','/css/main.css','/manifest.webmanifest',
  '/js/main.js','/js/core/utils.js','/js/core/bus.js','/js/core/state.js','/js/core/audio.js','/js/core/tts.js',
  '/js/game/levels.js','/js/game/runtime.js','/js/game/puzzles.js',
