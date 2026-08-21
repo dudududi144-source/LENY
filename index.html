@@ -6,7 +6,15 @@
 <title>LENY · העולם של לני</title>
 <meta name="description" content="משחק היברידי לילדים: פלטפורמות × למידה — חידות פותחות שערים ומעניקות כוחות">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/heebo@5.0.12/index.css"/>
+<meta name="theme-color" content="#7c4dff"/>
+<link rel="manifest" href="manifest.webmanifest"/>
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png"/>
+<link rel="apple-touch-icon" href="assets/icon-192.png"/>
 <link rel="stylesheet" href="css/main.css"/>
+<script>
+/* רישום Service Worker (PWA — עובד גם אופליין) */
+if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{/* noop */})});}
+</script>
 </head>
 <body>
 <div id="sky" aria-hidden="true">
