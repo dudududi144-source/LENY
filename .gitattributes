@@ -1,0 +1,10 @@
+# נורמליזציית שורות גלובלית
+* text=auto eol=lf
+
+# קבצים בינאריים — ללא דיף/מיזוג טקסטואלי
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
