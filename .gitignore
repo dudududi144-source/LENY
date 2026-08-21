@@ -1,0 +1,60 @@
+# ═══════════════════════════════════════════════════════════════
+#  LENY — .gitignore
+#  מטרה מס' 1: למנוע דליפת מפתחות, אסימונים וסודות לריפו
+# ═══════════════════════════════════════════════════════════════
+
+# ── סודות, מפתחות ואישורים (אסור לדחוף!) ──
+.env
+.env.*
+*.env
+secrets/
+keys/
+credentials/
+*secret*
+*token*
+*credential*
+*password*
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.jks
+id_rsa*
+*.jwt
+service-account*.json
+*-key.json
+turso*
+cloudflare*
+supabase*
+github_pat*
+
+# ── תלויות ובניות ──
+node_modules/
+dist/
+build/
+.next/
+.cache/
+*.tgz
+
+# ── לוגים ──
+*.log
+npm-debug.log*
+yarn-error.log
+
+# ── מערכות הפעלה ──
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── עורכים ו-IDE ──
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ── Python (כלי עזר) ──
+__pycache__/
+*.pyc
+.venv/
