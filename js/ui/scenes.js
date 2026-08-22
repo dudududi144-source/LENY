@@ -7,7 +7,7 @@ import {AU} from '../core/audio.js';
 import {TTS} from '../core/tts.js';
 import {toast,confetti} from './fx.js';
 import {RT,LEN} from '../game/runtime.js';
-import {WORLDS} from '../game/levels.js';
+import {WORLDS,MEANINGS} from '../game/levels.js';
 import {startWorld,togglePause} from '../engine/engine.js';
 import {renderGarden,initGarden} from './garden.js';
 import {DOMAINS,weakestDomain} from '../game/skill-model.js';
@@ -33,7 +33,7 @@ function renderHub(){
  const wd=weakestDomain();const weakIdx=wd?DOMAINS.indexOf(wd):-1;
  const queue=Array.isArray(S.reviewQueue)?S.reviewQueue:[];
  const n=S.name.trim();
- $('#hubHello').textContent=n?('הַי '+n+'! בְּחֲרִי עוֹלָם'):'הַי לֶנִי! בְּחֲרִי עוֹלָם';
+ $('#hubHello').textContent=n?('הַיְי '+n+'! בְּחֲרִי עוֹלָם'):'הַיְי לֶנִי! בְּחֲרִי עוֹלָם';
  $('#hubProgress').textContent='⭐ '+S.items.length+'/'+WORLDS.length;
  const box=$('#hubBubbles');box.innerHTML='';
  WORLDS.forEach((w,i)=>{
@@ -76,6 +76,8 @@ function showDone(d){const first=d&&d.first;
  $('#doneName').textContent=first?('לני קיבלה את '+w.rSay+'!'):'כָּל הַכָּבוֹד! שׁוּב הִשְׁלַמְתְּ אֶת הָעוֹלָם';
  $('#doneStats').innerHTML='ניקוד: <b>'+RT.score+'</b> · יהלומים: <b>'+RT.levelCoins+'/'+RT.levelCoinsTotal+'</b>';
  $('#doneStars').textContent='שערי חוכמה: '+'✦'.repeat(RT.gatesSolvedNow)+' ('+RT.gatesSolvedNow+'/3)';
+ $('#doneMeaning').textContent='✦ '+MEANINGS[RT.level];
+ TTS.say(MEANINGS[RT.level]);
  LEN.done.play(first?'spin':'cheer');
  later(()=>{if(RT.screen==='done')LEN.done.play('dance')},1100);
  if(first){confetti();AU.sfx('goal');TTS.say('לֶנִי קִבְּלָה אֶת '+w.rSay)}else AU.sfx('success')}
@@ -98,8 +100,8 @@ export function initScenes(){
  initGarden();
  on('levelup',d=>toast('⭐ לני עלתה רמה ב'+(DNAMES[d]||d)+'!'));
  on('review-toast',()=>toast('🌸 שלב חיזוק! +200 על כל שער'));
- on('rest-warn',()=>toast('⏰ עוד שתי דקות נחים יחד'));
- on('rest',()=>{RT.paused=true;$('#rest').classList.add('show');TTS.say('הַגִּיעַ הַזְּמַן לָנוּחַ');});
+ on('rest-warn',()=>toast('⏰ עוֹד שְׁתֵּי דַּקּוֹת — נָנוּחַ יַחַד'));
+ on('rest',()=>{RT.paused=true;$('#rest').classList.add('show');TTS.say('הַגִּיעַ הַזְּמָן לָנוּחַ');});
  $('#restDone').onclick=()=>{$('#rest').classList.remove('show');RT.paused=false;goTitle();};
  $('#restMore').onclick=()=>{RT.sessionStart+=5*60000;RT.rested=false;RT.restWarned=false;$('#rest').classList.remove('show');RT.paused=false;toast('עוד 5 דקות ⏰');};
  LEN.hub.el.addEventListener('pointerdown',()=>{if(RT.screen!=='hub')return;
@@ -108,7 +110,33 @@ export function initScenes(){
  on('level-done',showDone);
  on('game-over',showGameOver);
  on('win',showWin);
- $('#btnStart').onclick=()=>{AU.ensure();AU.sfx('success');TTS.say('יַאלְלָה!');goHub()};
+ $('#btnStart').onclick=()=>{AU.ensure();AU.sfx('success');
+  if(S.name.trim()){TTS.say('יַאלְלָה!');goHub();}
+  else{showScreen('name');TTS.say('אֵיךְ קוֹרְאִים לָךְ?');}};
+ /* בחירת שם: בועות מוכנות + שדה חופשי + דילוג */
+ const presets=['לני','נועה','מאיה','אביב','שחר','יהלי','ליאם','דניאל','עמית','רני'];
+ const namePresets=$('#namePresets');
+ if(namePresets){namePresets.innerHTML='';
+  presets.forEach(nm=>{const b=el('button','name-chip',nm);
+   b.onclick=()=>{$('#nameInput').value=nm;
+    namePresets.querySelectorAll('.name-chip').forEach(c=>c.classList.remove('sel'));
+    b.classList.add('sel');AU.sfx('tap')};
+   namePresets.appendChild(b)});}
+ const goWithName=()=>{const v=($('#nameInput').value||'').trim();
+  if(v){S.name=v;save();}
+  AU.sfx('goal');TTS.say(v?('שָׁלוֹם '+v+'!'):'יַאלְלָה!');goHub();};
+ $('#nameGo').onclick=goWithName;
+ $('#nameSkip').onclick=()=>{AU.sfx('tap');goHub();};
+ /* בחירת מצב רוח: צורך רגשי + אוטונומיה */
+ const moods=[['🌊','רוֹגַע','בָּא לָךְ מַשֶּׁהוּ רָגוּעַ? גַּן הַצְּבָעִים מְחַכֶּה לָךְ'],
+  ['🔥','הַרְפַּתְקָה','מַרְגִּישָׁה גִּבּוֹרָה? נַסִּי אֶת נִסְיוֹן הַגִּבּוֹרָה'],
+  ['🎨','יְצִירָה','בָּא לָךְ לִיצֹר? גִּנַּת הַיְּצִירָה פְּתוּחָה']];
+ const hubMoods=$('#hubMoods');
+ if(hubMoods){hubMoods.innerHTML='';
+  moods.forEach(m=>{const b=el('button','mood-btn',m[0]+' '+m[1]);
+   b.setAttribute('aria-label',m[1]);
+   b.onclick=()=>{AU.sfx('tap');toast(m[2]);TTS.say(m[2])};
+   hubMoods.appendChild(b)});}
  $('#btnDoneHome').onclick=()=>{AU.sfx('tap');goHub()};
  $('#btnRetry').onclick=()=>{AU.sfx('tap');fadeTo(()=>startWorld(RT.level))};
  $('#btnOverHome').onclick=()=>{AU.sfx('tap');goHub()};
