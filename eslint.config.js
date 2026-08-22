@@ -9,13 +9,13 @@ export default [
  {
   files:['js/**/*.js','sw.js'],
   languageOptions:{ecmaVersion:2022,sourceType:'module',globals:{...globals.browser}},
-  rules:{'no-empty':['error',{allowEmptyCatch:true}]}
+  rules:{'no-empty':['error',{allowEmptyCatch:true}],'no-unused-vars':['error',{caughtErrors:'none'}]}
  },
  {
   files:['tests/**/*.js','vitest.config.js'],
   languageOptions:{ecmaVersion:2022,sourceType:'module',
    globals:{...globals.browser,describe:'readonly',it:'readonly',expect:'readonly',
     vi:'readonly',beforeEach:'readonly',afterEach:'readonly',beforeAll:'readonly',afterAll:'readonly'}},
-  rules:{'no-empty':['error',{allowEmptyCatch:true}]}
+  rules:{'no-empty':['error',{allowEmptyCatch:true}],'no-unused-vars':['error',{caughtErrors:'none'}]}
  }
 ];
