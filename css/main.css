@@ -272,3 +272,6 @@ body.night .mood-btn{background:rgba(24,30,62,.8);color:#dfe6ff}
 .dash-row .bar i{display:block;height:100%;background:linear-gradient(90deg,#7c4dff,#F2549A);border-radius:99px}
 .dash-row .dp{width:44px;font-size:12px;font-weight:800;color:#5a4a6a;text-align:left}
 .dash-rec{margin-top:6px;font-size:13px;font-weight:800;color:#b45309;background:#fef3c7;border-radius:10px;padding:6px 10px}
+
+.pz-opt .ai svg{width:44px;height:44px;display:block}
+.pz-opt .ai{color:#7c4dff}
