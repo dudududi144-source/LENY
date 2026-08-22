@@ -144,6 +144,11 @@ body.night .chip{background:rgba(24,30,62,.85);color:#dfe6ff}
 .bubble.weak{box-shadow:0 0 0 3px rgba(255,210,62,.85),var(--shadow)}
 #hubLennyBox{width:min(34vmin,240px);height:min(44vmin,300px);margin-top:6px}
 #hubBubbles{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:12px;max-width:640px}
+#hubBubbles{position:relative}
+#hubPath{position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.5}
+#hubBubbles .bubble{z-index:1}
+.bubble.done{background:linear-gradient(180deg,#fff,#ffe9a8);box-shadow:0 6px 20px rgba(255,180,60,.4)}
+.bubble.current{box-shadow:0 0 0 4px rgba(124,77,255,.45),0 8px 26px rgba(124,77,255,.4)}
 .bubble{position:relative;width:104px;padding:14px 6px 10px;border-radius:28px;background:rgba(255,255,255,.94);box-shadow:var(--shadow);
   display:flex;flex-direction:column;align-items:center;gap:3px;transition:transform .15s var(--spring);animation:popIn .5s var(--spring) both}
 body.night .bubble{background:rgba(24,30,62,.88)}
