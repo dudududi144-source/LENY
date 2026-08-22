@@ -31,6 +31,7 @@ export function renderGarden(){
  if(ws){ws.innerHTML='';
   if(!S.words||S.words.length===0){ws.appendChild(el('span','word-chip','עוד אין מילים — שחקי בעולם האותיות! ✏️'));}
   else{S.words.slice(-14).forEach(wd=>{ws.appendChild(el('span','word-chip',wd.e+' '+wd.w));});}}
+}
 
 export function initGarden(){
  const stage=$('#gardenStage');
