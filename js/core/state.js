@@ -1,6 +1,6 @@
 /* core/state.js — מצב גלובלי + התמדה (localStorage) */
 const KEY='leny-world-v1';
-export function defState(){return{items:[],gates:{},stars:{},sound:true,night:false,diff:'רגיל',mode:'חוקר',tutorial:false,name:'',best:0}}
+export function defState(){return{items:[],gates:{},stars:{},sound:true,night:false,diff:'רגיל',mode:'חוקר',tutorial:false,skillModel:{},name:'',best:0}}
 export let S=(()=>{const d=defState();try{const p=JSON.parse(localStorage.getItem(KEY));if(p&&typeof p==='object')Object.assign(d,p)}catch(e){}return d})();
 let saveT=null;
 export function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
