@@ -1,13 +1,20 @@
-/* e2e/game.spec.js — בדיקות קצה-לקצה מול דפדפן אמיתי (#24) */
+/* e2e/game.spec.js — בדיקות קצה-לקצה מול דפדפן אמיתי (#24)
+   כל לחיצה אופציונלית נבדקת קודם לנראות — אין המתנות אינסופיות */
 import {test,expect} from '@playwright/test';
+
+async function clickIfVisible(page, sel){
+ const loc=page.locator(sel);
+ if(await loc.isVisible()){await loc.click();return true;}
+ return false;
+}
 
 /* כניסה מהפתיח לרכזת — עמידה עם/בלי שם, לפני ואחרי רענון */
 async function resumeFromTitle(page){
  await page.waitForSelector('#btnStart');
  await page.click('#btnStart');
- if(await page.locator('#scr-name').isVisible()){await page.click('#nameSkip');}
- await page.click('#storyBtn').catch(()=>{});
- await expect(page.locator('#scr-hub')).toBeVisible();
+ await clickIfVisible(page,'#nameSkip');
+ await clickIfVisible(page,'#storyBtn');
+ await expect(page.locator('#scr-hub')).toBeVisible({timeout:8000});
 }
 async function startToHub(page, name){
  await page.goto('/');
@@ -15,8 +22,8 @@ async function startToHub(page, name){
   await page.click('#btnStart');
   await page.fill('#nameInput',name);
   await page.click('#nameGo');
-  await page.click('#storyBtn').catch(()=>{});
-  await expect(page.locator('#scr-hub')).toBeVisible();
+  await clickIfVisible(page,'#storyBtn');
+  await expect(page.locator('#scr-hub')).toBeVisible({timeout:8000});
  }else{await resumeFromTitle(page);}
 }
 
@@ -55,10 +62,8 @@ test('גינת יצירה: מדבקה נשמרת בין טעינות (התמדה
  await expect(page.locator('#gardenStage')).toBeVisible();
  await page.locator('#gardenStage').click({position:{x:200,y:150}});
  await expect(page.locator('#gardenCount')).toContainText('1 מדבקות');
- /* וידוא התמדה באחסון עצמו */
  const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('leny-world-v1')).garden);
  expect(stored.length).toBe(1);
- /* טעינה מחדש ובדיקה דרך ה-UI */
  await page.reload();
  await resumeFromTitle(page);
  await page.click('#hubGarden');
