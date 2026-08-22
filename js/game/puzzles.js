@@ -8,6 +8,7 @@ import {praiseFor,reframe} from './mind.js';
 import {RT} from './runtime.js';
 import {emit} from '../core/bus.js';
 import {getLevel,recordResult} from './skill-model.js';
+import {recordAttempt} from '../core/stats.js';
 import {WORDS,COLOR_OBJECTS,SIZE_TRIPLES,PATTERN_BANK} from './content-bank.js';
 
 const ANI=[['🐶','dog','כֶּלֶב'],['🐱','cat','חָתוּל'],['🐮','cow','פָּרָה'],['🐷','pig','חֲזִיר'],['🐰','rabbit','אַרְנָב']];
@@ -36,7 +37,7 @@ export function openPuzzle(title,sub,build,cb){
 export function closePuzzle(ok){$('#puzzle').classList.remove('show');PZ.open=false;RT.paused=false;
  const cb=PZ.cb;PZ.cb=null;
  const dom=PZ.domain;PZ.domain=null;
- if(dom){const res=recordResult(dom,ok);if(res&&res.leveledUp)emit('levelup',dom);}
+ if(dom){recordAttempt(dom,ok);const res=recordResult(dom,ok);if(res&&res.leveledUp)emit('levelup',dom);}
  later(()=>{RT.puzzleBusy=false},250);
  if(ok){RT.skill=Math.min(1.15,RT.skill+.03);AU.sfx('success');TTS.say(praiseFor(wrongCount===0))}
  else{RT.skill=Math.max(.7,RT.skill-.05)}
