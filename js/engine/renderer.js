@@ -239,7 +239,9 @@ function drawLenny(g,x,y,s,p){
  g.beginPath();g.arc(6.5,-42-bob,1.8,0,7);g.fill();
  g.beginPath();g.arc(-6.5,-42-bob,1.8,0,7);g.fill();
  g.strokeStyle='#c2405e';g.lineWidth=1.4;
- g.beginPath();g.arc(0,-41.5-bob,2.6,.2,Math.PI-.2);g.stroke();
+ if(RT.expr==='sad'){g.beginPath();g.arc(0,-38-bob,2.6,Math.PI+.2,-.2);g.stroke();}
+ else if(RT.expr==='happy'){g.beginPath();g.arc(0,-42-bob,3.2,.1,Math.PI-.1);g.stroke();}
+ else{g.beginPath();g.arc(0,-41.5-bob,2.6,.2,Math.PI-.2);g.stroke();}
  }
  /* הילת כוכב */
  if(starOn){g.strokeStyle='rgba(255,210,62,.8)';g.lineWidth=2;
