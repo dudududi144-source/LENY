@@ -11,6 +11,7 @@
     "start": "npx --yes serve -l 8000 .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "playwright test",
     "lint": "eslint ."
   },
   "devDependencies": {
@@ -18,6 +19,7 @@
     "eslint": "^9.9.0",
     "globals": "^15.9.0",
     "jsdom": "^24.1.0",
+    "@playwright/test": "^1.45.0",
     "vitest": "^2.0.5"
   }
 }
