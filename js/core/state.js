@@ -1,7 +1,21 @@
 /* core/state.js — מצב גלובלי + התמדה (localStorage) */
 const KEY='leny-world-v1';
 export function defState(){return{items:[],gates:{},stars:{},sound:true,night:false,diff:'רגיל',mode:'חוקר',tutorial:false,storySeen:false,timeLimit:0,garden:[],reviewQueue:[],skillModel:{},name:'',best:0}}
-export let S=(()=>{const d=defState();try{const p=JSON.parse(localStorage.getItem(KEY));if(p&&typeof p==='object')Object.assign(d,p)}catch(e){}return d})();
+/* סניטציה: מצב שמור מושחת/ישן לא יכול לשבור את המשחק */
+export function sanitize(d){
+ if(!Array.isArray(d.items))d.items=[];
+ d.items=d.items.filter(x=>Number.isInteger(x)&&x>=0&&x<=9);
+ if(!Array.isArray(d.garden))d.garden=[];
+ d.garden=d.garden.filter(g=>g&&typeof g.e==='string'&&typeof g.x==='number'&&typeof g.y==='number').slice(0,60);
+ if(!Array.isArray(d.reviewQueue))d.reviewQueue=[];
+ d.reviewQueue=d.reviewQueue.filter(x=>typeof x==='string').slice(0,9);
+ if(typeof d.skillModel!=='object'||d.skillModel===null)d.skillModel={};
+ if(typeof d.gates!=='object'||d.gates===null)d.gates={};
+ if(typeof d.stars!=='object'||d.stars===null)d.stars={};
+ if(typeof d.timeLimit!=='number'||d.timeLimit<0)d.timeLimit=0;
+ if(typeof d.name!=='string')d.name='';
+ return d;}
+export let S=(()=>{const d=defState();try{const p=JSON.parse(localStorage.getItem(KEY));if(p&&typeof p==='object')Object.assign(d,p)}catch(e){}return sanitize(d)})();
 let saveT=null;
 export function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 export function saveSoon(){clearTimeout(saveT);saveT=setTimeout(save,250)}
