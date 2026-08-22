@@ -4,7 +4,7 @@ import {RT} from '../js/game/runtime.js';
 import {S} from '../js/core/state.js';
 import {parseLevel,flash} from '../js/engine/engine.js';
 
-describe('שכבת ג'וס',()=>{
+describe("שכבת ג'וס",()=>{
  beforeEach(()=>{S.mode='חוקר';});
 
  it('פלאש מסך נשמר ב-RT',()=>{
