@@ -43,9 +43,11 @@ export function parseLevel(li){
 function buildDeco(){RT.deco=[];for(let i=0;i<22;i++)RT.deco.push({x:Math.random()*RT.cols*TILE,y:Math.random()*RT.rows*TILE,z:.15+Math.random()*.4,s:2+Math.random()*3,p:Math.random()*6})}
 
 function capParts(){const cap=RT.perf===0?70:140;if(RT.parts.length>cap)RT.parts.splice(0,RT.parts.length-cap)}
-export function burst(x,y,col,n,sp){capParts();for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=(sp||3)*(.4+Math.random());
- RT.parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-1,life:26+rnd(18),max:40,c:col,r:2+Math.random()*2.5,g:.12})}}
-function dust(x,y){capParts();for(let i=0;i<5;i++)RT.parts.push({x:x+(Math.random()-.5)*16,y,vx:(Math.random()-.5)*1.5,vy:-Math.random()*1.2,life:20,max:20,c:'#b9a6e8',r:2.5,g:.05})}
+export const partPool=[]; /* object pooling: ממחזר אובייקטי חלקיקים במקום ליצור/לזרוק — פחות GC */
+function newPart(){return partPool.pop()||{};}
+function burst(x,y,col,n,sp){capParts();for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=(sp||3)*(.4+Math.random());
+ const q=newPart();q.x=x;q.y=y;q.vx=Math.cos(a)*s;q.vy=Math.sin(a)*s-1;q.life=26+rnd(18);q.max=40;q.c=col;q.r=2+Math.random()*2.5;q.g=.12;RT.parts.push(q);}}
+function dust(x,y){capParts();for(let i=0;i<5;i++){const q=newPart();q.x=x+(Math.random()-.5)*16;q.y=y;q.vx=(Math.random()-.5)*1.5;q.vy=-Math.random()*1.2;q.life=20;q.max=20;q.c='#b9a6e8';q.r=2.5;q.g=.05;RT.parts.push(q);}}
 function addText(x,y,txt,col){RT.texts.push({x,y,txt,c:col||'#7dffb8',life:50,max:50})}
 
 /* ── שכבת ג'וס: הבזק מסך + מתנות הפתעה (נגד מונוטוניות) ── */
@@ -154,7 +156,7 @@ export function update(){
   if(rem<=0&&!RT.rested){RT.rested=true;emit('rest');}}
  if(RT.powers.magnet>0)RT.powers.magnet--;if(RT.powers.star>0)RT.powers.star--;
  if(RT.comboT>0){RT.comboT--;if(RT.comboT===0)RT.combo=0}
- for(let i=RT.parts.length-1;i>=0;i--){const q=RT.parts[i];q.x+=q.vx;q.y+=q.vy;q.vy+=q.g;q.life--;if(q.life<=0)RT.parts.splice(i,1)}
+ for(let i=RT.parts.length-1;i>=0;i--){const q=RT.parts[i];q.x+=q.vx;q.y+=q.vy;q.vy+=q.g;q.life--;if(q.life<=0){partPool.push(q);RT.parts.splice(i,1);}}
  for(let i=RT.texts.length-1;i>=0;i--){const t=RT.texts[i];t.y-=1;t.life--;if(t.life<=0)RT.texts.splice(i,1)}
  RT.gates.forEach(g=>{if(g.anim>0)g.anim--});
  if(RT.dying>0){RT.dying++;RT.player.vy+=GRAV*.5;RT.player.y+=RT.player.vy;
