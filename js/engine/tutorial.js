@@ -14,15 +14,15 @@ export function tutorialStart(li){
 export function tutorialUpdate(p){
  if(RT.tut===1){
   RT.tutDist=(RT.tutDist||0)+Math.abs(p.vx);
-  RT.curHint='👟 לחצי על החצים כדי ללכת';RT.hintTimer=200;
+  RT.curHint='👟 לַחֲצִי עַל הַחִצִּים כְּדֵי לָלֶכֶת';RT.hintTimer=200;
   if(RT.tutDist>130){RT.tut=2;AU.sfx('power');
    TTS.say('מְצֻיֶּנֶת! עַכְשָׁיו קְפִיצָה — כַּפְתּוֹר הַקְּפִיצָה');}}
  else if(RT.tut===2){
-  RT.curHint='⤒ לחצי כדי לקפוץ!';RT.hintTimer=200;
+  RT.curHint='⤒ לַחֲצִי כְּדֵי לִקְפֹּץ!';RT.hintTimer=200;
   if(p.vy<-2){RT.tut=3;AU.sfx('power');
    TTS.say('וָואוּ! עַכְשָׁיו נִגְעִי בַּשַּׁעַר הַזּוֹהֵר');}}
  else if(RT.tut===3){
-  RT.curHint='✦ נגעי בשער הזוהר!';RT.hintTimer=200;}}
+  RT.curHint='✦ גְּעִי בַּשַּׁעַר הַזּוֹהֵר!';RT.hintTimer=200;}}
 
 export function tutorialComplete(){
  if(RT.tut===3){RT.tut=0;S.tutorial=true;save();}}
