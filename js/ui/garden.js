@@ -12,6 +12,7 @@ export function renderGarden(){
  if(!pal||!stage)return;
  pal.innerHTML='';
  GST.forEach(e2=>{const b=el('button','pal-btn'+(e2===picked?' sel':''),e2);
+  b.setAttribute('aria-label','בחירת מדבקה '+e2);
   b.onclick=()=>{picked=e2;AU.sfx('tap');renderGarden()};
   pal.appendChild(b);});
  const clear=el('button','pal-btn','🗑️');
@@ -19,6 +20,7 @@ export function renderGarden(){
  pal.appendChild(clear);
  stage.innerHTML='';
  (S.garden||[]).forEach((it,idx)=>{const s=el('div','gsticker',it.e);
+  s.setAttribute('role','button');s.setAttribute('aria-label','מדבקה בגינה — לחיצה מסירה');
   s.style.left=it.x+'%';s.style.top=it.y+'%';
   s.onclick=ev=>{ev.stopPropagation();S.garden.splice(idx,1);save();AU.sfx('tap');renderGarden()};
   stage.appendChild(s);});
