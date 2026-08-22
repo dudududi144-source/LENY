@@ -55,6 +55,8 @@ export const AU={ctx:null,mg:null,sg:null,mus:null,ni:0,
    this.mus=setInterval(()=>{if(!S.sound||document.hidden)return;const f=notes[this.ni%notes.length];this.tone(f,.34,'triangle',.5,0,this.mg);this.tone(f*2,.18,'sine',.12,.02,this.mg);this.ni++},S.night?640:520)},
  stopMusic(){if(this.mus){clearInterval(this.mus);this.mus=null}},
  setScale(i){this.scaleIdx=i;if(this.mus){this.stopMusic();if(S.sound)this.startMusic();}},
+ duck(on){if(!this.ctx||!this.mg)return;try{this.mg.gain.cancelScheduledValues(this.ctx.currentTime);
+  this.mg.gain.setTargetAtTime(on?(S.sound?.05:0):(S.sound?.16:0),this.ctx.currentTime,.15);}catch(_){/* noop */}},
  refresh(){if(!this.ctx)return;this.mg.gain.value=S.sound?.16:0;this.sg.gain.value=S.sound?.85:0}};
 
 document.addEventListener('visibilitychange',()=>{if(document.hidden)AU.stopMusic();else if(S.sound&&AU.ctx)AU.startMusic()});
