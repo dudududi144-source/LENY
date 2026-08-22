@@ -31,5 +31,12 @@ export function recordResult(domain,correct){
 
 export function resetModel(){S.skillModel={};save();}
 
+/* ספייסינג v1 (M1 #10): התחום עם הניקוד הנמוך ביותר שנוסה — מועמד לחזרה */
+export function weakestDomain(){ensure();let w=null,min=11;
+ for(const d of DOMAINS){const s=S.skillModel[d];
+  if(s===undefined)continue;
+  if(s<min){min=s;w=d;}}
+ return(w!==null&&min<=3)?w:null;}
+
 export function summary(){ensure();
  return DOMAINS.map(d=>({domain:d,score:getScore(d),level:getLevel(d)}));}
