@@ -150,6 +150,7 @@ body.night #hubHint{color:#cfd6ff;background:rgba(24,30,62,.7)}
 .pz-opt.sel{border-color:var(--violet)}
 .pz-opt.hint{outline:5px solid var(--gold);animation:pulse 1s infinite}
 .pz-opt.done{opacity:.5}
+.pz-opt.off{opacity:.35;pointer-events:none;filter:grayscale(.8)}
 .pz-big{font-size:44px;width:96px;height:96px;border-radius:50%;background:#fff;box-shadow:var(--shadow)}
 .pz-word{font-size:clamp(26px,6vw,40px);font-weight:900;color:#4a3a5a}
 .pz-pad{width:92px;height:92px;border-radius:26px;background:#fff;box-shadow:var(--shadow);font-size:44px;display:grid;place-items:center;transition:transform .12s}
