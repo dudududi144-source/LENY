@@ -1,13 +1,11 @@
 /* ui/input.js — מקלדת + כפתורי מגע */
 import {RT,keys} from '../game/runtime.js';
-import {togglePause} from '../engine/engine.js';
+import {togglePause,setJump} from '../engine/engine.js';
 
 function kd(e){const k=e.key.toLowerCase();
  if(['arrowleft','a'].includes(k))keys.l=true;
  if(['arrowright','d'].includes(k))keys.r=true;
- if([' ','arrowup','w'].includes(k)){keys.j=true;
-  if(RT.screen==='play'&&!RT.paused&&!RT.dying&&RT.player)RT.player.jbuf=8;
-  e.preventDefault()}
+ if([' ','arrowup','w'].includes(k)){keys.j=true;setJump();e.preventDefault()}
  if(k==='p'&&RT.screen==='play')togglePause()}
 
 function ku(e){const k=e.key.toLowerCase();
@@ -24,5 +22,5 @@ export function initInput(){
  addEventListener('keydown',kd);addEventListener('keyup',ku);
  bindT('#tl',()=>keys.l=true,()=>keys.l=false);
  bindT('#tr',()=>keys.r=true,()=>keys.r=false);
- bindT('#tj',()=>{keys.j=true;if(RT.screen==='play'&&!RT.paused&&!RT.dying&&RT.player)RT.player.jbuf=8},
+ bindT('#tj',()=>{keys.j=true;setJump()},
   ()=>{keys.j=false;if(RT.player&&RT.player.vy<0)RT.player.vy*=.45})}
