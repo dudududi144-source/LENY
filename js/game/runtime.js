@@ -13,7 +13,8 @@ export const RT={
  powers:{shield:false,magnet:0,star:0},
  combo:0, comboT:0,
  levelCoins:0, levelCoinsTotal:0, gatesSolvedNow:0,
- skill:1
+ skill:1,
+ perf:1 /* 1=רגיל · 0=מצב חסכון (נקבע ע"י משמר הפריימים בלולאה) */
 };
 
 /* מקלדת/מגע */
