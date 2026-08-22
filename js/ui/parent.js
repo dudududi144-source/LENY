@@ -83,7 +83,7 @@ export function initParent(){
  const pn=$('#parName');if(pn)pn.addEventListener('input',e=>{S.name=e.target.value.slice(0,16);saveSoon()});
  const tS=$('#tSound');if(tS)tS.addEventListener('change',e=>{S.sound=e.target.checked;save();AU.ensure();AU.refresh();if(S.sound)AU.sfx('tap')});
  const tN=$('#tNight');if(tN)tN.addEventListener('change',e=>setNight(e.target.checked));
- const st=$('#soundTest');if(st)st.onclick=()=>{AU.ensure();AU.refresh();AU.sfx('success');AU.animal('dog');
+ const st=$('#btnSoundTest');if(st)st.onclick=()=>{AU.ensure();AU.refresh();AU.sfx('success');AU.animal('dog');
   setTimeout(()=>AU.animal('cat'),350);TTS.say('בְּדִיקַת צְלִילִים. כָּל הַכָּבוֹד!')};
  const rh=$('#resetHold');if(rh)attachHold(rh,1600,()=>{resetState();$('#parent').classList.remove('show');toast('ההתקדמות אופסה');goTitle()},
   ()=>toast('הָאִפּוּס בֻּטַּל'));}
