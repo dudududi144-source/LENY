@@ -171,6 +171,9 @@ export function draw(){
    cx.beginPath();cx.moveTo(e.x+8,e.y+4);cx.lineTo(e.x+40,e.y+12+wav);cx.lineTo(e.x+8,e.y+24);cx.closePath();cx.fill();cx.restore()}});
  drawBoss();
  if(!(RT.invuln>0&&Math.floor(RT.time/4)%2===0))drawLenny(cx,RT.player.x-7,RT.player.y+RT.player.h,44,RT.player);
+ if(RT.tut>0){const em=RT.tut===1?'👟':RT.tut===2?'⤒':'✨';
+  cx.font='42px system-ui';cx.textAlign='center';
+  cx.fillText(em,RT.player.x+15,RT.player.y-24+Math.sin(RT.time*.15)*7)}
  RT.parts.forEach(q=>{cx.globalAlpha=q.life/q.max;cx.fillStyle=q.c;cx.beginPath();cx.arc(q.x,q.y,q.r,0,7);cx.fill()});
  RT.texts.forEach(t=>{cx.globalAlpha=t.life/t.max;cx.fillStyle=t.c;cx.font='800 18px Heebo,system-ui';cx.textAlign='center';
   cx.shadowColor=t.c;cx.shadowBlur=8;cx.fillText(t.txt,t.x,t.y);cx.shadowBlur=0});
