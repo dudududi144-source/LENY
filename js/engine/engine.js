@@ -40,9 +40,10 @@ export function parseLevel(li){
 
 function buildDeco(){RT.deco=[];for(let i=0;i<22;i++)RT.deco.push({x:Math.random()*RT.cols*TILE,y:Math.random()*RT.rows*TILE,z:.15+Math.random()*.4,s:2+Math.random()*3,p:Math.random()*6})}
 
-export function burst(x,y,col,n,sp){for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=(sp||3)*(.4+Math.random());
+function capParts(){if(RT.parts.length>140)RT.parts.splice(0,RT.parts.length-140)}
+export function burst(x,y,col,n,sp){capParts();for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=(sp||3)*(.4+Math.random());
  RT.parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-1,life:26+rnd(18),max:40,c:col,r:2+Math.random()*2.5,g:.12})}}
-function dust(x,y){for(let i=0;i<5;i++)RT.parts.push({x:x+(Math.random()-.5)*16,y,vx:(Math.random()-.5)*1.5,vy:-Math.random()*1.2,life:20,max:20,c:'#b9a6e8',r:2.5,g:.05})}
+function dust(x,y){capParts();for(let i=0;i<5;i++)RT.parts.push({x:x+(Math.random()-.5)*16,y,vx:(Math.random()-.5)*1.5,vy:-Math.random()*1.2,life:20,max:20,c:'#b9a6e8',r:2.5,g:.05})}
 function addText(x,y,txt,col){RT.texts.push({x,y,txt,c:col||'#7dffb8',life:50,max:50})}
 
 /* ── שערי חוכמה (Power-Learning) ── */
