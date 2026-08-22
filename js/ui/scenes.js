@@ -150,7 +150,7 @@ export function initScenes(){
  avIn.addEventListener('change',()=>{const f=avIn.files&&avIn.files[0];
   if(!f)return;
   fileToAvatar(f,data=>{S.avatar=data;save();refreshAvatarUI();AU.sfx('power');
-   TTS.say('וָואוּ! אַתְּ נִרְאֵית מְדִים!');});
+   TTS.say('וָואוּ! אַתְּ נִרְאֵית מְדַהִים!');});
   avIn.value='';});
  $('#avatarClear').onclick=()=>{S.avatar='';save();refreshAvatarUI();AU.sfx('tap');};
  /* בחירת מצב רוח: צורך רגשי + אוטונומיה */
