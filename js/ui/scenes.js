@@ -2,7 +2,7 @@
    נרשם לאירועי המנוע דרך ה-bus (צימוד חד-כיווני) */
 import {$,$$,el,later,cleanT} from '../core/utils.js';
 import {on} from '../core/bus.js';
-import {S} from '../core/state.js';
+import {S,save} from '../core/state.js';
 import {AU} from '../core/audio.js';
 import {TTS} from '../core/tts.js';
 import {toast,confetti} from './fx.js';
