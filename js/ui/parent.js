@@ -4,7 +4,6 @@ import {toast} from './fx.js';
 import {S,save,saveSoon,resetState} from '../core/state.js';
 import {AU} from '../core/audio.js';
 import {TTS} from '../core/tts.js';
-import {toast} from './fx.js';
 import {goTitle} from './scenes.js';
 
 function attachHold(elm,dur,onDone,onTick){
