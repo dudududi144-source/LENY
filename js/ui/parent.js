@@ -30,6 +30,11 @@ function renderParent(){
   ['חוקר','הרפתקן'].forEach(md=>{const b=el('button',S.mode===md?'on':'',md+(md==='חוקר'?' · גיל 3-5':' · גיל 6-8'));
    b.onclick=()=>{S.mode=md;save();renderParent();AU.sfx('tap');toast('המצב ישתנה מהשלב הבא 🌟')};
    mseg.appendChild(b)});}
+ const lseg=$('#limitSeg');if(lseg){lseg.innerHTML='';
+  [[0,'כבוי'],[10,'10 דק'],[15,'15 דק'],[20,'20 דק']].forEach(([v,l])=>{
+   const b=el('button',S.timeLimit===v?'on':'',l);
+   b.onclick=()=>{S.timeLimit=v;save();renderParent();AU.sfx('tap');toast(v?('מגבלת זמן: '+v+' דקות'):'מגבלת הזמן כבויה')};
+   lseg.appendChild(b)});}
  const seg=$('#diffSeg');seg.innerHTML='';
  ['קל','רגיל','מאתגר'].forEach(d=>{const b=el('button',S.diff===d?'on':'',d);
   b.onclick=()=>{S.diff=d;save();renderParent();AU.sfx('tap')};seg.appendChild(b)});
