@@ -33,9 +33,14 @@ export function closePuzzle(ok){$('#puzzle').classList.remove('show');PZ.open=fa
  if(ok){RT.skill=Math.min(1.15,RT.skill+.03);praise()}else{RT.skill=Math.max(.7,RT.skill-.05)}
  if(cb)later(()=>cb(ok),150)}
 
-function wrongFx(b,showEl,hintLine){AU.sfx('wrong');b.classList.add('shake');later(()=>b.classList.remove('shake'),420);
+/* פיגום (סקפולדינג): אחרי סף הטעויות — האפשרות השגויה שנלחצה נפסלת,
+   והרמז הטקסטואלי מכוון בלי לחשוף את התשובה. לעולם לא מסמנים את הנכונה. */
+function wrongFx(b,hintLine){AU.sfx('wrong');
+ if(b.classList){b.classList.add('shake');later(()=>b.classList.remove('shake'),420);}
  wrongCount++;
- if(wrongCount>=DIFF[S.diff].hint&&showEl&&hintLine){if(showEl.classList)showEl.classList.add('hint');$('#pzHint').textContent='💡 רמז: '+hintLine}}
+ if(wrongCount>=DIFF[S.diff].hint){
+  if(b.classList&&b.classList.contains('pz-opt')&&!b.classList.contains('off')){b.classList.add('off');b.disabled=true;}
+  if(hintLine)$('#pzHint').textContent='💡 '+hintLine;}}
 
 function pzAnimals(box){
  const opts=shuffle(ANI).slice(0,Math.max(2,numOpts()));
@@ -47,7 +52,7 @@ function pzAnimals(box){
  $('#pzHint').textContent='הקשיבי לקול ובחרי את החיה';
  opts.forEach(o=>{const b=el('button','pz-opt',o[0]+'<div style="font-size:13px;font-weight:800">'+o[2]+'</div>');
   b.onclick=()=>{if(o[1]===target[1]){AU.sfx('select');closePuzzle(true)}
-   else wrongFx(b,b,'הקשיבי שוב 🔊')};
+   else wrongFx(b,'הקשיבי שוב 🔊')};
   row.appendChild(b)})}
 
 function pzShapes(box){let round=0;const R=2;
@@ -57,7 +62,7 @@ function pzShapes(box){let round=0;const R=2;
   const big=el('div','pz-shape',shapeSVG(target,'sh-'+target[0]));big.querySelector('svg').style.width='80px';big.querySelector('svg').style.height='80px';box.appendChild(big);
   const row=el('div','pz-row pz-shape');box.appendChild(row);
   shuffle(SHP).forEach(s=>{const b=el('button','pz-opt pz-shape',shapeSVG(s[0],'sh-'+s[0]));
-   b.onclick=()=>{if(s[0]===target){AU.sfx('select');round++;next()}else wrongFx(b,b,'הסתכלי על הצורה שלמעלה')};
+   b.onclick=()=>{if(s[0]===target){AU.sfx('select');round++;next()}else wrongFx(b,'הסתכלי על הצורה שלמעלה')};
    row.appendChild(b)})}
  next();TTS.say('מִצְאִי אֶת הַצּוּרָה הַזֶּהָה')}
 
@@ -69,7 +74,7 @@ function pzLetters(box){let round=0;const rounds=shuffle(WORDS).slice(0,2);
   const row=el('div','pz-row');box.appendChild(row);
   const pool=shuffle(HEB.filter(l=>l!==r.a)).slice(0,Math.max(1,numOpts()-1));
   shuffle([r.a,...pool]).forEach(l=>{const b=el('button','pz-opt letters',l);
-   b.onclick=()=>{if(l===r.a){AU.sfx('select');round++;next()}else wrongFx(b,b,'המילה היא '+r.w)};
+   b.onclick=()=>{if(l===r.a){AU.sfx('select');round++;next()}else wrongFx(b,'הקשיבי שוב לצליל הראשון')};
    row.appendChild(b)});
   TTS.say('בְּאֵיזוֹ אוֹת מַתְחִילָה הַמִּלָּה '+r.w)}
  next()}
@@ -85,7 +90,7 @@ function pzMusic(box){
   later(()=>{phase='you';$('#pzHint').textContent='עכשיו תורך! נגני את המקצב ✨'},600*seqLen+500)}
  pads.forEach(p=>{p.onclick=()=>{if(phase!=='you')return;AU.inst(p.dataset.k);p.classList.add('flash');later(()=>p.classList.remove('flash'),300);
   if(p.dataset.k===seq[idx][1]){idx++;if(idx===seq.length){closePuzzle(true)}}
-  else{wrongFx(p,p,'הקשיבי שוב 🎵');showSeq()}}});
+  else{wrongFx(p,'הקשיבי שוב למקצב 🎵');showSeq()}}});
  showSeq();TTS.say('חִזְרִי עַל הַמַּקָּצֵב')}
 
 function pzEmo(box){let round=0;const rounds=shuffle(EMO).slice(0,2);
@@ -121,7 +126,7 @@ function pzColor(box){let round=0;const R=2;
  function colorBtn(col,ansCol){const b=el('button','pz-opt');
   b.innerHTML='<span style="display:block;width:52px;height:52px;border-radius:50%;background:'+col+'"></span>';
   b.onclick=()=>{if(col===ansCol){AU.sfx('select');round++;next()}
-   else wrongFx(b,b,'הסתכלי טוב על הצבע 🎨')};
+   else wrongFx(b,'הסתכלי טוב על הצבע 🎨')};
   return b}
  function next(){if(round>=R){closePuzzle(true);return}
   box.innerHTML='';
@@ -157,7 +162,7 @@ function pzSize(box){let round=0;const R=2;
    const t=TRIPLES[rnd(TRIPLES.length)];const ans=t[2];
    shuffle(t).forEach(e2=>{const b=el('button','pz-opt',e2);
     b.onclick=()=>{if(e2===ans){AU.sfx('select');round++;next()}
-     else wrongFx(b,b,'הסתכלי מי הכי גדול 🐘')};
+     else wrongFx(b,'הסתכלי מי הכי גדול 🐘')};
     row.appendChild(b)});}
   else{
    $('#pzHint').textContent='מה ממשיך את הסדרה? ('+(round+1)+'/2)';
@@ -165,7 +170,7 @@ function pzSize(box){let round=0;const R=2;
    box.appendChild(el('div','pz-word',a+' '+b2+' '+a+' '+b2+' ❓'));
    shuffle([a,b2,p[2]]).forEach(e2=>{const b=el('button','pz-opt',e2);
     b.onclick=()=>{if(e2===a){AU.sfx('select');round++;next()}
-     else wrongFx(b,b,'הסדרה מתחלפת: '+a+' '+b2)};
+     else wrongFx(b,'הסדרה מתחלפת לסירוגין')};
     row.appendChild(b)});}
   box.appendChild(row);}
  next();TTS.say(round===0?'מִי הַכִּי גָּדוֹל?':'מָה מַמְשִׁיךְ אֶת הַסִּדְרָה?')}
@@ -188,7 +193,7 @@ function pzTime(box){let round=0;const R=2;
   const pool=shuffle([1,2,3,4,5,6,7,8,9,10,11,12].filter(x=>x!==target)).slice(0,Math.max(2,numOpts()-1));
   shuffle([target,...pool]).forEach(n=>{const b=el('button','pz-opt letters',String(n));
    b.onclick=()=>{if(n===target){AU.sfx('select');round++;next()}
-    else wrongFx(b,b,'המחוג הקצר מצביע על '+target)};
+    else wrongFx(b,'הסתכלי על המחוג הקצר')};
    row.appendChild(b)});
   box.appendChild(row);}
  next();TTS.say('כַּמָּה הַשָּׁעָה?')}
