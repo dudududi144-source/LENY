@@ -53,7 +53,7 @@ function renderStickers(){
   d.innerHTML='<span class="si">'+(got?w.rIcon:'❔')+'</span><span class="sn">'+w.rName+'</span>';
   g.appendChild(d)});
  const totalStars=Object.values(S.stars).reduce((a,b)=>a+b,0);
- $('#stickerCount').innerHTML='✦ נאספו <b>'+totalStars+'/15</b> כוכבי חוכמה · שיא: <b>'+S.best+'</b>'}
+ $('#stickerCount').innerHTML='✦ נאספו <b>'+totalStars+'/'+(WORLDS.length*3)+'</b> כוכבי חוכמה · שיא: <b>'+S.best+'</b>'}
 
 function showStickers(){RT.screen='stickers';RT.paused=false;showScreen('stickers');
  $('#wrap').classList.remove('show');renderStickers();AU.sfx('open')}
