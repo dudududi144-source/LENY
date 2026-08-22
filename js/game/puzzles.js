@@ -61,7 +61,7 @@ function pzAnimals(box){
  TTS.say('אֵיזוֹ חַיָּה מַשְׁמִיעָה אֶת הַקּוֹל?');
  const row=el('div','pz-row');box.appendChild(row);
  $('#pzHint').textContent='הקשיבי לקול ובחרי את החיה';
- opts.forEach(o=>{const b=el('button','pz-opt',o[0]+'<div style="font-size:13px;font-weight:800">'+o[2]+'</div>');
+ opts.forEach(o=>{const b=el('button','pz-opt','<span class="ai">'+animalIcon(o[1])+'</span><div style="font-size:13px;font-weight:800">'+o[2]+'</div>');
   b.onclick=()=>{
    /* למידה: לחיצה משמיעה את קול החיה כדי לבנות אסוציאציה ברורה */
    AU.animal(o[1]);
