@@ -14,6 +14,7 @@ describe('state',()=>{
   expect(d.mode).toBe('חוקר');
   expect(d.tutorial).toBe(false);
   expect(d.storySeen).toBe(false);
+  expect(d.garden).toEqual([]);
   expect(d.skillModel).toEqual({});
   expect(d.best).toBe(0);});
  it('שלוש רמות קושי עם ערכים שפויים',()=>{
