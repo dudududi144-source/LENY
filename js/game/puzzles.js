@@ -5,6 +5,7 @@ import {S,DIFF} from '../core/state.js';
 import {AU} from '../core/audio.js';
 import {TTS,praise} from '../core/tts.js';
 import {RT} from './runtime.js';
+import {recordResult} from './skill-model.js';
 
 const ANI=[['🐶','dog','כֶּלֶב'],['🐱','cat','חָתוּל'],['🐮','cow','פָּרָה'],['🐷','pig','חֲזִיר'],['🐰','rabbit','אַרְנָב']];
 const WORDS=[{w:'כֶּלֶב',e:'🐶',a:'כ'},{w:'חָתוּל',e:'🐱',a:'ח'},{w:'סוּס',e:'🐴',a:'ס'},{w:'פֶּרַח',e:'🌸',a:'פ'},{w:'בַּיִת',e:'🏠',a:'ב'},{w:'דָּג',e:'🐟',a:'ד'}];
@@ -17,7 +18,7 @@ function shapeSVG(s,cls){if(s==='circle')return `<svg viewBox="0 0 88 88"><circl
  return `<svg viewBox="0 0 88 88"><polygon class="${cls}" points="44,12 78,76 10,76"/></svg>`}
 const numOpts=()=>DIFF[S.diff].opts;
 
-export const PZ={open:false,cb:null};
+export const PZ={open:false,cb:null,domain:null};
 let wrongCount=0;
 
 export function openPuzzle(title,sub,build,cb){
@@ -28,6 +29,8 @@ export function openPuzzle(title,sub,build,cb){
 
 export function closePuzzle(ok){$('#puzzle').classList.remove('show');PZ.open=false;RT.paused=false;
  const cb=PZ.cb;PZ.cb=null;
+ const dom=PZ.domain;PZ.domain=null;
+ if(dom)recordResult(dom,ok);
  later(()=>{RT.puzzleBusy=false},250);
  if(ok){RT.skill=Math.min(1.15,RT.skill+.03);praise()}else{RT.skill=Math.max(.7,RT.skill-.05)}
  if(cb)later(()=>cb(ok),150)}
