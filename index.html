@@ -31,8 +31,8 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
       <span class="hchip" id="hudPowers"></span>
     </div>
     <div style="display:flex;align-items:center">
-      <span class="hchip">✦ <b id="hudScore">0</b></span>
-      <span class="hchip">💎 <b id="hudCoins">0</b></span>
+      <span class="hchip" id="chipScore">✦ <b id="hudScore">0</b></span>
+      <span class="hchip" id="chipCoins">💎 <b id="hudCoins">0</b></span>
       <span class="hchip" id="hudWorld"></span>
       <button id="hudPause" aria-label="השהיה">⏸</button>
     </div>
@@ -137,6 +137,7 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
     <button class="mclose" id="parClose" aria-label="סגירה">✖</button>
     <h2>פינת המבוגרים 🔒</h2>
     <label class="field">שם הילדה<input id="parName" maxlength="16" placeholder="לני"></label>
+    <div class="field"><span>מצב משחק</span><div class="seg" id="modeSeg"></div></div>
     <div class="field"><span>רמת קושי</span><div class="seg" id="diffSeg"></div></div>
     <div class="srow"><span>צלילים ומוזיקה</span><label class="sw"><input type="checkbox" id="tSound"><span class="sl"></span></label></div>
     <div class="srow"><span>מצב לילה</span><label class="sw"><input type="checkbox" id="tNight"><span class="sl"></span></label></div>
