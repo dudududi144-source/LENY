@@ -1,3 +1,4 @@
+import {S} from './state.js';
 /* core/strings.js — טבלת המילים הקנונית (Single Source of Truth)
    כל טקסט המיועד למשתמש חי כאן, בניקוד מלא ועקבי, מופרד מהלוגיקה.
    מבנה: STR[קטגוריה][מפתח]. מאפשר: אחידות, ביקורת לשונית, לוקליזציה עתידית.
@@ -81,4 +82,4 @@ export const STR_EN={
   restNow:'Time to rest', moreTime:'5 more minutes ⏰'}
 };
 /* מחזיר את המילון לפי השפה הנבחרת */
-export function tr(){return (typeof S!=='undefined'&&S.lang==='en')?STR_EN:STR;}
+export function tr(){return (S&&S.lang==='en')?STR_EN:STR;}
