@@ -1,6 +1,19 @@
 /* core/audio.js — WebAudio: אפקטים, מוזיקה, צלילי חיות וכלים (הכול מסונתז) */
 import {S} from './state.js';
 
+/* סולם מוזיקלי ייחודי לכל עולם (M2) */
+const SCALES=[
+ [261.63,329.63,392,523.25,392,329.63],
+ [220,261.63,329.63,440,329.63,261.63],
+ [196,246.94,293.66,392,293.66,246.94],
+ [293.66,369.99,440,587.33,440,369.99],
+ [174.61,220,261.63,349.23,261.63,220],
+ [329.63,415.3,493.88,659.25,493.88,415.3],
+ [349.23,440,523.25,698.46,523.25,440],
+ [246.94,293.66,369.99,493.88,369.99,293.66],
+ [261.63,311.13,392,523.25,392,311.13],
+ [293.66,349.23,440,587.33,440,349.23]];
+
 export const AU={ctx:null,mg:null,sg:null,mus:null,ni:0,
  ensure(){if(!this.ctx){const C=window.AudioContext||window.webkitAudioContext;if(!C)return false;
    this.ctx=new C();const m=this.ctx.createGain();m.gain.value=1;m.connect(this.ctx.destination);
@@ -38,9 +51,10 @@ export const AU={ctx:null,mg:null,sg:null,mus:null,ni:0,
    if(k==='drum'){this.tone(90,.16,'triangle',.8);this.tone(60,.22,'sine',.7,.02)}
    else if(k==='trumpet'){this.tone(392,.26,'sawtooth',.32);this.tone(523.25,.26,'sawtooth',.27,.03)}
    else{this.tone(880,.45,'sine',.5);this.tone(1760,.35,'sine',.22,.01)}},
- startMusic(){if(!this.ctx||this.mus)return;const notes=S.night?[196,246.94,293.66,392,293.66,246.94]:[261.63,329.63,392,523.25,392,329.63];
+ startMusic(){if(!this.ctx||this.mus)return;const notes=SCALES[this.scaleIdx||0];
    this.mus=setInterval(()=>{if(!S.sound||document.hidden)return;const f=notes[this.ni%notes.length];this.tone(f,.34,'triangle',.5,0,this.mg);this.tone(f*2,.18,'sine',.12,.02,this.mg);this.ni++},S.night?640:520)},
  stopMusic(){if(this.mus){clearInterval(this.mus);this.mus=null}},
+ setScale(i){this.scaleIdx=i;if(this.mus){this.stopMusic();if(S.sound)this.startMusic();}},
  refresh(){if(!this.ctx)return;this.mg.gain.value=S.sound?.16:0;this.sg.gain.value=S.sound?.85:0}};
 
 document.addEventListener('visibilitychange',()=>{if(document.hidden)AU.stopMusic();else if(S.sound&&AU.ctx)AU.startMusic()});
