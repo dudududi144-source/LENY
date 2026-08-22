@@ -9,6 +9,8 @@ import {toast,confetti} from './fx.js';
 import {RT,LEN} from '../game/runtime.js';
 import {WORLDS} from '../game/levels.js';
 import {startWorld,togglePause} from '../engine/engine.js';
+import {renderGarden,initGarden} from './garden.js';
+import {DOMAINS,weakestDomain} from '../game/skill-model.js';
 
 function showScreen(id){$$('.scr').forEach(s=>s.classList.remove('show'));
  if(id)$('#scr-'+id).classList.add('show')}
@@ -28,6 +30,7 @@ function renderHub(){
  const lights=$('#hubLights');if(lights){lights.innerHTML='';
   for(let i=0;i<WORLDS.length;i++){const got=S.items.includes(i);
    lights.appendChild(el('div','orb'+(got?' lit':''),got?'✦':''));}}
+ const wd=weakestDomain();const weakIdx=wd?DOMAINS.indexOf(wd):-1;
  const n=S.name.trim();
  $('#hubHello').textContent=n?('הַי '+n+'! בְּחֲרִי עוֹלָם'):'הַי לֶנִי! בְּחֲרִי עוֹלָם';
  $('#hubProgress').textContent='⭐ '+S.items.length+'/'+WORLDS.length;
@@ -40,6 +43,7 @@ function renderHub(){
   b.setAttribute('aria-label',w.name);
   b.innerHTML='<span class="bi">'+(unlocked?w.icon:'🔒')+'</span><span class="bl">'+w.name+'</span><span class="bs">'+(done?'⭐'.repeat(Math.max(1,S.stars[i]||1)):'')+'</span>';
   if(done)b.appendChild(el('span','bdone','✓'));
+  if(i===weakIdx){b.classList.add('weak');b.appendChild(el('span','bdone','🌸'));}
   b.onclick=()=>{AU.ensure();
    if(!unlocked){AU.sfx('wrong');b.classList.add('shake');later(()=>b.classList.remove('shake'),420);
     toast('שַׂחֲקִי קוֹדֶם בָּעוֹלָם הַקּוֹדֵם! 🌟');return}
@@ -72,6 +76,7 @@ function showDone(d){const first=d&&d.first;
  $('#doneStats').innerHTML='ניקוד: <b>'+RT.score+'</b> · יהלומים: <b>'+RT.levelCoins+'/'+RT.levelCoinsTotal+'</b>';
  $('#doneStars').textContent='שערי חוכמה: '+'✦'.repeat(RT.gatesSolvedNow)+' ('+RT.gatesSolvedNow+'/3)';
  LEN.done.play(first?'spin':'cheer');
+ later(()=>{if(RT.screen==='done')LEN.done.play('dance')},1100);
  if(first){confetti();AU.sfx('goal');TTS.say('לֶנִי קִבְּלָה אֶת '+w.rSay)}else AU.sfx('success')}
 
 function showGameOver(){
@@ -87,6 +92,10 @@ function showWin(){
 
 /* ── אתחול: מנוי לאירועים + חיבור כפתורים ── */
 export function initScenes(){
+ initGarden();
+ LEN.hub.el.addEventListener('pointerdown',()=>{if(RT.screen!=='hub')return;
+  LEN.hub.play(Math.random()<.5?'cheer':'spin');AU.sfx('success');
+  const n=S.name.trim();TTS.say(n?('אֲנִי אוֹהֶבֶת אוֹתָךְ '+n+'!'):'כֵּיף לְשַׂחֵק אִתָּךְ!')});
  on('level-done',showDone);
  on('game-over',showGameOver);
  on('win',showWin);
@@ -99,6 +108,8 @@ export function initScenes(){
  $('#btnPauseHome').onclick=()=>{$('#pauseM').classList.remove('show');RT.paused=false;goHub()};
  $('#hudPause').onclick=()=>togglePause();
  $('#hubStickers').onclick=()=>{AU.ensure();showStickers()};
+ $('#hubGarden').onclick=()=>{AU.ensure();AU.sfx('open');showScreen('garden');renderGarden()};
+ $('#gardenBack').onclick=()=>{AU.sfx('tap');goHub()};
  $('#storyBtn').onclick=()=>{S.storySeen=true;save();$('#story').classList.remove('show');
   AU.sfx('goal');LEN.hub.play('cheer');TTS.say('קדימה! בואי נאסוף את האורות');};
  $('#stickersBack').onclick=()=>{AU.sfx('tap');goHub()}}
