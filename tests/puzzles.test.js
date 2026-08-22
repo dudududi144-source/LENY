@@ -1,6 +1,6 @@
 /* tests/puzzles.test.js */
 import {describe,it,expect,beforeEach} from 'vitest';
-import {PZ,openPuzzle,closePuzzle,pzGate} from '../js/game/puzzles.js';
+import {PZ,openPuzzle,closePuzzle,pzGate,pzBoss} from '../js/game/puzzles.js';
 import {RT} from '../js/game/runtime.js';
 
 beforeEach(()=>{
@@ -50,4 +50,22 @@ describe('בניית חידות',()=>{
   pzGate(box);
   expect(box.querySelectorAll('.pz-opt').length).toBeGreaterThanOrEqual(3);
   expect(box.querySelector('svg')).not.toBeNull();});
+ it('pzGate בונה חידת ערבוב לעולם 10 (הסיום)',()=>{
+  RT.level=9;
+  for(let i=0;i<5;i++){
+   const box=document.getElementById('pzBox');
+   pzGate(box);
+   expect(box.querySelectorAll('button').length).toBeGreaterThanOrEqual(2);
+   box.innerHTML='';}});
+ it('בוס מגריל חידה מתוך כל 9 הסוגים',()=>{
+  const box=document.getElementById('pzBox');
+  pzBoss(box);
+  expect(box.querySelectorAll('button').length).toBeGreaterThanOrEqual(2);});
+ it('כל 10 העולמות מייצרים חידה תקינה',()=>{
+  for(let w=0;w<10;w++){
+   RT.level=w;
+   const box=document.getElementById('pzBox');
+   pzGate(box);
+   expect(box.querySelectorAll('button').length).toBeGreaterThanOrEqual(2);
+   box.innerHTML='';}});
 });
