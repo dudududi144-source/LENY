@@ -39,8 +39,10 @@ function renderParent(){
  const seg=$('#diffSeg');seg.innerHTML='';
  ['קל','רגיל','מאתגר'].forEach(d=>{const b=el('button',S.diff===d?'on':'',d);
   b.onclick=()=>{S.diff=d;save();renderParent();AU.sfx('tap')};seg.appendChild(b)});
- const sum=summaryStats();const dash=$('#parDash');
- if(dash){dash.innerHTML='';const mins=Math.round(sum.playSec/60);
+ const sum=summaryStats();
+ let dash=$('#parDash');if(!dash){dash=el('div');dash.id='parDash';dash.className='dash';const card=$('#parent .overlay__card')||$('#parent');card.appendChild(dash);}
+ let acc=$('#parAcc');if(!acc){acc=el('div');acc.id='parAcc';acc.className='seg';const f=el('div','field');f.appendChild(el('span','','נגישות: מהירות וללא כישלון'));f.appendChild(acc);dash.appendChild(f);}
+ if(dash){dash.querySelectorAll('.dash-row,.dash-line,.dash-rec').forEach(x=>x.remove());const mins=Math.round(sum.playSec/60);
   dash.appendChild(el('div','dash-line','זמן משחק: '+mins+' דק · מפגשים: '+sum.sessions));
   const DN={animals:'חיות',shapes:'צורות',letters:'אותיות',music:'מוזיקה',emotions:'רגשות',math:'חשבון',colors:'צבעים',sizes:'גדלים',time:'שעות'};
   for(const k in DN){const mm=sum.domains[k];const row=el('div','dash-row');
