@@ -11,6 +11,7 @@ import {GRAV,MOVE,MAXV,FRIC,JUMP,rectVsMap,aabb} from './physics.js';
 import {openPuzzle,pzGate,pzBoss,PZ} from '../game/puzzles.js';
 import {tutorialStart,tutorialUpdate,tutorialComplete} from './tutorial.js';
 import {DOMAINS} from '../game/skill-model.js';
+import {reframe} from '../game/mind.js';
 
 const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
 
@@ -100,7 +101,6 @@ function hitBoss(){
 
 /* ── פגיעה ── */
 const DPRAISE={animals:'קוֹלוֹת הַחַיּוֹת',shapes:'הַצּוּרוֹת',letters:'הָאוֹתִיּוֹת',music:'הַמּוּזִיקָה',emotions:'הָרְגָשׁוֹת',math:'הַחֶשְׁבּוֹן',colors:'הַצְּבָעִים',sizes:'הַגְּדָלִים',time:'הַשָּׁעוֹת'};
-const ENCOURAGE=['אַתְּ מַצְלִיחָה! בּוֹאִי נְנַסֶּה שׁוּב','כִּמְעַט! עוֹד קְצָת','כָּל הַכָּבוֹד שֶׁנִּסִּית!'];
 export function hurt(fell){
  if(RT.powers.star>0||RT.dying>0)return;
  if(RT.powers.shield){RT.powers.shield=false;RT.invuln=80;AU.sfx('hurt');RT.shake=8;
@@ -109,7 +109,7 @@ export function hurt(fell){
  if(S.mode==='חוקר'){
   AU.sfx('gentle');RT.invuln=90;RT.shake=3;
   burst(RT.player.x+15,RT.player.y+21,'#7dffb8',12,3);
-  TTS.say(ENCOURAGE[rnd(ENCOURAGE.length)]);
+  TTS.say(reframe());
   const m=LEVELS[RT.level].map;
   for(let r=0;r<RT.rows;r++)for(let c=0;c<(m[r]||'').length;c++)if(m[r][c]==='P'){RT.player.x=c*TILE;RT.player.y=r*TILE;RT.player.vx=0;RT.player.vy=0}
   return}
