@@ -25,6 +25,9 @@ export function recordResult(domain,correct){
  const cur=S.skillModel[domain]||0;
  const next=Math.max(0,Math.min(10,cur+(correct?1:-2)));
  S.skillModel[domain]=next;
+ if(!Array.isArray(S.reviewQueue))S.reviewQueue=[];
+ if(correct){S.reviewQueue=S.reviewQueue.filter(d=>d!==domain);}
+ else if(!S.reviewQueue.includes(domain))S.reviewQueue.push(domain);
  save();
  const level=getLevel(domain);
  return{level,leveledUp:level>before};}
