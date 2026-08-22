@@ -72,9 +72,9 @@ function tryGate(){if(RT.puzzleBusy||RT.paused)return;
   if(aabb(RT.player,gr)){AU.sfx('tap');
    tutorialComplete();
    PZ.domain=RT.level<=8?DOMAINS[RT.level]:null;
-   openPuzzle('✦ שער חוכמה ✦','עולמן של ה'+WORLDS[RT.level].learn,pzGate,(ok)=>{
+   openPuzzle('✦ שַׁעַר חָכְמָה ✦','עולמן של ה'+WORLDS[RT.level].learn,pzGate,(ok)=>{
     if(ok){g.open=true;g.anim=30;S.gates[RT.level+':'+g.num]=true;RT.gatesSolvedNow++;
-     if(RT.review){RT.score+=200;addText(g.col*TILE+22,g.row*TILE-40,'+200 חיזוק ✿','#FFD76A');}
+     if(RT.review){RT.score+=200;addText(g.col*TILE+22,g.row*TILE-40,'+200 חִזּוּק ✿','#FFD76A');}
      RT.score+=300;addText(g.col*TILE+22,g.row*TILE,'+300 ✦','#FFD76A');
      const pw=GATE_POWER[g.num];
      if(pw.k==='shield')RT.powers.shield=true;
@@ -99,7 +99,7 @@ function updateBoss(){
  if(aabb(p,b)&&RT.invuln<=0){
   if(p.vy>2&&(p.y+p.h)-b.y<30&&b.hitT<=0&&!RT.puzzleBusy){
    b.hitT=9999;p.vy=JUMP*.85;AU.sfx('stomp');
-   openPuzzle('⚔️ מַכַּת חָכְמָה!','עני נכון כדי לפגוע בגנרל',pzBoss,(ok)=>{
+   openPuzzle('⚔️ מַכַּת חָכְמָה!','עֲנִי נָכוֹן כְּדֵי לִפְגֹּעַ בַּגֶּנֶרָל',pzBoss,(ok)=>{
     b.hitT=45;if(ok)hitBoss()})}
   else if(!starOn&&b.hitT<=0)hurt();
   else if(starOn&&b.hitT<=0){b.hitT=45;hitBoss()}}}
@@ -108,7 +108,7 @@ function hitBoss(){
  addText(b.x+b.w/2,b.y,'+300','#b967ff');
  burst(b.x+b.w/2,b.y+b.h/3,'#b967ff',20,6);
  if(b.hp<=0){b.dead=true;AU.sfx('bossdie');RT.shake=20;RT.score+=1000;
-  addText(b.x+b.w/2,b.y,'+1000 הובס!','#FFD76A');
+  addText(b.x+b.w/2,b.y,'+1000 הוּבַס!','#FFD76A');
   for(let i=0;i<5;i++)later(()=>burst(b.x+Math.random()*b.w,b.y+Math.random()*b.h,'#FFD76A',20,7),i*120);
   RT.ents.push({t:'flag',x:b.x+b.w/2,y:b.y,w:TILE,h:TILE*2})}}
 
@@ -201,8 +201,8 @@ export function update(){
   if(e.t==='gift'&&!e.got){e.ph+=.05;
    if(aabb(p,e)){e.got=true;AU.sfx('power');RT.shake=4;flash(RT.theme.accent,.3);
     if(e.kind===0){RT.score+=150;RT.coins+=2;RT.levelCoins+=2;addText(e.x+16,e.y-12,'🎁 +150','#FFD76A');}
-    else if(e.kind===1){RT.powers.magnet=600;addText(e.x+16,e.y-12,'🎁 מגנט!','#b967ff');}
-    else{RT.powers.shield=true;addText(e.x+16,e.y-12,'🎁 מגן!','#4dc9ff');}
+    else if(e.kind===1){RT.powers.magnet=600;addText(e.x+16,e.y-12,'🎁 מַגְנֵט!','#b967ff');}
+    else{RT.powers.shield=true;addText(e.x+16,e.y-12,'🎁 מָגֵן!','#4dc9ff');}
     burst(e.x+16,e.y+16,'#FFD76A',18,4);}}
   if(e.t==='spike'&&aabb(p,e)&&RT.invuln<=0&&!starOn)hurt();
   if(e.t==='flag'&&aabb(p,e)){RT.ents.splice(i,1);levelDone();return}}
