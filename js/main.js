@@ -12,6 +12,9 @@ import {update} from './engine/engine.js';
 import {draw} from './engine/renderer.js';
 import {hudSync} from './ui/hud.js';
 
+/* לכידת שגיאות גלובלית (דיאגנוסטיקה בפלייטסטים ובדיקות) */
+window.addEventListener('error',e=>{try{(window.__lenyErrors=window.__lenyErrors||[]).push(String(e.message));}catch(_){/* noop */}});
+
 function boot(){
  /* כוכבים ברקע הרכז */
  const st=$('#stars');
@@ -32,7 +35,13 @@ function boot(){
  document.addEventListener('pointerdown',()=>{AU.ensure();AU.refresh()},{passive:true});
 
  /* לולאת משחק */
- function loop(){requestAnimationFrame(loop);
+ /* לולאת משחק + משמר פריימים (#23): ממוצע נע של זמן פריים;
+   מעל 34ms בממוצע — מעבר למצב חסכון שמקל על הרינדור */
+let ftAvg=16,lastT=performance.now();
+function loop(){requestAnimationFrame(loop);
+  const now=performance.now();const dt=Math.min(100,now-lastT);lastT=now;
+  ftAvg=ftAvg*.92+dt*.08;
+  RT.perf=ftAvg>34?0:1;
   if(RT.screen==='play'){
    if(!RT.paused)update();
    draw();hudSync()}}
