@@ -240,6 +240,9 @@ body.night #hubHint{color:#cfd6ff;background:rgba(24,30,62,.7)}
 .avatar-preview.has-img{border-style:solid;border-color:#FFD76A;box-shadow:0 0 22px rgba(255,215,106,.5)}
 .avatar-btns{display:flex;flex-direction:column;gap:8px}
 .avatar-btn{font-size:15px!important;padding:9px 18px!important}
+/* ── פס המילים שלי — ערך למידה מוחשי ── */
+.words-strip{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px;max-width:560px}
+.word-chip{background:rgba(185,103,255,.15);border:1px solid rgba(185,103,255,.4);color:#efe7ff;border-radius:999px;padding:6px 14px;font-weight:800;font-size:15px;animation:popIn .4s var(--spring) both}
 .name-chip{padding:10px 22px;border-radius:999px;background:rgba(255,255,255,.12);color:#efe7ff;font-weight:800;font-size:17px;border:2px solid transparent;transition:all .15s var(--spring)}
 .name-chip.sel{border-color:#7dffb8;background:rgba(125,255,184,.15)}
 .name-chip:active{transform:scale(.93)}
