@@ -69,3 +69,13 @@ test('גינת יצירה: מדבקה נשמרת בין טעינות (התמדה
  await page.click('#hubGarden');
  await expect(page.locator('#gardenStage .gsticker')).toHaveCount(1);
 });
+
+test('פרטיות: אפס בקשות מעקב/אנליטיקס (#19)', async ({page})=>{
+ const TRACK=['google-analytics','analytics','facebook','fb.','doubleclick','hotjar','segment','amplitude','mixpanel','adsby'];
+ const bad=[];
+ page.on('request',r=>{const u=r.url().toLowerCase();
+  if(TRACK.some(t=>u.includes(t)))bad.push(u);});
+ await page.goto('/');
+ await page.click('#btnStart');
+ await page.waitForTimeout(1500);
+ expect(bad).toEqual([]);});
