@@ -23,15 +23,16 @@ export function parseLevel(li){
    const x=c*TILE,y=r*TILE;
    if(ch==='P'){px=x;py=y}
    else if(ch==='C'){RT.ents.push({t:'coin',x:x+10,y:y+10,w:24,h:24,ph:Math.random()*6,got:false});RT.levelCoinsTotal++}
-   else if(ch==='S')RT.ents.push({t:'spike',x,y:y+TILE-18,w:TILE,h:18});
-   else if(ch==='E')RT.ents.push({t:'enemy',kind:'walk',x,y:y+8,w:38,h:36,vx:1.3*(Math.random()<.5?1:-1)*DIFF[S.diff].spd,min:x-90,max:x+90,ph:Math.random()*6,dead:false});
-   else if(ch==='Y')RT.ents.push({t:'enemy',kind:'fly',x,y,w:36,h:30,sx:x,sy:y,ph:Math.random()*6,dead:false});
+   else if(ch==='S'){if(S.mode!=='חוקר')RT.ents.push({t:'spike',x,y:y+TILE-18,w:TILE,h:18});}
+   else if(ch==='E'){if(S.mode!=='חוקר')RT.ents.push({t:'enemy',kind:'walk',x,y:y+8,w:38,h:36,vx:1.3*(Math.random()<.5?1:-1)*DIFF[S.diff].spd,min:x-90,max:x+90,ph:Math.random()*6,dead:false});}
+   else if(ch==='Y'){if(S.mode!=='חוקר')RT.ents.push({t:'enemy',kind:'fly',x,y,w:36,h:30,sx:x,sy:y,ph:Math.random()*6,dead:false});}
    else if(ch==='M')RT.ents.push({t:'move',x,y,w:TILE*2.6,h:16,sx:x,sy:y,ax:(Math.random()<.5?'x':'y'),range:100,ph:Math.random()*6});
    else if(ch==='H')RT.ents.push({t:'heart',x:x+8,y:y+8,w:28,h:28,ph:Math.random()*6,got:false});
    else if(ch==='F')RT.ents.push({t:'flag',x,y:y-TILE,w:TILE,h:TILE*2});
    else if(ch>='1'&&ch<='3'){RT.gates.push({num:+ch,col:c,row:r,open:!!S.gates[li+':'+ch],anim:0});
      RT.levelMap[r][c]=0}
-   else if(ch==='B'){RT.boss={x,y:y-TILE*1.2,w:TILE*2.2,h:TILE*1.9,hp:5,maxhp:5,vx:1.5,vy:0,onGround:false,flash:0,dead:false,dir:-1,jumpT:0,hitT:0,ph:0}}
+   else if(ch==='B'){if(S.mode==='חוקר'){RT.ents.push({t:'flag',x,y:y-TILE,w:TILE,h:TILE*2})}
+    else{RT.boss={x,y:y-TILE*1.2,w:TILE*2.2,h:TILE*1.9,hp:5,maxhp:5,vx:1.5,vy:0,onGround:false,flash:0,dead:false,dir:-1,jumpT:0,hitT:0,ph:0}}}
   }}
  RT.player=makePlayer(px,py);RT.cam={x:0,y:0};RT.powers={shield:false,magnet:0,star:0};RT.dying=0;
  RT.curHint=LEVELS[li].hint;RT.hintTimer=280;buildDeco()}
@@ -92,10 +93,19 @@ function hitBoss(){
   RT.ents.push({t:'flag',x:b.x+b.w/2,y:b.y,w:TILE,h:TILE*2})}}
 
 /* ── פגיעה ── */
+const ENCOURAGE=['אַתְּ מַצְלִיחָה! בּוֹאִי נְנַסֶּה שׁוּב','כִּמְעַט! עוֹד קְצָת','כָּל הַכָּבוֹד שֶׁנִּסִּית!'];
 export function hurt(fell){
  if(RT.powers.star>0||RT.dying>0)return;
  if(RT.powers.shield){RT.powers.shield=false;RT.invuln=80;AU.sfx('hurt');RT.shake=8;
   burst(RT.player.x+15,RT.player.y+21,'#4dc9ff',16,5);RT.player.vy=-8;return}
+ /* מצב חוקר: נחיתה רכה — חזרה עדינה להתחלה, עידוד קולי, אפס כישלון */
+ if(S.mode==='חוקר'){
+  AU.sfx('gentle');RT.invuln=90;RT.shake=3;
+  burst(RT.player.x+15,RT.player.y+21,'#7dffb8',12,3);
+  TTS.say(ENCOURAGE[rnd(ENCOURAGE.length)]);
+  const m=LEVELS[RT.level].map;
+  for(let r=0;r<RT.rows;r++)for(let c=0;c<(m[r]||'').length;c++)if(m[r][c]==='P'){RT.player.x=c*TILE;RT.player.y=r*TILE;RT.player.vx=0;RT.player.vy=0}
+  return}
  RT.lives--;AU.sfx('hurt');RT.shake=12;RT.invuln=90;RT.combo=0;RT.skill=Math.max(.7,RT.skill-.05);
  burst(RT.player.x+15,RT.player.y+21,'#ff2e88',16,5);
  if(RT.lives<=0){RT.dying=1;RT.player.vy=-10;return}
@@ -130,7 +140,7 @@ export function update(){
  if(!keys.l&&!keys.r)p.vx*=FRIC;
  const mv=starOn?MAXV*1.35:MAXV;p.vx=Math.max(-mv,Math.min(mv,p.vx));
  p.vy+=GRAV;if(p.vy>16)p.vy=16;
- if(p.onGround){p.coyote=8;p.jumps=0}else if(p.coyote>0)p.coyote--;
+ if(p.onGround){p.coyote=S.mode==='חוקר'?14:8;p.jumps=0}else if(p.coyote>0)p.coyote--;
  if(p.jbuf>0){p.jbuf--;
   if(p.coyote>0){p.vy=JUMP;p.coyote=0;p.jbuf=0;AU.sfx('jump');dust(p.x+p.w/2,p.y+p.h);p.squash=-.25}
   else if(p.jumps<1){p.vy=JUMP*.92;p.jumps=1;p.jbuf=0;AU.sfx('djump');burst(p.x+p.w/2,p.y+p.h,RT.theme.accent,8,2.5)}}
@@ -179,6 +189,8 @@ export function startWorld(li){
  document.getElementById('wrap').classList.add('show');
  document.getElementById('touch').style.display=isTouch?'block':'none';
  RT.invuln=60;TTS.say(WORLDS[li].name)}
+
+export function setJump(){if(RT.screen==='play'&&!RT.paused&&!RT.dying&&RT.player)RT.player.jbuf=S.mode==='חוקר'?12:8;}
 
 export function togglePause(){if(PZ.open)return;
  const m=document.getElementById('pauseM');
