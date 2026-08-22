@@ -118,6 +118,7 @@ function hitBoss(){
 const DPRAISE={animals:'קוֹלוֹת הַחַיּוֹת',shapes:'הַצּוּרוֹת',letters:'הָאוֹתִיּוֹת',music:'הַמּוּזִיקָה',emotions:'הָרְגָשׁוֹת',math:'הַחֶשְׁבּוֹן',colors:'הַצְּבָעִים',sizes:'הַגְּדָלִים',time:'הַשָּׁעוֹת'};
 export function hurt(fell){
  if(RT.powers.star>0||RT.dying>0)return;
+ if(S.access&&S.access.noFail){RT.invuln=90;RT.powers.shield=true;}
  if(RT.powers.shield){RT.powers.shield=false;RT.invuln=80;AU.sfx('hurt');RT.shake=8;
   burst(RT.player.x+15,RT.player.y+21,'#4dc9ff',16,5);RT.player.vy=-8;return}
  /* מצב חוקר: נחיתה רכה — חזרה עדינה להתחלה, עידוד קולי, אפס כישלון */
@@ -165,7 +166,7 @@ export function update(){
  if(keys.l){p.vx-=MOVE;p.face=-1}
  if(keys.r){p.vx+=MOVE;p.face=1}
  if(!keys.l&&!keys.r)p.vx*=FRIC;
- const mv=starOn?MAXV*1.35:MAXV;p.vx=Math.max(-mv,Math.min(mv,p.vx));
+ const SPD=(S.access&&S.access.speed)||1;const mv=(starOn?MAXV*1.35:MAXV)*SPD;p.vx=Math.max(-mv,Math.min(mv,p.vx));
  p.vy+=GRAV;if(p.vy>16)p.vy=16;
  if(p.onGround){p.coyote=S.mode==='חוקר'?14:8;p.jumps=0}else if(p.coyote>0)p.coyote--;
  if(p.jbuf>0){p.jbuf--;
