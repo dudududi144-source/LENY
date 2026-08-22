@@ -4,6 +4,6 @@ export default defineConfig({
  testDir:'e2e',
  timeout:30000,
  retries:1,
- use:{baseURL:'http://127.0.0.1:8123',headless:true},
+ use:{baseURL:'http://127.0.0.1:8123',headless:true,serviceWorkers:'block'},
  webServer:{command:'python3 -m http.server 8123',port:8123,reuseExistingServer:true}
 });
