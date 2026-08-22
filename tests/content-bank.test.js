@@ -6,7 +6,7 @@ describe('בנק תוכן',()=>{
  it('validateBank עובר',()=>{
   expect(validateBank()).toBe(true);});
 
- it('אותיות: 10+ מילים, אותיות חוקיות, אימוג'י לכל מילה',()=>{
+ it('אותיות: 10+ מילים, אותיות חוקיות וסמל לכל מילה',()=>{
   expect(WORDS.length).toBeGreaterThanOrEqual(10);
   for(const w of WORDS){
    expect(w.w.length).toBeGreaterThan(0);
