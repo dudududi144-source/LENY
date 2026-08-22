@@ -25,7 +25,11 @@ self.addEventListener('activate',e=>{
 self.addEventListener('fetch',e=>{
  const req=e.request;
  if(req.method!=='GET')return;
- e.respondWith(caches.match(req).then(hit=>hit||fetch(req).then(res=>{
-   if(res.ok){try{const url=new URL(req.url);
-    if(url.origin===location.origin){const cp=res.clone();caches.open(CACHE).then(c=>c.put(req,cp));}}catch(_){/* noop */}}
-   return res}).catch(()=>caches.match('/index.html'))))});
+ /* network-first לאותו origin: עדכונים מגיעים מיד כשאונליין; מטמון רק לאופליין */
+ e.respondWith(
+  fetch(req).then(res=>{
+    if(res.ok){const cp=res.clone();caches.open(CACHE).then(c=>c.put(req,cp));}
+    return res;
+  }).catch(()=>caches.match(req).then(hit=>hit||caches.match('/index.html')))
+ );
+});
