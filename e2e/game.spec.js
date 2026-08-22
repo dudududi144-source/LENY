@@ -61,11 +61,11 @@ test('גינת יצירה: מדבקה נשמרת בין טעינות (התמדה
  await page.click('#hubGarden');
  await expect(page.locator('#gardenStage')).toBeVisible();
  await page.locator('#gardenStage').click({position:{x:200,y:150}});
- await expect(page.locator('#gardenCount')).toContainText('1 מדבקות');
+ await expect(page.locator('#gardenStage .gsticker')).toHaveCount(1);
  const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('leny-world-v1')).garden);
  expect(stored.length).toBe(1);
  await page.reload();
  await resumeFromTitle(page);
  await page.click('#hubGarden');
- await expect(page.locator('#gardenCount')).toContainText('1 מדבקות');
+ await expect(page.locator('#gardenStage .gsticker')).toHaveCount(1);
 });
