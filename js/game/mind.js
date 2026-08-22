@@ -1,30 +1,13 @@
-/* game/mind.js — השכבה הפסיכולוגית של המשחק
-   מבוסס על עקרונות מכווני-ילד:
-   • שבח תהליך ולא שבח אדם (growth mindset — Dweck): מחזקים התמדה ומיקוד, לא "את מוכשרת"
-   • ניסוח מחדש של טעויות: טעות = דרך ללמוד, לא כישלון
-   • מסרים מרגיעים אחרי רצף קושי (ויסות רגשי) */
+/* game/mind.js — השכבה הפסיכולוגית (מקור טקסט: core/strings.js)
+   עקרונות מכווני-ילד: שבח תהליך (growth mindset), ניסוח מחדש של טעויות, ויסות רגשי.
+   כל המחרוזות חיות ב-STR.mind — כאן רק הלוגיקה. */
 import {rnd} from '../core/utils.js';
+import STR from '../core/strings.js';
 
-export const EFFORT_PRAISE=[
- 'לֹא וִתַּרְתְּ וְנִסִּית שׁוּב!',
- 'הַהַתְמָדָה שֶׁלָּךְ מַדְהִימָה!',
- 'גִּלִּית שֶׁאֶפְשָׁר לִלְמֹד מִכָּל טָעוּת!',
- 'הַמֹּחַ שֶׁלָּךְ גָּדֵל עִם כָּל נִסָּיוֹן!'];
+export const EFFORT_PRAISE=STR.mind.effort;
+export const FOCUS_PRAISE=STR.mind.focus;
+export const CALM_MISTAKE=STR.mind.calm;
 
-export const FOCUS_PRAISE=[
- 'הָיִית קַשֶּׁבֶת וּמְדֻיֶּקֶת!',
- 'שַׂמְתְּ לֵב לַפְּרָטִים!',
- 'הִקְשַׁבְתְּ בְּקַשָּׁה וְהִצְלַחַתְּ!'];
-
-export const CALM_MISTAKE=[
- 'טָעוּת? זֶוּ דֶּרֶךְ לִלְמֹד!',
- 'כָּל גִּבּוֹרָה מְנַסָּה שׁוּב',
- 'לֹא נוֹרָא — נְנַסֶּה יַחַד עוֹד פַּעַם',
- 'נְשִׁימָה עֲמֻקָּה... וְקָדִימָה'];
-
-/* הצלחה בניסיון ראשון → שבח מיקוד · הצלחה אחרי קושי → שבח התמדה */
 export function praiseFor(firstTry){
  return firstTry?FOCUS_PRAISE[rnd(FOCUS_PRAISE.length)]:EFFORT_PRAISE[rnd(EFFORT_PRAISE.length)];}
-
-/* ניסוח מחדש מרגיע אחרי טעות/נפילה */
 export function reframe(){return CALM_MISTAKE[rnd(CALM_MISTAKE.length)];}
