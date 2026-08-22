@@ -5,7 +5,6 @@ import {S,DIFF} from '../core/state.js';
 import {AU} from '../core/audio.js';
 import {TTS,praise} from '../core/tts.js';
 import {RT} from './runtime.js';
-import {WORLDS} from './levels.js';
 
 const ANI=[['🐶','dog','כֶּלֶב'],['🐱','cat','חָתוּל'],['🐮','cow','פָּרָה'],['🐷','pig','חֲזִיר'],['🐰','rabbit','אַרְנָב']];
 const WORDS=[{w:'כֶּלֶב',e:'🐶',a:'כ'},{w:'חָתוּל',e:'🐱',a:'ח'},{w:'סוּס',e:'🐴',a:'ס'},{w:'פֶּרַח',e:'🌸',a:'פ'},{w:'בַּיִת',e:'🏠',a:'ב'},{w:'דָּג',e:'🐟',a:'ד'}];
