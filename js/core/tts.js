@@ -11,7 +11,7 @@ export const TTS={he:null,
  say(t){if(!S.sound)return;try{if(!('speechSynthesis' in window))return;
    speechSynthesis.cancel();
    AU.duck(true);clearTimeout(this._duckT);this._duckT=setTimeout(()=>AU.duck(false),2600);
-   const u=new SpeechSynthesisUtterance(t);u.lang='he-IL';
+   const u=new SpeechSynthesisUtterance(t);const en=(typeof S!=='undefined'&&S.lang==='en');u.lang=en?'en-US':'he-IL';
    if(this.he)u.voice=this.he;u.rate=.9;u.pitch=1.15;
    speechSynthesis.speak(u)}catch(e){AU.duck(false)}}};
 TTS.init();
