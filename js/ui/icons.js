@@ -18,3 +18,18 @@ export const WORLD_ICONS=[
 ];
 export function worldIcon(i){return WORLD_ICONS[i]||WORLD_ICONS[0];}
 export default WORLD_ICONS;
+
+/* אייקוני מצבי-רוח (רכזת) — אותה שפה אחידה */
+export const MOOD_ICONS={
+ calm:wrap('<path d="M8 28c4-5 8-5 12 0s8 5 12 0 8-5 12 0"/><path d="M8 36c4-5 8-5 12 0s8 5 12 0 8-5 12 0"/>'),
+ adventure:wrap('<path d="M10 38l9-16 6 9 5-8 9 15z"/><path d="M19 22v-8l6 3-6 3"/>'),
+ create:wrap('<path d="M24 8a16 16 0 1 0 0 32c3 0 4-2 4-4s-1-3 0-5 3-2 5-2h4a8 8 0 0 0 8-8c0-8-8-15-17-15z"/><circle cx="17" cy="18" r="2.5"/><circle cx="26" cy="14" r="2.5"/><circle cx="14" cy="27" r="2.5"/>')
+};
+/* אייקוני כוחות (HUD) — מגן/מגנט/כוכב */
+export const POWER_ICONS={
+ shield:wrap('<path d="M24 6l14 6v10c0 10-6 16-14 20-8-4-14-10-14-20V12z"/>'),
+ magnet:wrap('<path d="M14 8v14a10 10 0 0 0 20 0V8"/><path d="M14 8h7v8h-7zM27 8h7v8h-7z"/>'),
+ star:wrap('<path d="M24 6l5 11 12 1-9 8 3 12-10-6-10 6 3-12-9-8 12-1z"/>')
+};
+export function moodIcon(k){return MOOD_ICONS[k]||MOOD_ICONS.calm;}
+export function powerIcon(k){return POWER_ICONS[k]||POWER_ICONS.star;}
