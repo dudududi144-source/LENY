@@ -100,7 +100,7 @@ function pzEmo(box){let round=0;const rounds=shuffle(EMO).slice(0,2);
   box.appendChild(el('div','pz-word',r.sit));
   const row=el('div','pz-row');box.appendChild(row);
   shuffle(['😄','😢','😨']).forEach(f=>{const b=el('button','pz-opt',f);
-   b.onclick=()=>{if(f===r.ans){AU.sfx('select');round++;next()}else wrongFx(b,b,'מה קורה בתמונה?')};
+   b.onclick=()=>{if(f===r.ans){AU.sfx('select');round++;next()}else wrongFx(b,'מה קורה בתמונה?')};
    row.appendChild(b)});
   TTS.say('מָה הִיא מַרְגִּישָׁה?')}
  next()}
@@ -117,7 +117,7 @@ function pzMath(box){let round=0;const R=2;
   const pool=shuffle([ans-1,ans+1,ans+2].filter(x=>x>0&&x!==ans)).slice(0,Math.max(1,numOpts()-1));
   shuffle([ans,...pool]).forEach(n=>{const b2=el('button','pz-opt letters',String(n));
    b2.onclick=()=>{if(n===ans){AU.sfx('select');round++;next()}
-    else wrongFx(b2,b2,'ספרי שוב 🧮')};
+    else wrongFx(b2,'ספרי שוב 🧮')};
    row.appendChild(b2)});}
  next();TTS.say(round===0?'כַּמָּה תַּפּוּחִים יֵשׁ?':'כַּמָּה זֶה בְּיַחַד?')}
 
