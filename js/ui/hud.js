@@ -16,7 +16,7 @@ export function hudSync(){
   ?('💎 '+RT.levelCoins+'/'+RT.levelCoinsTotal)
   :('❤️'.repeat(Math.max(0,RT.lives))||'💔');
  document.getElementById('hudWorld').textContent=WORLDS[RT.level].icon+' '+WORLDS[RT.level].name;
- let pw='';
+ let pw=RT.review?'🌸 ':'';
  if(RT.powers.shield)pw+='🛡️';
  if(RT.powers.magnet>0)pw+='🧲';
  if(RT.powers.star>0)pw+='⭐'+Math.ceil(RT.powers.star/60);
