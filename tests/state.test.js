@@ -1,6 +1,6 @@
 /* tests/state.test.js */
 import {describe,it,expect} from 'vitest';
-import {defState,DIFF,S,save,resetState} from '../js/core/state.js';
+import {defState,DIFF,S,save,resetState,sanitize} from '../js/core/state.js';
 
 describe('state',()=>{
  it('מבנה ברירת מחדל',()=>{
@@ -37,9 +37,7 @@ describe('state',()=>{
 
 describe('סניטציית מצב',()=>{
  it('מצב מושחת מתוקן לברירת מחדל בטוחה',()=>{
-  const bad={items:[1,'x',99,3],garden:'oops',reviewQueue:null,skillModel:5,timeLimit:-3,name:42,
-   garden2:null};
-  bad.garden='oops';
+  const bad={items:[1,'x',99,3],garden:'oops',reviewQueue:null,skillModel:5,timeLimit:-3,name:42};
   const s=sanitize(Object.assign(defState(),bad));
   expect(s.items).toEqual([1,3]);
   expect(Array.isArray(s.garden)).toBe(true);
