@@ -155,6 +155,8 @@ body.night .bubble{background:rgba(24,30,62,.88)}
 .bubble:active{transform:scale(.9)}
 .bubble.locked{filter:grayscale(.7);opacity:.75}
 .bubble .bi{font-size:38px;line-height:1.1;animation:floaty 3s ease-in-out infinite}
+.bubble .bi svg{width:42px;height:42px;display:block}
+.bubble .bs{color:#f5a623}
 .bubble .bl{font-size:13.5px;font-weight:800;color:#5a4a6a}
 body.night .bubble .bl{color:#dfe6ff}
 .bubble .bs{font-size:12px;letter-spacing:1px;min-height:15px}
