@@ -12,6 +12,7 @@ import {openPuzzle,pzGate,pzBoss,PZ} from '../game/puzzles.js';
 import {tutorialStart,tutorialUpdate,tutorialComplete} from './tutorial.js';
 import {DOMAINS} from '../game/skill-model.js';
 import {reframe} from '../game/mind.js';
+import {recordLevel} from '../core/stats.js';
 
 const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
 
@@ -129,7 +130,7 @@ export function hurt(fell){
   const m=LEVELS[RT.level].map;
   for(let r=0;r<RT.rows;r++)for(let c=0;c<(m[r]||'').length;c++)if(m[r][c]==='P'){RT.player.x=c*TILE;RT.player.y=r*TILE;RT.player.vx=0;RT.player.vy=0}
   return}
- RT.lives--;AU.sfx('hurt');RT.shake=12;RT.invuln=90;RT.combo=0;RT.skill=Math.max(.7,RT.skill-.05);RT.expr='sad';RT.exprT=60;
+ RT.lives--;RT.levelDeaths=(RT.levelDeaths||0)+1;AU.sfx('hurt');RT.shake=12;RT.invuln=90;RT.combo=0;RT.skill=Math.max(.7,RT.skill-.05);RT.expr='sad';RT.exprT=60;
  burst(RT.player.x+15,RT.player.y+21,'#ff2e88',16,5);
  if(RT.lives<=0){RT.dying=1;RT.player.vy=-10;return}
  if(fell){const m=LEVELS[RT.level].map;
@@ -137,7 +138,7 @@ export function hurt(fell){
  else{RT.player.vy=-8;RT.player.vx=-RT.player.face*4}}
 
 /* ── סיום שלב ── */
-function levelDone(){AU.sfx('goal');RT.score+=500;flash('#FFD76A',.4);RT.shake=6;
+function levelDone(){recordLevel(RT.level,{deaths:RT.levelDeaths||0,puzzleFails:RT.levelFails||0,sec:Math.round((Date.now()-(RT.levelStart||Date.now()))/1000),wins:1});AU.sfx('goal');RT.score+=500;flash('#FFD76A',.4);RT.shake=6;
  if(RT.level<=8&&DPRAISE[DOMAINS[RT.level]])TTS.say('הִתְקַדַּמְתְּ בְּ'+DPRAISE[DOMAINS[RT.level]]+'!');
  const first=!S.items.includes(RT.level);
  if(first)S.items.push(RT.level);
