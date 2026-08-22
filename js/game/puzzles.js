@@ -5,6 +5,7 @@ import {S,DIFF} from '../core/state.js';
 import {AU} from '../core/audio.js';
 import {TTS,praise} from '../core/tts.js';
 import {RT} from './runtime.js';
+import {emit} from '../core/bus.js';
 import {getLevel,recordResult} from './skill-model.js';
 import {WORDS,COLOR_OBJECTS,SIZE_TRIPLES,PATTERN_BANK} from './content-bank.js';
 
@@ -34,7 +35,7 @@ export function openPuzzle(title,sub,build,cb){
 export function closePuzzle(ok){$('#puzzle').classList.remove('show');PZ.open=false;RT.paused=false;
  const cb=PZ.cb;PZ.cb=null;
  const dom=PZ.domain;PZ.domain=null;
- if(dom)recordResult(dom,ok);
+ if(dom){const res=recordResult(dom,ok);if(res&&res.leveledUp)emit('levelup',dom);}
  later(()=>{RT.puzzleBusy=false},250);
  if(ok){RT.skill=Math.min(1.15,RT.skill+.03);praise()}else{RT.skill=Math.max(.7,RT.skill-.05)}
  if(cb)later(()=>cb(ok),150)}
