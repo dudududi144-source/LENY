@@ -5,6 +5,7 @@ import globals from 'globals';
 
 export default [
  {ignores:['classic/**','node_modules/**','.github/**','assets/**']},
+ {files:['e2e/**/*.js','playwright.config.js'],languageOptions:{ecmaVersion:2022,sourceType:'module',globals:{...globals.browser}}},
  js.configs.recommended,
  {
   files:['js/**/*.js','sw.js'],
