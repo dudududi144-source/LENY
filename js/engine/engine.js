@@ -198,7 +198,7 @@ export function update(){
   if(e.t==='coin'&&!e.got){e.ph+=.08;
    if(RT.powers.magnet>0){const dx2=(p.x+15)-(e.x+12),dy2=(p.y+21)-(e.y+12),d=Math.hypot(dx2,dy2);
     if(d<150&&d>1){e.x+=dx2/d*5;e.y+=dy2/d*5}}
-   if(aabb(p,e)){e.got=true;RT.coins++;RT.levelCoins++;RT.score+=50;AU.sfx('coin');
+   if(aabb(p,e)){e.got=true;RT.coins++;RT.levelCoins++;RT.score+=50;AU.sfx('coin');RT.expr='happy';RT.exprT=40;
     addText(e.x+12,e.y,'+50');burst(e.x+12,e.y+12,'#FFD76A',10,3)}}
   if(e.t==='heart'&&!e.got){e.ph+=.06;if(aabb(p,e)){e.got=true;RT.lives=Math.min(5,RT.lives+1);AU.sfx('power');
    addText(e.x+14,e.y,'+❤','#ff2e88');burst(e.x+14,e.y+14,'#ff2e88',12,3)}}
@@ -225,7 +225,7 @@ export function startWorld(li){
  document.getElementById('wrap').classList.add('show');
  document.getElementById('touch').style.display=isTouch?'block':'none';
  AU.setWorld(li);RT.invuln=60;tutorialStart(li);
- RT.sessionStart=Date.now();RT.restWarned=false;RT.rested=false;
+ RT.sessionStart=Date.now();RT.levelStart=Date.now();RT.levelDeaths=0;RT.levelFails=0;RT.restWarned=false;RT.rested=false;
  RT.review=li<=8&&(Array.isArray(S.reviewQueue))&&S.reviewQueue.includes(DOMAINS[li]);
  if(RT.review)emit('review-toast');
  if(li===0&&!S.tutorial){RT.tut=1;
