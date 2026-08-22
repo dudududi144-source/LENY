@@ -26,7 +26,8 @@ export const AU={ctx:null,mg:null,sg:null,mus:null,ni:0,
    case'goal':[523,659,784,1046].forEach((f,i)=>this.tone(f,.15,'sine',.5,i*.11));break;
    case'bosshit':this.tone(120,.2,'sawtooth',.6,0,null,50);break;
    case'bossdie':this.tone(80,.5,'sawtooth',.6,0,null,30);this.tone(60,.6,'square',.5,.2,null,20);break;
-   case'wrong':this.tone(330,.12,'sine',.35);this.tone(290,.16,'sine',.3,.12);break}},
+   case'wrong':this.tone(330,.12,'sine',.35);this.tone(290,.16,'sine',.3,.12);break;
+   case'gentle':this.tone(330,.1,'sine',.25);this.tone(440,.14,'sine',.25,.1);break}},
  animal(k){if(!this.ensure()||!S.sound)return;const c=this.ctx,t=c.currentTime;try{
    if(k==='dog'){[0,.2].forEach(d=>{const o=c.createOscillator(),g=c.createGain(),f=c.createBiquadFilter();o.type='sawtooth';o.frequency.setValueAtTime(500,t+d);o.frequency.exponentialRampToValueAtTime(150,t+d+.12);f.type='lowpass';f.frequency.setValueAtTime(1200,t+d);f.frequency.exponentialRampToValueAtTime(400,t+d+.12);g.gain.setValueAtTime(.0001,t+d);g.gain.exponentialRampToValueAtTime(.9,t+d+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d+.16);o.connect(f);f.connect(g);g.connect(this.sg);o.start(t+d);o.stop(t+d+.2)})}
    else if(k==='cat'){const o=c.createOscillator(),g=c.createGain(),f=c.createBiquadFilter();o.type='sawtooth';f.type='bandpass';f.frequency.value=900;f.Q.value=2;o.frequency.setValueAtTime(500,t);o.frequency.linearRampToValueAtTime(950,t+.15);o.frequency.linearRampToValueAtTime(400,t+.45);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.5,t+.05);g.gain.exponentialRampToValueAtTime(.0001,t+.5);o.connect(f);f.connect(g);g.connect(this.sg);o.start(t);o.stop(t+.55)}
