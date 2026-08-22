@@ -223,7 +223,7 @@ export function startWorld(li){
  $$('.scr').forEach(s=>s.classList.remove('show'));
  document.getElementById('wrap').classList.add('show');
  document.getElementById('touch').style.display=isTouch?'block':'none';
- AU.setScale(li);RT.invuln=60;tutorialStart(li);
+ AU.setWorld(li);RT.invuln=60;tutorialStart(li);
  RT.sessionStart=Date.now();RT.restWarned=false;RT.rested=false;
  RT.review=li<=8&&(Array.isArray(S.reviewQueue))&&S.reviewQueue.includes(DOMAINS[li]);
  if(RT.review)emit('review-toast');
