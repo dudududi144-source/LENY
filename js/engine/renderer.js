@@ -5,13 +5,21 @@ import {RT} from '../game/runtime.js';
 import {S} from '../core/state.js';
 import {TILE} from '../game/levels.js';
 
-export const W=960,H=540;
+export let W=960,H=540;
 let DPR=1;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 
-export function resize(){const r=innerWidth/innerHeight,t=16/9;let w=innerWidth,h=innerHeight;
- if(r>t)w=h*t;else h=w/t;DPR=Math.min(2,devicePixelRatio||1);
- cv.style.width=w+'px';cv.style.height=h+'px';cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0)}
+export /* פרופורציה נכונה: יחס המסך מסתגל לאוריינטציה (נייד לאורך vs מחשב רוחב)
+   כדי שהמשחק לא יצא מפרופורציה ולא יהיה זעיר בנייד */
+function resize(){
+ const wa=innerWidth/innerHeight;
+ const A=Math.max(0.7,Math.min(16/9,wa));
+ H=540;W=Math.round(H*A);
+ DPR=Math.min(2,devicePixelRatio||1);
+ let w=innerWidth,h=innerHeight;
+ if(wa>A)w=h*A;else h=w/A;
+ cv.style.width=w+'px';cv.style.height=h+'px';
+ cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0)}
 addEventListener('resize',resize);resize();
 
 const starsBg=[];for(let i=0;i<80;i++)starsBg.push({x:Math.random()*2000,y:Math.random()*600,z:.2+Math.random()*.8,r:Math.random()*1.8+.4,p:Math.random()*6});
