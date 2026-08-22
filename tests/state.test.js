@@ -34,3 +34,22 @@ describe('state',()=>{
   S.best=999;resetState();
   expect(S.best).toBe(0);expect(S.items).toEqual([]);});
 });
+
+describe('סניטציית מצב',()=>{
+ it('מצב מושחת מתוקן לברירת מחדל בטוחה',()=>{
+  const bad={items:[1,'x',99,3],garden:'oops',reviewQueue:null,skillModel:5,timeLimit:-3,name:42,
+   garden2:null};
+  bad.garden='oops';
+  const s=sanitize(Object.assign(defState(),bad));
+  expect(s.items).toEqual([1,3]);
+  expect(Array.isArray(s.garden)).toBe(true);
+  expect(s.garden.length).toBe(0);
+  expect(s.skillModel).toEqual({});
+  expect(s.timeLimit).toBe(0);
+  expect(s.name).toBe('');});
+
+ it('מדבקות תקינות נשמרות',()=>{
+  const s=sanitize(Object.assign(defState(),{garden:[{e:'🌸',x:10.5,y:20.1},{e:7}]}));
+  expect(s.garden.length).toBe(1);
+  expect(s.garden[0].e).toBe('🌸');});
+});
