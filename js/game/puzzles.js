@@ -93,7 +93,9 @@ function pzLetters(box){const lvL=adaptLevel();let round=0;
    box.appendChild(el('div','pz-word',r.e+' '+r.w));
    const pool=shuffle(HEB.filter(l=>l!==r.a)).slice(0,Math.max(1,optsCount()-1));
    shuffle([r.a,...pool]).forEach(l=>{const b=el('button','pz-opt letters',l);
-    b.onclick=()=>{if(l===r.a){AU.sfx('select');round++;next()}else wrongFx(b,'הקשיבי שוב לצליל הראשון')};
+    b.onclick=()=>{if(l===r.a){AU.sfx('select');
+    if(!S.words.some(x=>x.w===r.w)&&S.words.length<40)S.words.push({w:r.w,e:r.e});
+    save();round++;next()}else wrongFx(b,'הקשיבי שוב לצליל הראשון')};
     row.appendChild(b)});}
   box.appendChild(row);}
  next();TTS.say(lvL<=2?'מִצְאִי אֶת אוֹתָה אוֹת':'בְּאֵיזוֹ אוֹת מַתְחִילָה הַמִּלָּה')}
