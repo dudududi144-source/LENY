@@ -5,10 +5,10 @@ import {LEVELS,WORLDS,THEMES,TILE} from '../js/game/levels.js';
 const KNOWN=new Set(['.','P','C','S','E','Y','M','H','F','B','#','1','2','3']);
 
 describe('נתוני עולמות',()=>{
- it('5 עולמות, 5 נושאים, 5 מפות',()=>{
-  expect(LEVELS.length).toBe(5);
-  expect(WORLDS.length).toBe(5);
-  expect(THEMES.length).toBe(5);});
+ it('10 עולמות, 10 נושאים, 10 מפות',()=>{
+  expect(LEVELS.length).toBe(10);
+  expect(WORLDS.length).toBe(10);
+  expect(THEMES.length).toBe(10);});
  it('גודל אריח 44',()=>{expect(TILE).toBe(44);});
 });
 
