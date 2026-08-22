@@ -1,7 +1,7 @@
 /* tests/skill-model.test.js — M1: אלגוריתם מודל המיומנות */
 import {describe,it,expect,beforeEach} from 'vitest';
 import {S} from '../js/core/state.js';
-import {DOMAINS,getLevel,getScore,recordResult,resetModel,summary} from '../js/game/skill-model.js';
+import {DOMAINS,getLevel,getScore,recordResult,resetModel,summary,weakestDomain} from '../js/game/skill-model.js';
 
 beforeEach(()=>{S.skillModel={};S.reviewQueue=[];});
 
