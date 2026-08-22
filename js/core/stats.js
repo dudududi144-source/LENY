@@ -21,3 +21,14 @@ export function summaryStats(){ensure();
   out.domains[k]={attempts:d.a,success:d.s,pct:d.a?Math.round(100*d.s/d.a):0};}
  return out;}
 export function resetStats(){ensure();S.stats={domains:{},playSec:0,sessions:0};save();}
+
+/* ── כלי פלייטסט (#1,#27): הקלטת מדדי מפגש + דוח לחוקר ── */
+function ensureLevels(){ensure();if(typeof S.stats.levels!=='object'||S.stats.levels===null)S.stats.levels={};}
+export function recordLevel(level,info){ensureLevels();
+ const key=String(level);const cur=S.stats.levels[key]||(S.stats.levels[key]={plays:0,deaths:0,fails:0,sec:0,wins:0});
+ cur.plays++;cur.deaths+=info.deaths||0;cur.fails+=info.puzzleFails||0;cur.sec+=info.sec||0;cur.wins+=info.wins||0;save();}
+export function buildReport(){ensure();
+ return {generatedAt:new Date().toISOString(),
+  sessions:S.stats.sessions, totalPlaySec:S.stats.playSec,
+  domains:S.stats.domains, levels:S.stats.levels};}
+export function reportJSON(){return JSON.stringify(buildReport(),null,2);}
