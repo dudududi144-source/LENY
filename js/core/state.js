@@ -1,6 +1,6 @@
 /* core/state.js — מצב גלובלי + התמדה (localStorage) */
 const KEY='leny-world-v1';
-export function defState(){return{items:[],gates:{},stars:{},sound:true,night:false,diff:'רגיל',mode:'חוקר',tutorial:false,storySeen:false,timeLimit:0,garden:[],reviewQueue:[],skillModel:{},name:'',best:0}}
+export function defState(){return{items:[],gates:{},stars:{},sound:true,night:false,diff:'רגיל',mode:'חוקר',tutorial:false,storySeen:false,timeLimit:0,avatar:'',garden:[],reviewQueue:[],skillModel:{},name:'',best:0}}
 /* סניטציה: מצב שמור מושחת/ישן לא יכול לשבור את המשחק */
 export function sanitize(d){
  if(!Array.isArray(d.items))d.items=[];
@@ -14,6 +14,7 @@ export function sanitize(d){
  if(typeof d.stars!=='object'||d.stars===null)d.stars={};
  if(typeof d.timeLimit!=='number'||d.timeLimit<0)d.timeLimit=0;
  if(typeof d.name!=='string')d.name='';
+ if(typeof d.avatar!=='string'||d.avatar.length>250000||d.avatar.indexOf('data:image')!==0)d.avatar='';
  return d;}
 export let S=(()=>{const d=defState();try{const p=JSON.parse(localStorage.getItem(KEY));if(p&&typeof p==='object')Object.assign(d,p)}catch(e){}return sanitize(d)})();
 let saveT=null;
