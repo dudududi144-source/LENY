@@ -60,3 +60,25 @@ export const STR={
   words:'מִלִּים'}
 };
 export default STR;
+
+/* לוקליזציה אנגלית (#28) — תשתית + תרגום לשכבת ההדרכה/משוב */
+export const STR_EN={
+ tutorial:{
+  welcome:'Welcome! Press the arrows to walk',
+  walkHint:' Press the arrows to walk',
+  jumpPraise:'Great! Now jump — the jump button',
+  jumpHint:'⤒ Press to jump!',
+  gatePraise:'Wow! Now touch the glowing gate',
+  gateHint:'✦ Touch the glowing gate!'},
+ mind:{
+  effort:['You tried again — that is how we learn!','Your practice is amazing!','Mistakes help your brain grow!'],
+  focus:['You were careful and precise!','You noticed the details!','You listened well and did it!'],
+  calm:['A mistake? That is how we learn!','Every hero tries again!','It is okay — let us try again','A deep breath... and onward']},
+ onScreen:{
+  wisdomGate:'✦ WISDOM GATE ✦',
+  score:'Score', diamonds:'Diamonds', wisdomGates:'Wisdom gates',
+  levelUp:'⭐ Lenny leveled up in ',
+  restNow:'Time to rest', moreTime:'5 more minutes ⏰'}
+};
+/* מחזיר את המילון לפי השפה הנבחרת */
+export function tr(){return (typeof S!=='undefined'&&S.lang==='en')?STR_EN:STR;}
