@@ -3,16 +3,16 @@
 export const TILE=44;
 
 export const THEMES=[
- {name:'אחו החיות',skyT:'#1c0f3d',skyM:'#12082a',skyB:'#0a0416',far:'#241245',mid:'#2e1a56',tile:'#2e1a56',tileTop:'#7dffb8',accent:'#7dffb8'},
- {name:'מערות הצורות',skyT:'#06202e',skyM:'#041520',skyB:'#020a10',far:'#0a3a4d',mid:'#0e4d63',tile:'#0e4d63',tileTop:'#4dc9ff',accent:'#4dc9ff'},
- {name:'פסגות האותיות',skyT:'#3d0f14',skyM:'#2a080c',skyB:'#160406',far:'#5c1a20',mid:'#7a2530',tile:'#7a2530',tileTop:'#ff7a3c',accent:'#ff7a3c'},
- {name:'ריצת המוזיקה',skyT:'#2e2410',skyM:'#201a08',skyB:'#120e04',far:'#4d3d14',mid:'#6b551e',tile:'#6b551e',tileTop:'#ffd23e',accent:'#ffd23e'},
- {name:'מבצר הרגשות',skyT:'#240a2e',skyM:'#180620',skyB:'#0c0212',far:'#3d1450',mid:'#521e6b',tile:'#521e6b',tileTop:'#ff2e88',accent:'#ff2e88'},
- {name:'מעבדת המספרים',skyT:'#082033',skyM:'#041420',skyB:'#02090e',far:'#0c3a4a',mid:'#11556b',tile:'#11556b',tileTop:'#40e0d0',accent:'#40e0d0'},
- {name:'גן הצבעים',skyT:'#2a1040',skyM:'#1c0a2e',skyB:'#10061c',far:'#3d1a5c',mid:'#57267e',tile:'#57267e',tileTop:'#ff8bd4',accent:'#ff8bd4'},
- {name:'עמק הגדלים',skyT:'#04142a',skyM:'#020c1a',skyB:'#01060f',far:'#0a2a4d',mid:'#0e3d6b',tile:'#0e3d6b',tileTop:'#a0f0ff',accent:'#a0f0ff'},
- {name:'מגדל השעות',skyT:'#330a1e',skyM:'#220616',skyB:'#12030c',far:'#57122f',mid:'#7a1c42',tile:'#7a1c42',tileTop:'#ff6b9d',accent:'#ff6b9d'},
- {name:'מבחן הגיבורה',skyT:'#2e0a3d',skyM:'#1e0628',skyB:'#0f0314',far:'#4d1466',mid:'#6b1e8a',tile:'#6b1e8a',tileTop:'#ffd23e',accent:'#ffd23e'}];
+ {name:'אחו החיות',skyT:'#1c0f3d',skyM:'#12082a',skyB:'#0a0416',far:'#241245',mid:'#2e1a56',tile:'#2e1a56',tileTop:'#7dffb8',accent:'#7dffb8',deco:'meadow'},
+ {name:'מערות הצורות',skyT:'#06202e',skyM:'#041520',skyB:'#020a10',far:'#0a3a4d',mid:'#0e4d63',tile:'#0e4d63',tileTop:'#4dc9ff',accent:'#4dc9ff',deco:'crystal'},
+ {name:'פסגות האותיות',skyT:'#3d0f14',skyM:'#2a080c',skyB:'#160406',far:'#5c1a20',mid:'#7a2530',tile:'#7a2530',tileTop:'#ff7a3c',accent:'#ff7a3c',deco:'flame'},
+ {name:'ריצת המוזיקה',skyT:'#2e2410',skyM:'#201a08',skyB:'#120e04',far:'#4d3d14',mid:'#6b551e',tile:'#6b551e',tileTop:'#ffd23e',accent:'#ffd23e',deco:'notes'},
+ {name:'מבצר הרגשות',skyT:'#240a2e',skyM:'#180620',skyB:'#0c0212',far:'#3d1450',mid:'#521e6b',tile:'#521e6b',tileTop:'#ff2e88',accent:'#ff2e88',deco:'castle'},
+ {name:'מעבדת המספרים',skyT:'#082033',skyM:'#041420',skyB:'#02090e',far:'#0c3a4a',mid:'#11556b',tile:'#11556b',tileTop:'#40e0d0',accent:'#40e0d0',deco:'numbers'},
+ {name:'גן הצבעים',skyT:'#2a1040',skyM:'#1c0a2e',skyB:'#10061c',far:'#3d1a5c',mid:'#57267e',tile:'#57267e',tileTop:'#ff8bd4',accent:'#ff8bd4',deco:'flowers'},
+ {name:'עמק הגדלים',skyT:'#04142a',skyM:'#020c1a',skyB:'#01060f',far:'#0a2a4d',mid:'#0e3d6b',tile:'#0e3d6b',tileTop:'#a0f0ff',accent:'#a0f0ff',deco:'ice'},
+ {name:'מגדל השעות',skyT:'#330a1e',skyM:'#220616',skyB:'#12030c',far:'#57122f',mid:'#7a1c42',tile:'#7a1c42',tileTop:'#ff6b9d',accent:'#ff6b9d',deco:'clocks'},
+ {name:'מבחן הגיבורה',skyT:'#2e0a3d',skyM:'#1e0628',skyB:'#0f0314',far:'#4d1466',mid:'#6b1e8a',tile:'#6b1e8a',tileTop:'#ffd23e',accent:'#ffd23e',deco:'fireworks'}];
 
 export const WORLDS=[
  {icon:'🐾',name:'אחו החיות',learn:'חַיּוֹת',reward:'hearts',rIcon:'💖',rName:'שמלת הלבבות',rSay:'שִׂמְלַת הַלְּבָבוֹת'},
