@@ -1,6 +1,6 @@
 {
   "name": "leny-world",
-  "version": "2.21.0",
+  "version": "2.22.0",
   "description": "LENY — hybrid platformer × learning game for kids (Hebrew, RTL)",
   "private": true,
   "type": "module",
