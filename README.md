@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/dudududi144-source/LENY/actions/workflows/ci.yml/badge.svg)
 ![Deploy](https://github.com/dudududi144-source/LENY/actions/workflows/deploy-pages.yml/badge.svg)
-![Version](https://img.shields.io/badge/version-2.6.0-7c4dff)
+![Version](https://img.shields.io/badge/version-2.7.0-7c4dff)
 ![License](https://img.shields.io/badge/license-MIT-22c55e)
 
 **משחק היברידי לילדים: פלטפורמות × למידה** — כל שער נפתח בחידה חינוכית, והידע הופך לכוח (מגן, מגנט, כוכב). **Production-ready:** PWA עם offline, בדיקות, CI/CD, תיעוד מלא.
@@ -27,6 +27,7 @@
 | 🏆 מבחן הגיבורה | **הכול + בוס סופי** | ✨ שרביט הקסם |
 
 ### מכניקות מפתח
+- **שני מצבי משחק** — 🧒 *חוקר* (3–5): ללא כישלון, קפיצה נדיבה, עידוד קולי · 🎮 *הרפתקן* (6–8): האתגר המלא
 - **שערי חוכמה** — חידה פותחת דרך **ומעניקה כוח** (Power-Learning)
 - **בוס חכם** — כל מכה דורשת מענה על חידה
 - **קושי מסתגל** — `skill` 0.7–1.15 + 3 רמות קושי בפינת הורים
