@@ -1,15 +1,20 @@
 /* e2e/game.spec.js — בדיקות קצה-לקצה מול דפדפן אמיתי (#24) */
 import {test,expect} from '@playwright/test';
 
-/* זרימה: פתיח → (שם) → רכזת */
+/* כניסה מהפתיח לרכזת — עמידה בין אם יש שם ובין אם לא, לפני ואחרי רענון */
+async function resumeFromTitle(page){
+ await page.click('#btnStart');
+ if(await page.locator('#scr-name').isVisible()){await page.click('#nameSkip');}
+ await page.click('#storyBtn').catch(()=>{});
+}
 async function startToHub(page, name){
  await page.goto('/');
- await page.click('#btnStart');
- if(await page.locator('#scr-name').isVisible()){
-  if(name){await page.fill('#nameInput',name);await page.click('#nameGo');}
-  else{await page.click('#nameSkip');}
- }
- await page.click('#storyBtn').catch(()=>{});
+ if(name){
+  await page.click('#btnStart');
+  await page.fill('#nameInput',name);
+  await page.click('#nameGo');
+  await page.click('#storyBtn').catch(()=>{});
+ }else{await resumeFromTitle(page);}
 }
 
 test('המשחק נטען ללא שגיאות ומציג פתיח', async ({page})=>{
@@ -49,7 +54,7 @@ test('גינת יצירה: מדבקה נשמרת בין טעינות (התמדה
  await page.locator('#gardenStage').click({position:{x:200,y:150}});
  await expect(page.locator('#gardenCount')).toContainText('1 מדבקות');
  await page.reload();
- await page.click('#btnStart');
+ await resumeFromTitle(page);
  await page.click('#hubGarden');
  await expect(page.locator('#gardenCount')).toContainText('1 מדבקות');
 });
