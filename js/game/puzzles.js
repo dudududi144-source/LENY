@@ -3,7 +3,8 @@
 import {$,el,shuffle,rnd,later} from '../core/utils.js';
 import {S,DIFF} from '../core/state.js';
 import {AU} from '../core/audio.js';
-import {TTS,praise} from '../core/tts.js';
+import {TTS} from '../core/tts.js';
+import {praiseFor,reframe} from './mind.js';
 import {RT} from './runtime.js';
 import {emit} from '../core/bus.js';
 import {getLevel,recordResult} from './skill-model.js';
@@ -37,7 +38,8 @@ export function closePuzzle(ok){$('#puzzle').classList.remove('show');PZ.open=fa
  const dom=PZ.domain;PZ.domain=null;
  if(dom){const res=recordResult(dom,ok);if(res&&res.leveledUp)emit('levelup',dom);}
  later(()=>{RT.puzzleBusy=false},250);
- if(ok){RT.skill=Math.min(1.15,RT.skill+.03);praise()}else{RT.skill=Math.max(.7,RT.skill-.05)}
+ if(ok){RT.skill=Math.min(1.15,RT.skill+.03);AU.sfx('success');TTS.say(praiseFor(wrongCount===0))}
+ else{RT.skill=Math.max(.7,RT.skill-.05)}
  if(cb)later(()=>cb(ok),150)}
 
 /* פיגום (סקפולדינג): אחרי סף הטעויות — האפשרות השגויה שנלחצה נפסלת,
@@ -45,6 +47,7 @@ export function closePuzzle(ok){$('#puzzle').classList.remove('show');PZ.open=fa
 function wrongFx(b,hintLine){AU.sfx('wrong');
  if(b.classList){b.classList.add('shake');later(()=>b.classList.remove('shake'),420);}
  wrongCount++;
+ if(wrongCount===2)TTS.say(reframe());
  if(wrongCount>=DIFF[S.diff].hint){
   if(b.classList&&b.classList.contains('pz-opt')&&!b.classList.contains('off')){b.classList.add('off');b.disabled=true;}
   if(hintLine)$('#pzHint').textContent='💡 '+hintLine;}}
