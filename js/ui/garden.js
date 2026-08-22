@@ -25,7 +25,12 @@ export function renderGarden(){
   s.onclick=ev=>{ev.stopPropagation();S.garden.splice(idx,1);save();AU.sfx('tap');renderGarden()};
   stage.appendChild(s);});
  const cnt=$('#gardenCount');
- if(cnt)cnt.textContent=(S.garden||[]).length+' מדבקות בגינה ✿';}
+ if(cnt)cnt.textContent=(S.garden||[]).length+' מדבקות בגינה ✿';
+ /* פס "המילים שלי" — ערך למידה מוחשי שנצבר ממשחק */
+ const ws=$('#wordsStrip');
+ if(ws){ws.innerHTML='';
+  if(!S.words||S.words.length===0){ws.appendChild(el('span','word-chip','עוד אין מילים — שחקי בעולם האותיות! ✏️'));}
+  else{S.words.slice(-14).forEach(wd=>{ws.appendChild(el('span','word-chip',wd.e+' '+wd.w));});}}
 
 export function initGarden(){
  const stage=$('#gardenStage');
