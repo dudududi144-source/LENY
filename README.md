@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/dudududi144-source/LENY/actions/workflows/ci.yml/badge.svg)
 ![Deploy](https://github.com/dudududi144-source/LENY/actions/workflows/deploy-pages.yml/badge.svg)
-![Version](https://img.shields.io/badge/version-2.15.0-7c4dff)
+![Version](https://img.shields.io/badge/version-2.16.0-7c4dff)
 ![License](https://img.shields.io/badge/license-MIT-22c55e)
 
 **משחק היברידי לילדים: פלטפורמות × למידה** — כל שער נפתח בחידה חינוכית, והידע הופך לכוח (מגן, מגנט, כוכב). **Production-ready:** PWA עם offline, בדיקות, CI/CD, תיעוד מלא.
@@ -80,8 +80,9 @@ LENY/
 ```
 
 ## 🧪 איכות
-- **בדיקות:** `npm test` — 10 סוויטות: פיזיקה, שערים, חידות, אדפטיביות, מודל מיומנות, בנק תוכן, מצבי משחק, התמדה
-- **CI:** כל push/PR עובר lint + tests
+- **בדיקות יחידה:** `npm test` — 11 סוויטות: פיזיקה, שערים, חידות, אדפטיביות, מיומנות, בנק תוכן, סניטציה, התמדה
+- **בדיקות E2E:** `npm run test:e2e` — Playwright מול דפדפן אמיתי (טעינה, רכזת, עולם, גינה+התמדה)
+- **CI:** כל push/PR עובר לינט + יחידות (`ci.yml`) **וגם** E2E מול כרומיום (`e2e.yml`)
 - **CD:** deploy אוטומטי ל-GitHub Pages
 
 ## 📖 תיעוד
