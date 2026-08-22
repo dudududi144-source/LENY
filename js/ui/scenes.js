@@ -62,7 +62,7 @@ function renderStickers(){
   d.innerHTML='<span class="si">'+(got?w.rIcon:'❔')+'</span><span class="sn">'+w.rName+'</span>';
   g.appendChild(d)});
  const totalStars=Object.values(S.stars).reduce((a,b)=>a+b,0);
- $('#stickerCount').innerHTML='✦ נאספו <b>'+totalStars+'/'+(WORLDS.length*3)+'</b> כוכבי חוכמה · שיא: <b>'+S.best+'</b>'}
+ $('#stickerCount').innerHTML='✦ נֶאֶסְפוּ <b>'+totalStars+'/'+(WORLDS.length*3)+'</b> כּוֹכְבֵי חָכְמָה · שיא: <b>'+S.best+'</b>'}
 
 function showStickers(){RT.screen='stickers';RT.paused=false;showScreen('stickers');
  $('#wrap').classList.remove('show');renderStickers();AU.sfx('open')}
@@ -73,9 +73,9 @@ function showDone(d){const first=d&&d.first;
  LEN.done.sync(S.items.map(w=>WORLDS[w].reward));
  const w=WORLDS[RT.level];
  $('#doneReward').textContent=first?w.rIcon:'🏅';
- $('#doneName').textContent=first?('לני קיבלה את '+w.rSay+'!'):'כָּל הַכָּבוֹד! שׁוּב הִשְׁלַמְתְּ אֶת הָעוֹלָם';
- $('#doneStats').innerHTML='ניקוד: <b>'+RT.score+'</b> · יהלומים: <b>'+RT.levelCoins+'/'+RT.levelCoinsTotal+'</b>';
- $('#doneStars').textContent='שערי חוכמה: '+'✦'.repeat(RT.gatesSolvedNow)+' ('+RT.gatesSolvedNow+'/3)';
+ $('#doneName').textContent=first?('לֶנִי קִבְּלָה אֶת '+w.rSay+'!'):'כָּל הַכָּבוֹד! שׁוּב הִשְׁלַמְתְּ אֶת הָעוֹלָם';
+ $('#doneStats').innerHTML='נִקּוּד: <b>'+RT.score+'</b> · יְהַלּוּמִים: <b>'+RT.levelCoins+'/'+RT.levelCoinsTotal+'</b>';
+ $('#doneStars').textContent='שַׁעֲרֵי חָכְמָה: '+'✦'.repeat(RT.gatesSolvedNow)+' ('+RT.gatesSolvedNow+'/3)';
  $('#doneMeaning').textContent='✦ '+MEANINGS[RT.level];
  TTS.say(MEANINGS[RT.level]);
  LEN.done.play(first?'spin':'cheer');
@@ -115,12 +115,12 @@ function refreshAvatarUI(){const pv=$('#avatarPreview');if(!pv)return;
 
 export function initScenes(){
  initGarden();
- on('levelup',d=>toast('⭐ לני עלתה רמה ב'+(DNAMES[d]||d)+'!'));
- on('review-toast',()=>toast('🌸 שלב חיזוק! +200 על כל שער'));
+ on('levelup',d=>toast('⭐ לֶנִי עָלְתָה רָמָה בְּ'+(DNAMES[d]||d)+'!'));
+ on('review-toast',()=>toast('🌸 שֶׁלֶב חִזּוּק! +200 עַל כָּל שַׁעַר'));
  on('rest-warn',()=>toast('⏰ עוֹד שְׁתֵּי דַּקּוֹת — נָנוּחַ יַחַד'));
  on('rest',()=>{RT.paused=true;$('#rest').classList.add('show');TTS.say('הַגִּיעַ הַזְּמָן לָנוּחַ');});
  $('#restDone').onclick=()=>{$('#rest').classList.remove('show');RT.paused=false;goTitle();};
- $('#restMore').onclick=()=>{RT.sessionStart+=5*60000;RT.rested=false;RT.restWarned=false;$('#rest').classList.remove('show');RT.paused=false;toast('עוד 5 דקות ⏰');};
+ $('#restMore').onclick=()=>{RT.sessionStart+=5*60000;RT.rested=false;RT.restWarned=false;$('#rest').classList.remove('show');RT.paused=false;toast('עוֹד 5 דַּקּוֹת ⏰');};
  LEN.hub.el.addEventListener('pointerdown',()=>{if(RT.screen!=='hub')return;
   LEN.hub.play(Math.random()<.5?'cheer':'spin');AU.sfx('success');
   const n=S.name.trim();TTS.say(n?('אֲנִי אוֹהֶבֶת אוֹתָךְ '+n+'!'):'כֵּיף לְשַׂחֵק אִתָּךְ!')});
