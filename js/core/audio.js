@@ -16,7 +16,11 @@ const SCALES=[
 
 export const AU={ctx:null,mg:null,sg:null,mus:null,ni:0,
  ensure(){if(!this.ctx){const C=window.AudioContext||window.webkitAudioContext;if(!C)return false;
-   this.ctx=new C();const m=this.ctx.createGain();m.gain.value=1;m.connect(this.ctx.destination);
+   this.ctx=new C();const m=this.ctx.createGain();m.gain.value=1;
+   this.comp=this.ctx.createDynamicsCompressor();
+   this.comp.threshold.value=-18;this.comp.knee.value=20;this.comp.ratio.value=6;
+   this.comp.attack.value=.003;this.comp.release.value=.25;
+   m.connect(this.comp);this.comp.connect(this.ctx.destination);
    this.mg=this.ctx.createGain();this.mg.gain.value=S.sound?.16:0;this.mg.connect(m);
    this.sg=this.ctx.createGain();this.sg.gain.value=S.sound?.85:0;this.sg.connect(m);this.startMusic()}
    if(this.ctx.state==='suspended')this.ctx.resume().catch(()=>{});return true},
