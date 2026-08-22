@@ -68,6 +68,14 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
     <h2 class="name-title">אֵיךְ קוֹרְאִים לָךְ?</h2>
     <p class="name-sub">בחרו את השם שמרגיש בדיוק נכון ✦</p>
     <input id="nameInput" class="name-input" maxlength="12" placeholder="כתבו שם כאן..." autocomplete="off"/>
+    <div class="avatar-row">
+      <div id="avatarPreview" class="avatar-preview" aria-label="האווטר שלי">📷</div>
+      <div class="avatar-btns">
+        <button id="avatarCam" class="btn ghost avatar-btn">📸 צלמו תמונה</button>
+        <button id="avatarClear" class="btn ghost avatar-btn">🗑️ בלי תמונה</button>
+      </div>
+      <input type="file" id="avatarInput" accept="image/*" style="display:none"/>
+    </div>
     <div id="namePresets" class="name-presets"></div>
     <div class="row">
       <button id="nameGo" class="cta">קָדִימָה! ✨</button>
