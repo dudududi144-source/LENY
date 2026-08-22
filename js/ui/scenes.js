@@ -8,7 +8,7 @@ import {TTS} from '../core/tts.js';
 import {toast,confetti} from './fx.js';
 import {RT,LEN} from '../game/runtime.js';
 import {WORLDS,MEANINGS,THEMES} from '../game/levels.js';
-import {worldIcon,moodIcon,powerIcon} from './icons.js';
+import {worldIcon,moodIcon} from './icons.js';
 import {startWorld,togglePause} from '../engine/engine.js';
 import {renderGarden,initGarden} from './garden.js';
 import {DOMAINS,weakestDomain} from '../game/skill-model.js';
