@@ -9,6 +9,7 @@ import {RT,keys} from '../game/runtime.js';
 import {TILE,THEMES,WORLDS,LEVELS} from '../game/levels.js';
 import {GRAV,MOVE,MAXV,FRIC,JUMP,rectVsMap,aabb} from './physics.js';
 import {openPuzzle,pzGate,pzBoss,PZ} from '../game/puzzles.js';
+import {tutorialStart,tutorialUpdate,tutorialComplete} from './tutorial.js';
 import {DOMAINS} from '../game/skill-model.js';
 
 const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
@@ -55,7 +56,7 @@ function tryGate(){if(RT.puzzleBusy||RT.paused)return;
  for(const g of RT.gates){if(g.open)continue;
   const gr={x:g.col*TILE-8,y:0,w:TILE+16,h:(g.row+1)*TILE};
   if(aabb(RT.player,gr)){AU.sfx('tap');
-   if(RT.tut===3){RT.tut=0;S.tutorial=true;save();}
+   tutorialComplete();
    PZ.domain=RT.level<=8?DOMAINS[RT.level]:null;
    openPuzzle('✦ שער חוכמה ✦','עולמן של ה'+WORLDS[RT.level].learn,pzGate,(ok)=>{
     if(ok){g.open=true;g.anim=30;S.gates[RT.level+':'+g.num]=true;RT.gatesSolvedNow++;
@@ -161,16 +162,7 @@ export function update(){
  p.squash*=.85;
  if(Math.abs(p.vx)>.5&&p.onGround)p.runPhase+=Math.abs(p.vx)*.09;else p.runPhase*=.8;
  if(Math.random()<.006)p.blink=8;if(p.blink>0)p.blink--;
- /* אונבורדינג מונחה (פעם ראשונה בעולם 1): ללכת ← לקפוץ ← לגעת בשער */
- if(RT.tut>0){
-  if(RT.tut===1){RT.tutDist=(RT.tutDist||0)+Math.abs(p.vx);
-   RT.curHint='👟 לחצי על החצים כדי ללכת';RT.hintTimer=200;
-   if(RT.tutDist>130){RT.tut=2;AU.sfx('power');
-    TTS.say('מְצֻיֶּנֶת! עַכְשָׁיו קְפִיצָה — כַּפְתּוֹר הַקְּפִיצָה')}}
-  else if(RT.tut===2){RT.curHint='⤒ לחצי כדי לקפוץ!';RT.hintTimer=200;
-   if(p.vy<-2){RT.tut=3;AU.sfx('power');
-    TTS.say('וָואו! עַכְשָׁיו נִגְעִי בַּשַּׁעַר הַזּוֹהֵר')}}
-  else if(RT.tut===3){RT.curHint='✦ נגעי בשער הזוהר!';RT.hintTimer=200}}
+ if(RT.tut>0)tutorialUpdate(p);
  tryGate();
  for(let i=0;i<RT.ents.length;i++){const e=RT.ents[i];
   if(e.t==='move'){e.ph+=.02;const off=Math.sin(e.ph)*e.range;
@@ -209,7 +201,7 @@ export function startWorld(li){
  $$('.scr').forEach(s=>s.classList.remove('show'));
  document.getElementById('wrap').classList.add('show');
  document.getElementById('touch').style.display=isTouch?'block':'none';
- AU.setScale(li);RT.invuln=60;RT.tut=0;RT.tutDist=0;
+ AU.setScale(li);RT.invuln=60;tutorialStart(li);
  RT.sessionStart=Date.now();RT.restWarned=false;RT.rested=false;
  RT.review=li<=8&&(Array.isArray(S.reviewQueue))&&S.reviewQueue.includes(DOMAINS[li]);
  if(RT.review)emit('review-toast');
