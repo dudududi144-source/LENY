@@ -96,7 +96,11 @@ function showWin(){
  RT.screen='win';$('#wrap').classList.remove('show');showScreen('win');
  LEN.win.sync(['hearts','hat','bow','tutu','boots','crown','wings','glasses','necklace','wand']);LEN.win.play('dance');
  $('#winScore').textContent=RT.score;confetti();AU.sfx('goal');later(confetti,1200);
- TTS.say('כָּל הַכָּבוֹד! לֶנִי נִצְּחָה!')}
+ /* נרטיב (#12): הגנרל מתחרט ומצטרף */
+ let ws=$('#winStory');if(!ws){ws=el('div');ws.id='winStory';ws.className='sub';
+  const card=$('#scr-win .card')||$('#scr-win');if(card)card.appendChild(ws);}
+ ws.textContent='הגנרל הסגול התחרט, החזיר את האור והצטרף לחגיגה! 💜';
+ TTS.say('כָּל הַכָּבוֹד! לֶנִי נִצְּחָה! הַגֶּנֶרָל הִתְחָרֵט וְהֵחִיז אֶת הָאוֹר!')}
 
 /* ── אתחול: מנוי לאירועים + חיבור כפתורים ── */
 const DNAMES={animals:'חיות',shapes:'צורות',letters:'אותיות',music:'מוזיקה',emotions:'רגשות',math:'חשבון',colors:'צבעים',sizes:'גדלים',time:'שעות'};
