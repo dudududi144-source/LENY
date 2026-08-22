@@ -20,10 +20,14 @@ export function goTitle(){RT.screen='title';RT.paused=false;showScreen('title');
  $('#wrap').classList.remove('show');LEN.title.play('wave')}
 
 export function goHub(){RT.screen='hub';RT.paused=false;cleanT();showScreen('hub');
- $('#wrap').classList.remove('show');renderHub()}
+ $('#wrap').classList.remove('show');renderHub();
+ if(!S.storySeen)$('#story').classList.add('show')}
 
 function renderHub(){
  LEN.hub.sync(S.items.map(w=>WORLDS[w].reward));LEN.hub.play('idle');
+ const lights=$('#hubLights');if(lights){lights.innerHTML='';
+  for(let i=0;i<WORLDS.length;i++){const got=S.items.includes(i);
+   lights.appendChild(el('div','orb'+(got?' lit':''),got?'✦':''));}}
  const n=S.name.trim();
  $('#hubHello').textContent=n?('הַי '+n+'! בְּחֲרִי עוֹלָם'):'הַי לֶנִי! בְּחֲרִי עוֹלָם';
  $('#hubProgress').textContent='⭐ '+S.items.length+'/'+WORLDS.length;
@@ -95,4 +99,6 @@ export function initScenes(){
  $('#btnPauseHome').onclick=()=>{$('#pauseM').classList.remove('show');RT.paused=false;goHub()};
  $('#hudPause').onclick=()=>togglePause();
  $('#hubStickers').onclick=()=>{AU.ensure();showStickers()};
+ $('#storyBtn').onclick=()=>{S.storySeen=true;save();$('#story').classList.remove('show');
+  AU.sfx('goal');LEN.hub.play('cheer');TTS.say('קדימה! בואי נאסוף את האורות');};
  $('#stickersBack').onclick=()=>{AU.sfx('tap');goHub()}}
