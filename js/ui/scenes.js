@@ -7,7 +7,8 @@ import {AU} from '../core/audio.js';
 import {TTS} from '../core/tts.js';
 import {toast,confetti} from './fx.js';
 import {RT,LEN} from '../game/runtime.js';
-import {WORLDS,MEANINGS} from '../game/levels.js';
+import {WORLDS,MEANINGS,THEMES} from '../game/levels.js';
+import {worldIcon} from './icons.js';
 import {startWorld,togglePause} from '../engine/engine.js';
 import {renderGarden,initGarden} from './garden.js';
 import {DOMAINS,weakestDomain} from '../game/skill-model.js';
@@ -46,7 +47,7 @@ function renderHub(){
   const b=el('button','bubble'+(unlocked?'':' locked')+(done?' done':'')+(i===firstOpen?' current':''));
   b.style.animationDelay=(i*.08)+'s';
   b.setAttribute('aria-label',w.name);
-  b.innerHTML='<span class="bi">'+(unlocked?w.icon:'🔒')+'</span><span class="bl">'+w.name+'</span><span class="bs">'+(done?'⭐'.repeat(Math.max(1,S.stars[i]||1)):'')+'</span>';
+  b.innerHTML='<span class="bi" style="color:'+(unlocked?THEMES[i].accent:'#9a9ab0')+'">'+worldIcon(i)+'</span><span class="bl">'+w.name+'</span><span class="bs">'+(done?'★'.repeat(Math.max(1,S.stars[i]||1)):'')+'</span>';
   if(done)b.appendChild(el('span','bdone','✓'));
   if(i===weakIdx||queue.includes(DOMAINS[i])){b.classList.add('weak');b.appendChild(el('span','bdone','🌸'));}
   b.onclick=()=>{AU.ensure();
