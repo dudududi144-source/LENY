@@ -7,7 +7,7 @@ import {AU} from '../core/audio.js';
 import {TTS} from '../core/tts.js';
 import {RT,keys} from '../game/runtime.js';
 import {TILE,THEMES,WORLDS,LEVELS} from '../game/levels.js';
-import {GRAV,MOVE,MAXV,FRIC,JUMP,solidAt,rectVsMap,aabb} from './physics.js';
+import {GRAV,MOVE,MAXV,FRIC,JUMP,rectVsMap,aabb} from './physics.js';
 import {openPuzzle,pzGate,pzBoss,PZ} from '../game/puzzles.js';
 
 const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
