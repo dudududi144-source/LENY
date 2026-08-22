@@ -129,7 +129,7 @@ export function hurt(fell){
   const m=LEVELS[RT.level].map;
   for(let r=0;r<RT.rows;r++)for(let c=0;c<(m[r]||'').length;c++)if(m[r][c]==='P'){RT.player.x=c*TILE;RT.player.y=r*TILE;RT.player.vx=0;RT.player.vy=0}
   return}
- RT.lives--;AU.sfx('hurt');RT.shake=12;RT.invuln=90;RT.combo=0;RT.skill=Math.max(.7,RT.skill-.05);
+ RT.lives--;AU.sfx('hurt');RT.shake=12;RT.invuln=90;RT.combo=0;RT.skill=Math.max(.7,RT.skill-.05);RT.expr='sad';RT.exprT=60;
  burst(RT.player.x+15,RT.player.y+21,'#ff2e88',16,5);
  if(RT.lives<=0){RT.dying=1;RT.player.vy=-10;return}
  if(fell){const m=LEVELS[RT.level].map;
@@ -212,7 +212,7 @@ export function update(){
  if(RT.boss&&!RT.boss.dead)updateBoss();
  if(p.y>RT.rows*TILE+200)hurt(true);
  const tx=p.x+p.w/2-480,ty=p.y+p.h/2-270-30;
- RT.cam.x+=(tx-RT.cam.x)*.1;RT.cam.y+=(ty-RT.cam.y)*.1;
+ RT.cam.x+=(tx-RT.cam.x)*.08;RT.cam.y+=(ty-RT.cam.y)*.08;
  RT.cam.x=Math.max(0,Math.min(Math.max(0,RT.cols*TILE-960),RT.cam.x));
  RT.cam.y=Math.max(0,Math.min(Math.max(0,RT.rows*TILE-540),RT.cam.y))}
 
