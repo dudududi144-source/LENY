@@ -21,7 +21,8 @@ function rr(x,y,w,h,r){cx.beginPath();cx.moveTo(x+r,y);cx.arcTo(x+w,y,x+w,y+h,r)
 /* ── דקורציית עולם (פרלקס אמצעי): אובייקטי נושא לכל תמה ── */
 function themeDeco(type){
  const z=.55,t=RT.time,ac=RT.theme.accent;
- for(let i=0;i<18;i++){
+ const count=RT.perf===0?8:18; /* מצב חסכון: פחות אובייקטים */
+ for(let i=0;i<count;i++){
   const wx=i*263+((i*i*53)%140);
   const sx=((wx-RT.cam.x*z)%(W+240)+(W+240))%(W+240)-120;
   const sway=Math.sin(t*.03+i)*3;
@@ -139,7 +140,7 @@ function drawBG(){
  drawRange(RT.cam.x*.15,H*.62,140,theme.far);
  drawRange(RT.cam.x*.3,H*.72,110,theme.mid);
  themeDeco(theme.deco||'meadow');
- ambient(theme.deco||'meadow')}
+ if(RT.perf!==0)ambient(theme.deco||'meadow');}
 
 function drawRange(off,base,amp,col){
  cx.fillStyle=col;cx.beginPath();cx.moveTo(0,H);
