@@ -62,7 +62,10 @@ function pzAnimals(box){
  const row=el('div','pz-row');box.appendChild(row);
  $('#pzHint').textContent='הקשיבי לקול ובחרי את החיה';
  opts.forEach(o=>{const b=el('button','pz-opt',o[0]+'<div style="font-size:13px;font-weight:800">'+o[2]+'</div>');
-  b.onclick=()=>{if(o[1]===target[1]){AU.sfx('select');closePuzzle(true)}
+  b.onclick=()=>{
+   /* למידה: לחיצה משמיעה את קול החיה כדי לבנות אסוציאציה ברורה */
+   AU.animal(o[1]);
+   if(o[1]===target[1]){AU.sfx('select');TTS.say('נָכוֹן! זֶה '+o[2]+'!');later(()=>closePuzzle(true),700);}
    else wrongFx(b,'הקשיבי שוב 🔊')};
   row.appendChild(b)})}
 
