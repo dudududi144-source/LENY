@@ -15,7 +15,8 @@ export const RT={
  levelCoins:0, levelCoinsTotal:0, gatesSolvedNow:0,
  skill:1,
  perf:1,
- flashC:null,flashA:0 /* פלאש מסך — נקבע ע"י שכבת הג'וס */ /* 1=רגיל · 0=מצב חסכון (נקבע ע"י משמר הפריימים בלולאה) */
+ flashC:null,flashA:0,
+ expr:null,exprT:0 /* פלאש מסך — נקבע ע"י שכבת הג'וס */ /* 1=רגיל · 0=מצב חסכון (נקבע ע"י משמר הפריימים בלולאה) */
 };
 
 /* מקלדת/מגע */
