@@ -85,5 +85,5 @@ export function initParent(){
  const tN=$('#tNight');if(tN)tN.addEventListener('change',e=>setNight(e.target.checked));
  const st=$('#btnSoundTest');if(st)st.onclick=()=>{AU.ensure();AU.refresh();AU.sfx('success');AU.animal('dog');
   setTimeout(()=>AU.animal('cat'),350);TTS.say('בְּדִיקַת צְלִילִים. כָּל הַכָּבוֹד!')};
- const rh=$('#resetHold');if(rh)attachHold(rh,1600,()=>{resetState();$('#parent').classList.remove('show');toast('ההתקדמות אופסה');goTitle()},
+ const rh=$('#btnReset');if(rh)attachHold(rh,1600,()=>{resetState();$('#parent').classList.remove('show');toast('ההתקדמות אופסה');goTitle()},
   ()=>toast('הָאִפּוּס בֻּטַּל'));}
