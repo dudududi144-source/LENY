@@ -36,10 +36,14 @@ function renderHub(){
  $('#hubHello').textContent=n?('הַיְי '+n+'! בְּחֲרִי עוֹלָם'):'הַיְי לֶנִי! בְּחֲרִי עוֹלָם';
  $('#hubProgress').textContent='⭐ '+S.items.length+'/'+WORLDS.length;
  const box=$('#hubBubbles');box.innerHTML='';
+ const path=el('div');path.id='hubPath';
+ path.innerHTML='<svg viewBox="0 0 640 220" preserveAspectRatio="none" style="width:100%;height:100%"><path d="M20 40 C 120 120, 200 20, 320 110 S 520 40, 620 150" fill="none" stroke="rgba(124,77,255,.5)" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 14"/></svg>';
+ box.appendChild(path);
+ const firstOpen=WORLDS.findIndex((w,i)=>!S.items.includes(i));
  WORLDS.forEach((w,i)=>{
   const unlocked=i===0||S.items.includes(i-1);
   const done=S.items.includes(i);
-  const b=el('button','bubble'+(unlocked?'':' locked'));
+  const b=el('button','bubble'+(unlocked?'':' locked')+(done?' done':'')+(i===firstOpen?' current':''));
   b.style.animationDelay=(i*.08)+'s';
   b.setAttribute('aria-label',w.name);
   b.innerHTML='<span class="bi">'+(unlocked?w.icon:'🔒')+'</span><span class="bl">'+w.name+'</span><span class="bs">'+(done?'⭐'.repeat(Math.max(1,S.stars[i]||1)):'')+'</span>';
