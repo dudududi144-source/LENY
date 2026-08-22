@@ -201,7 +201,7 @@ export function startWorld(li){
  $$('.scr').forEach(s=>s.classList.remove('show'));
  document.getElementById('wrap').classList.add('show');
  document.getElementById('touch').style.display=isTouch?'block':'none';
- RT.invuln=60;RT.tut=0;RT.tutDist=0;
+ AU.setScale(li);RT.invuln=60;RT.tut=0;RT.tutDist=0;
  if(li===0&&!S.tutorial){RT.tut=1;
   later(()=>TTS.say('בְּרוּכָה הַבָּאָה! לַחֲצִי עַל הַחִצִּים כְּדֵי לָלֶכֶת'),700)}
  TTS.say(WORLDS[li].name)}
