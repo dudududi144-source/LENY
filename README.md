@@ -68,24 +68,24 @@ LENY/
 ├── js/
 │   ├── main.js
 │   ├── core/   utils · bus · state · audio · tts
-│   ├── game/   levels · runtime · puzzles
+│   ├── game/   levels · runtime · puzzles · skill-model · content-bank
 │   ├── engine/ physics · renderer · engine
-│   └── ui/     lenny · scenes · hud · parent · input · fx
-├── tests/      6 סוויטות unit (Vitest + jsdom)
+│   └── ui/     lenny · scenes · hud · parent · input · fx · garden
+├── tests/      10 סוויטות unit (Vitest + jsdom)
 ├── .github/workflows/  ci.yml · deploy-pages.yml
-├── docs/       ARCHITECTURE · GDD · TESTING
+├── docs/       ARCHITECTURE · GDD · TESTING · ROADMAP · PLAYTEST
 ├── classic/    lenny-heroine.html (המקור לעיון)
 ├── SECURITY.md · CONTRIBUTING.md · CHANGELOG.md
 └── assets/     אייקוני PWA
 ```
 
 ## 🧪 איכות
-- **בדיקות:** `npm test` — פיזיקה, שערים, חידות, state, bus, ולידציית שלבים
+- **בדיקות:** `npm test` — 10 סוויטות: פיזיקה, שערים, חידות, אדפטיביות, מודל מיומנות, בנק תוכן, מצבי משחק, התמדה
 - **CI:** כל push/PR עובר lint + tests
 - **CD:** deploy אוטומטי ל-GitHub Pages
 
 ## 📖 תיעוד
-- [ארכיטקטורה](docs/ARCHITECTURE.md) · [עיצוב (GDD)](docs/GDD.md) · [בדיקות](docs/TESTING.md) · [אבטחה](SECURITY.md) · [תרומה](CONTRIBUTING.md)
+- [ארכיטקטורה](docs/ARCHITECTURE.md) · [עיצוב (GDD)](docs/GDD.md) · [בדיקות](docs/TESTING.md) · **[Roadmap](docs/ROADMAP.md)** · [פלייטסטים](docs/PLAYTEST.md) · [אבטחה](SECURITY.md) · [תרומה](CONTRIBUTING.md)
 
 ## 🔒 אבטחה
 `.gitignore` חוסם קבצי סודות; המשחק ללא מעקב וללא רשת. אם מפתח נחשף — בטלו אותו מיידית (ראה SECURITY.md).
