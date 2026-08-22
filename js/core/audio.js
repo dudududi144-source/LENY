@@ -2,6 +2,19 @@
 import {S} from './state.js';
 
 /* סולם מוזיקלי ייחודי לכל עולם (M2) */
+/* סוללות ייחודיות לכל עולם (#16) — זהות מוזיקלית נפרדת */
+const WORLD_SCALES=[
+ [261.63,329.63,392,523.25,392,329.63],   /* אחו — מז'ורי בהיר */
+ [220,261.63,329.63,440,329.63,261.63], /* מערות — מינורי */
+ [196,246.94,293.66,392,293.66,246.94], /* אותיות */
+ [293.66,369.99,440,587.33,440,369.99], /* מוזיקה */
+ [174.61,220,261.63,349.23,261.63,220], /* רגשות */
+ [329.63,415.3,493.88,659.25,493.88,415.3],/* מספרים */
+ [349.23,440,523.25,698.46,523.25,440], /* צבעים */
+ [246.94,293.66,369.99,493.88,369.99,293.66],/* גדלים */
+ [261.63,311.13,392,523.25,392,311.13], /* שעות */
+ [293.66,349.23,440,587.33,440,349.23]  /* סיום */
+];
 const SCALES=[
  [261.63,329.63,392,523.25,392,329.63],
  [220,261.63,329.63,440,329.63,261.63],
@@ -55,9 +68,12 @@ export const AU={ctx:null,mg:null,sg:null,mus:null,ni:0,
    if(k==='drum'){this.tone(90,.16,'triangle',.8);this.tone(60,.22,'sine',.7,.02)}
    else if(k==='trumpet'){this.tone(392,.26,'sawtooth',.32);this.tone(523.25,.26,'sawtooth',.27,.03)}
    else{this.tone(880,.45,'sine',.5);this.tone(1760,.35,'sine',.22,.01)}},
- startMusic(){if(!this.ctx||this.mus)return;const notes=SCALES[this.scaleIdx||0];
+ startMusic(){if(!this.ctx||this.mus)return;const notes=this._ws||SCALES[this.scaleIdx||0];
    this.mus=setInterval(()=>{if(!S.sound||document.hidden)return;const f=notes[this.ni%notes.length];this.tone(f,.34,'triangle',.5,0,this.mg);this.tone(f*2,.18,'sine',.12,.02,this.mg);this.ni++},S.night?640:520)},
  stopMusic(){if(this.mus){clearInterval(this.mus);this.mus=null}},
+ setWorld(i){this.scaleIdx=(WORLD_SCALES[i]||SCALES)[0]? (WORLD_SCALES[i]?i:this.scaleIdx):this.scaleIdx;
+  this._ws=WORLD_SCALES[i]||null;
+  if(this.mus){this.stopMusic();if(S.sound)this.startMusic();}},
  setScale(i){this.scaleIdx=i;if(this.mus){this.stopMusic();if(S.sound)this.startMusic();}},
  duck(on){if(!this.ctx||!this.mg)return;try{this.mg.gain.cancelScheduledValues(this.ctx.currentTime);
   this.mg.gain.setTargetAtTime(on?(S.sound?.05:0):(S.sound?.16:0),this.ctx.currentTime,.15);}catch(_){/* noop */}},
