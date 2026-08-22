@@ -193,5 +193,9 @@ function pzTime(box){let round=0;const R=2;
   box.appendChild(row);}
  next();TTS.say('כַּמָּה הַשָּׁעָה?')}
 
-export function pzGate(box){const builders=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor,pzSize,pzTime];builders[RT.level](box)}
-export function pzBoss(box){const pool=[pzAnimals,pzLetters,pzEmo];pool[rnd(pool.length)](box)}
+/* חידת ערבוב (עולם הסיום + שדרוג הבוס): בוחרת אקראית מבין כל סוגי החידות */
+export function pzMix(box){const pool=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor,pzSize,pzTime];
+ pool[rnd(pool.length)](box)}
+
+export function pzGate(box){const builders=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor,pzSize,pzTime,pzMix];builders[RT.level](box)}
+export function pzBoss(box){const pool=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor,pzSize,pzTime];pool[rnd(pool.length)](box)}
