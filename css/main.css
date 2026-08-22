@@ -262,3 +262,13 @@ body.night .mood-btn{background:rgba(24,30,62,.8);color:#dfe6ff}
 .mood-btn:active{transform:scale(.93)}
 /* ── משפט משמעות בסיום עולם ── */
 .done-meaning{font-size:clamp(16px,3vw,21px);font-weight:900;color:#FFD76A;margin-top:6px;text-shadow:0 0 18px rgba(255,215,106,.4);animation:fadeUp .9s .4s var(--soft) both}
+
+/* ── דשבורד הורים (#18) ── */
+.dash{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.dash-line{font-size:14px;font-weight:800;color:#5a4a6a}
+.dash-row{display:flex;align-items:center;gap:8px}
+.dash-row .dl{width:64px;font-size:13px;font-weight:800;color:#5a4a6a}
+.dash-row .bar{flex:1;height:10px;border-radius:99px;background:#eee;overflow:hidden}
+.dash-row .bar i{display:block;height:100%;background:linear-gradient(90deg,#7c4dff,#F2549A);border-radius:99px}
+.dash-row .dp{width:44px;font-size:12px;font-weight:800;color:#5a4a6a;text-align:left}
+.dash-rec{margin-top:6px;font-size:13px;font-weight:800;color:#b45309;background:#fef3c7;border-radius:10px;padding:6px 10px}
