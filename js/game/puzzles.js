@@ -65,7 +65,7 @@ function pzAnimals(box){
   b.onclick=()=>{
    /* למידה: לחיצה משמיעה את קול החיה כדי לבנות אסוציאציה ברורה */
    AU.animal(o[1]);
-   if(o[1]===target[1]){AU.sfx('select');TTS.say('נָכוֹן! זֶה '+o[2]+'!');later(()=>closePuzzle(true),700);}
+   if(o[1]===target[1]){AU.sfx('select');row.querySelectorAll('button').forEach(x=>x.disabled=true);TTS.say('נָכוֹן! זֶה '+o[2]+'!');later(()=>closePuzzle(true),700);}
    else wrongFx(b,'הקשיבי שוב 🔊')};
   row.appendChild(b)})}
 
