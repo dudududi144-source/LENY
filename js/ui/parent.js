@@ -2,6 +2,7 @@
 import {$,el} from '../core/utils.js';
 import {toast} from './fx.js';
 import {S,save,saveSoon,resetState} from '../core/state.js';
+import {summaryStats} from '../core/stats.js';
 import {AU} from '../core/audio.js';
 import {TTS} from '../core/tts.js';
 import {goTitle} from './scenes.js';
@@ -38,6 +39,20 @@ function renderParent(){
  const seg=$('#diffSeg');seg.innerHTML='';
  ['קל','רגיל','מאתגר'].forEach(d=>{const b=el('button',S.diff===d?'on':'',d);
   b.onclick=()=>{S.diff=d;save();renderParent();AU.sfx('tap')};seg.appendChild(b)});
+ const sum=summaryStats();const dash=$('#parDash');
+ if(dash){dash.innerHTML='';const mins=Math.round(sum.playSec/60);
+  dash.appendChild(el('div','dash-line','זמן משחק: '+mins+' דק · מפגשים: '+sum.sessions));
+  const DN={animals:'חיות',shapes:'צורות',letters:'אותיות',music:'מוזיקה',emotions:'רגשות',math:'חשבון',colors:'צבעים',sizes:'גדלים',time:'שעות'};
+  for(const k in DN){const mm=sum.domains[k];const row=el('div','dash-row');
+   row.innerHTML='<span class="dl">'+DN[k]+'</span><div class="bar"><i style="width:'+(mm?mm.pct:0)+'%"></i></div><span class="dp">'+(mm?mm.pct+'%':'—')+'</span>';
+   dash.appendChild(row);}
+  let weak=null,wp=101;for(const k in sum.domains){if(sum.domains[k].pct<wp){wp=sum.domains[k].pct;weak=k;}}
+  if(weak&&wp<70)dash.appendChild(el('div','dash-rec','המלצה: כדאי לתרגל '+DN[weak]+' ('+wp+'%)'));}
+ const acc=$('#parAcc');if(acc){acc.innerHTML='';
+  [[0.7,'איטי'],[1,'רגיל']].forEach(([v,l])=>{const b=el('button',(S.access&&S.access.speed===v)?'on':'',l);
+   b.onclick=()=>{S.access.speed=v;save();renderParent();AU.sfx('tap')};acc.appendChild(b)});
+  const nf=el('button',(S.access&&S.access.noFail)?'on':'','ללא כישלון');
+  nf.onclick=()=>{S.access.noFail=!(S.access.noFail);save();renderParent();AU.sfx('tap')};acc.appendChild(nf);}
  const stars=Object.values(S.stars).reduce((a,b)=>a+b,0);
  $('#parStats').textContent='התקדמות: '+S.items.length+'/5 עולמות · '+stars+'✦ שערי חוכמה · שיא '+S.best}
 
