@@ -63,6 +63,7 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
     </div>
   </div>
   <div class="sub dark" id="hubHello"></div>
+  <div id="hubLights" aria-label="האורות שנאספו"></div>
   <div id="hubLennyBox"></div>
   <div id="hubBubbles"></div>
   <div id="hubHint">בחרי עולם! פתרי חידות כדי לפתוח שערי קסם ✦</div>
@@ -110,6 +111,15 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
     <div id="winLenny" style="width:min(28vmin,190px);height:min(37vmin,250px)"></div>
     <div class="stat">ניקוד סופי: <b id="winScore">0</b></div>
     <div class="row"><button class="btn" id="btnWinHome">שחקי שוב 🌍</button></div>
+  </div>
+</div>
+
+<div class="modal" id="story">
+  <div class="mcard" style="text-align:center">
+    <div style="font-size:46px">🌌✨👾</div>
+    <h2>עשרת האורות</h2>
+    <p style="font-size:18px;line-height:1.9;color:#5a4a6a;font-weight:700">הגנרל הסגול החביא את עשרת האורות של העולם!<br>בכל עולם מחכה לך אור אחד — וגם חידות, הפתעות וחברים חדשים.<br>אספי את כל העשרה והאור יחזור לעולם כולו! ✦</p>
+    <button class="btn" id="storyBtn">קדימה, לאסוף אורות! ✦</button>
   </div>
 </div>
 
