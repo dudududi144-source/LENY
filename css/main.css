@@ -233,6 +233,13 @@ body.night #hubHint{color:#cfd6ff;background:rgba(24,30,62,.7)}
 .name-input:focus{border-color:#7dffb8}
 .name-input::placeholder{color:#8a7bb0}
 .name-presets{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:540px;animation:fadeUp 1s .3s var(--soft) both}
+/* ── אווטר מתמונת הילד ── */
+.avatar-row{display:flex;align-items:center;gap:14px;margin:4px 0;animation:fadeUp 1s .25s var(--soft) both}
+.avatar-preview{width:86px;height:86px;border-radius:50%;background:rgba(255,255,255,.1);border:3px dashed rgba(185,103,255,.6);display:grid;place-items:center;font-size:30px;overflow:hidden;flex-shrink:0}
+.avatar-preview img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.avatar-preview.has-img{border-style:solid;border-color:#FFD76A;box-shadow:0 0 22px rgba(255,215,106,.5)}
+.avatar-btns{display:flex;flex-direction:column;gap:8px}
+.avatar-btn{font-size:15px!important;padding:9px 18px!important}
 .name-chip{padding:10px 22px;border-radius:999px;background:rgba(255,255,255,.12);color:#efe7ff;font-weight:800;font-size:17px;border:2px solid transparent;transition:all .15s var(--spring)}
 .name-chip.sel{border-color:#7dffb8;background:rgba(125,255,184,.15)}
 .name-chip:active{transform:scale(.93)}
