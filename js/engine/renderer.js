@@ -2,6 +2,7 @@
    שכבות: רקע מדורג → כוכבים → רכסי פרלקס → דקורציית עולם → חלקיקי אווירה
           → אריחים (ניצוצות) → ישויות → לני → בוס → אפקטי מסך */
 import {RT} from '../game/runtime.js';
+import {S} from '../core/state.js';
 import {TILE} from '../game/levels.js';
 
 export const W=960,H=540;
@@ -149,6 +150,11 @@ function drawRange(off,base,amp,col){
  cx.lineTo(W,H);cx.closePath();cx.fill()}
 
 const CC={hair:'#6B4A33',skin:'#F6C39A',dress:'#F7A8C4'};
+/* מטמון תמונת האווטר (נטענת פעם אחת מ-dataURL) */
+let avatarImg=null,avatarSrc=null;
+function getAvatar(){
+ if(S.avatar&&avatarSrc!==S.avatar){avatarImg=new Image();avatarImg.src=S.avatar;avatarSrc=S.avatar;}
+ return(S.avatar&&avatarImg&&avatarImg.complete&&avatarImg.naturalWidth>0)?avatarImg:null;}
 function drawLenny(g,x,y,s,p){
  g.save();g.translate(x+s/2,y-5); /* תיקון יישור: הנעליים נוחתות בדיוק על קו האריח */
  if(RT.dying>0)g.rotate(RT.dying*.15);
@@ -182,7 +188,17 @@ function drawLenny(g,x,y,s,p){
  g.fillStyle=CC.hair;
  g.beginPath();g.moveTo(-13,-46);g.quadraticCurveTo(-21,-30+hb,-15,-16+hb);g.quadraticCurveTo(-11,-26,-12,-34);g.closePath();g.fill();
  g.beginPath();g.moveTo(13,-46);g.quadraticCurveTo(21,-30+hb,15,-16+hb);g.quadraticCurveTo(11,-26,12,-34);g.closePath();g.fill();
- /* ראש */
+ /* ראש — האווטר הוא התמונה האמיתית של הילד (אם נבחרה), אחרת פנים מצוירות */
+ const av=getAvatar();
+ if(av){
+  g.save();g.beginPath();g.arc(0,-46-bob,13,0,7);g.clip();
+  g.drawImage(av,-13,-59-bob,26,26);
+  g.restore();
+  g.strokeStyle='#fff';g.lineWidth=2.2;
+  g.beginPath();g.arc(0,-46-bob,13,0,7);g.stroke();
+  g.strokeStyle='rgba(255,215,106,.85)';g.lineWidth=1.2;
+  g.beginPath();g.arc(0,-46-bob,15,0,7);g.stroke();
+ }else{
  g.fillStyle=CC.skin;g.beginPath();g.arc(0,-46-bob,11,0,7);g.fill();
  g.fillStyle=CC.hair;g.beginPath();g.arc(0,-48-bob,11.5,Math.PI*.95,Math.PI*2.05);g.fill();
  g.beginPath();g.moveTo(-11,-48-bob);g.quadraticCurveTo(-4,-42-bob,-9,-40-bob);g.quadraticCurveTo(-12,-44-bob,-11,-48-bob);g.closePath();g.fill();
@@ -208,6 +224,7 @@ function drawLenny(g,x,y,s,p){
  g.beginPath();g.arc(-6.5,-42-bob,1.8,0,7);g.fill();
  g.strokeStyle='#c2405e';g.lineWidth=1.4;
  g.beginPath();g.arc(0,-41.5-bob,2.6,.2,Math.PI-.2);g.stroke();
+ }
  /* הילת כוכב */
  if(starOn){g.strokeStyle='rgba(255,210,62,.8)';g.lineWidth=2;
   for(let k=0;k<3;k++){const a=RT.time*.12+k*2.1;
