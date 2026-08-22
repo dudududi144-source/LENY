@@ -6,9 +6,9 @@ import {AU} from '../core/audio.js';
 import {TTS,praise} from '../core/tts.js';
 import {RT} from './runtime.js';
 import {getLevel,recordResult} from './skill-model.js';
+import {WORDS,COLOR_OBJECTS,SIZE_TRIPLES,PATTERN_BANK} from './content-bank.js';
 
 const ANI=[['🐶','dog','כֶּלֶב'],['🐱','cat','חָתוּל'],['🐮','cow','פָּרָה'],['🐷','pig','חֲזִיר'],['🐰','rabbit','אַרְנָב']];
-const WORDS=[{w:'כֶּלֶב',e:'🐶',a:'כ'},{w:'חָתוּל',e:'🐱',a:'ח'},{w:'סוּס',e:'🐴',a:'ס'},{w:'פֶּרַח',e:'🌸',a:'פ'},{w:'בַּיִת',e:'🏠',a:'ב'},{w:'דָּג',e:'🐟',a:'ד'}];
 const HEB=['א','ב','ג','ד','ה','ו','כ','פ','ח','ס'];
 const EMO=[{sit:'🎁',ans:'😄',say:'שָׂמֵחַ'},{sit:'🌧️',ans:'😢',say:'עָצוּב'},{sit:'👻',ans:'😨',say:'מְפַחֵד'},{sit:'🤗',ans:'😄',say:'שָׂמֵחַ'}];
 const SHP=[['circle','עִגּוּל'],['square','רִבּוּעַ'],['triangle','מְשֻׁלָּשׁ']];
@@ -72,18 +72,27 @@ function pzShapes(box){let round=0;const R=roundsFor(2);
    row.appendChild(b)})}
  next();TTS.say('מִצְאִי אֶת הַצּוּרָה הַזֶּהָה')}
 
-function pzLetters(box){let round=0;const rounds=shuffle(WORDS).slice(0,roundsFor(2));
+function pzLetters(box){const lvL=adaptLevel();let round=0;
+ const rounds=shuffle(WORDS).slice(0,roundsFor(2));
  function next(){if(round>=rounds.length){closePuzzle(true);return}
   box.innerHTML='';const r=rounds[round];
-  $('#pzHint').textContent='באיזו אות מתחילה המילה? ('+(round+1)+'/2)';
-  box.appendChild(el('div','pz-word',r.e+' '+r.w));
-  const row=el('div','pz-row');box.appendChild(row);
-  const pool=shuffle(HEB.filter(l=>l!==r.a)).slice(0,Math.max(1,optsCount()-1));
-  shuffle([r.a,...pool]).forEach(l=>{const b=el('button','pz-opt letters',l);
-   b.onclick=()=>{if(l===r.a){AU.sfx('select');round++;next()}else wrongFx(b,'הקשיבי שוב לצליל הראשון')};
-   row.appendChild(b)});
-  TTS.say('בְּאֵיזוֹ אוֹת מַתְחִילָה הַמִּלָּה '+r.w)}
- next()}
+  const row=el('div','pz-row');
+  if(lvL<=2){
+   $('#pzHint').textContent='מצאי את אותה האות ('+(round+1)+'/'+rounds.length+')';
+   box.appendChild(el('div','pz-word',r.a));
+   const pool=shuffle(HEB.filter(l=>l!==r.a)).slice(0,Math.max(2,optsCount()-1));
+   shuffle([r.a,...pool]).forEach(l=>{const b=el('button','pz-opt letters',l);
+    b.onclick=()=>{if(l===r.a){AU.sfx('select');round++;next()}else wrongFx(b,'הסתכלי על האות שלמעלה')};
+    row.appendChild(b)});}
+  else{
+   $('#pzHint').textContent='באיזו אות מתחילה המילה? ('+(round+1)+'/'+rounds.length+')';
+   box.appendChild(el('div','pz-word',r.e+' '+r.w));
+   const pool=shuffle(HEB.filter(l=>l!==r.a)).slice(0,Math.max(1,optsCount()-1));
+   shuffle([r.a,...pool]).forEach(l=>{const b=el('button','pz-opt letters',l);
+    b.onclick=()=>{if(l===r.a){AU.sfx('select');round++;next()}else wrongFx(b,'הקשיבי שוב לצליל הראשון')};
+    row.appendChild(b)});}
+  box.appendChild(row);}
+ next();TTS.say(lvL<=2?'מִצְאִי אֶת אוֹתָה אוֹת':'בְּאֵיזוֹ אוֹת מַתְחִילָה הַמִּלָּה')}
 
 function pzMusic(box){
  const seqLen=Math.min(5,(S.diff==='קל'?2:S.diff==='מאתגר'?4:3)+(adaptLevel()>=4?1:0));
@@ -111,21 +120,45 @@ function pzEmo(box){let round=0;const rounds=shuffle(EMO).slice(0,roundsFor(2));
   TTS.say('מָה הִיא מַרְגִּישָׁה?')}
  next()}
 
-function pzMath(box){let round=0;const R=2;
+function pzMath(box){const lvM=adaptLevel();let round=0;const R=2;
  function next(){if(round>=R){closePuzzle(true);return}
-  box.innerHTML='';let ans=0,prompt='';
-  if(round===0){const N=2+rnd(Math.min(6,adaptLevel()+2));ans=N;prompt='🍎'.repeat(N);
-   $('#pzHint').textContent='כמה תפוחים יש? ('+(round+1)+'/'+R+')';}
-  else{const mx=Math.min(6,adaptLevel()+2);const a=1+rnd(mx),b=1+rnd(mx);ans=a+b;prompt=a+' + '+b+' = ?';
-   $('#pzHint').textContent='כמה זה ביחד? ('+(round+1)+'/'+R+')';}
-  box.appendChild(el('div','pz-word',prompt));
-  const row=el('div','pz-row');box.appendChild(row);
-  const pool=shuffle([ans-1,ans+1,ans+2].filter(x=>x>0&&x!==ans)).slice(0,Math.max(1,optsCount()-1));
-  shuffle([ans,...pool]).forEach(n=>{const b2=el('button','pz-opt letters',String(n));
-   b2.onclick=()=>{if(n===ans){AU.sfx('select');round++;next()}
-    else wrongFx(b2,'ספרי שוב 🧮')};
-   row.appendChild(b2)});}
- next();TTS.say(round===0?'כַּמָּה תַּפּוּחִים יֵשׁ?':'כַּמָּה זֶה בְּיַחַד?')}
+  box.innerHTML='';
+  const row=el('div','pz-row');
+  if(round===0){
+   const N=2+rnd(Math.min(6,lvM+2));
+   $('#pzHint').textContent='כמה יש? ('+(round+1)+'/'+R+')';
+   box.appendChild(el('div','pz-word','🍎'.repeat(N)));
+   const pool=shuffle([N-1,N+1,N+2].filter(x=>x>0&&x!==N)).slice(0,Math.max(2,optsCount()-1));
+   shuffle([N,...pool]).forEach(n=>{const b=el('button','pz-opt letters',String(n));
+    b.onclick=()=>{if(n===N){AU.sfx('select');round++;next()}else wrongFx(b,'ספרי שוב 🧮')};
+    row.appendChild(b)});}
+  else if(lvM<=2){
+   let a=2+rnd(4),b2=2+rnd(4);if(a===b2)b2=a+1;
+   const big=Math.max(a,b2);
+   $('#pzHint').textContent='איפה יש יותר? ('+(round+1)+'/'+R+')';
+   box.appendChild(el('div','pz-word','👀'));
+   const mk=n=>{const b=el('button','pz-opt','🍎'.repeat(n));
+    b.onclick=()=>{if(n===big){AU.sfx('select');round++;next()}else wrongFx(b,'ספרי ובדקי מי יותר 🧮')};
+    row.appendChild(b)};
+   if(Math.random()<.5){mk(a);mk(b2)}else{mk(b2);mk(a)}}
+  else if(lvM<=4){
+   const mx=Math.min(6,lvM+2);const a=1+rnd(mx),b2=1+rnd(mx);const ans=a+b2;
+   $('#pzHint').textContent='כמה זה ביחד? ('+(round+1)+'/'+R+')';
+   box.appendChild(el('div','pz-word',a+' + '+b2+' = ?'));
+   const pool=shuffle([ans-1,ans+1,ans+2].filter(x=>x>0&&x!==ans)).slice(0,Math.max(2,optsCount()-1));
+   shuffle([ans,...pool]).forEach(n=>{const b=el('button','pz-opt letters',String(n));
+    b.onclick=()=>{if(n===ans){AU.sfx('select');round++;next()}else wrongFx(b,'ספרי שוב 🧮')};
+    row.appendChild(b)});}
+  else{
+   const a=3+rnd(6),b2=1+rnd(a-1),ans=a-b2;
+   $('#pzHint').textContent='כמה נשאר? ('+(round+1)+'/'+R+')';
+   box.appendChild(el('div','pz-word',a+' − '+b2+' = ?'));
+   const pool=shuffle([ans-1,ans+1,ans+2].filter(x=>x>0&&x!==ans)).slice(0,Math.max(2,optsCount()-1));
+   shuffle([ans,...pool]).forEach(n=>{const b=el('button','pz-opt letters',String(n));
+    b.onclick=()=>{if(n===ans){AU.sfx('select');round++;next()}else wrongFx(b,'ספרי שוב 🧮')};
+    row.appendChild(b)});}
+  box.appendChild(row);}
+ next();TTS.say('בּוֹאִי נַחְשֵׁב')}
 
 function pzColor(box){let round=0;const R=2;
  const PAL=['#ff2e88','#7dffb8','#4dc9ff','#ffd23e','#b967ff','#ff7a3c'];
@@ -146,7 +179,7 @@ function pzColor(box){let round=0;const R=2;
    const opts=shuffle([target,...shuffle(PAL.filter(c=>c!==target)).slice(0,Math.max(2,optsCount()-1))]);
    opts.forEach(c=>row.appendChild(colorBtn(c,target)));
   }else{
-   const pairs=[['🍌','#ffd23e'],['🐸','#7dff5e'],['🍓','#ff2e88'],['🌊','#4dc9ff']];
+   const pairs=COLOR_OBJECTS;
    const p=pairs[rnd(pairs.length)];
    $('#pzHint').textContent='באיזה צבע זה? ('+(round+1)+'/'+R+')';
    box.appendChild(el('div','pz-word',p[0]));
@@ -157,8 +190,8 @@ function pzColor(box){let round=0;const R=2;
  next();TTS.say(round===0?'מִצְאִי אֶת הַצֶּבַע הַזֶּהֶה':'בְּאֵיזֶה צֶבַע?')}
 
 function pzSize(box){let round=0;const R=2;
- const TRIPLES=[['🐭','🐰','🐘'],['🐜','🐱','🦁'],['🐟','🐬','🐋']];
- const PATTERNS=[['🔴','🔵','🟢'],['🟡','🟣','🔵']];
+ const TRIPLES=SIZE_TRIPLES;
+ const PATTERNS=PATTERN_BANK;
  function next(){if(round>=R){closePuzzle(true);return}
   box.innerHTML='';
   const row=el('div','pz-row');
