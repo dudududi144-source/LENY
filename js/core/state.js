@@ -1,6 +1,6 @@
 /* core/state.js — מצב גלובלי + התמדה (localStorage) */
 const KEY='leny-world-v1';
-export function defState(){return{items:[],gates:{},stars:{},sound:true,night:false,diff:'רגיל',mode:'חוקר',tutorial:false,storySeen:false,timeLimit:0,avatar:'',garden:[],words:[],reviewQueue:[],skillModel:{},access:{speed:1,big:false,noFail:false},name:'',best:0}}
+export function defState(){return{items:[],gates:{},stars:{},sound:true,night:false,diff:'רגיל',mode:'חוקר',tutorial:false,storySeen:false,timeLimit:0,avatar:'',garden:[],words:[],reviewQueue:[],skillModel:{},access:{speed:1,big:false,noFail:false},lang:'he',name:'',best:0}}
 /* סניטציה: מצב שמור מושחת/ישן לא יכול לשבור את המשחק */
 export function sanitize(d){
  if(!Array.isArray(d.items))d.items=[];
