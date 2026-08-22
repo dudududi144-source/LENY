@@ -53,6 +53,7 @@ function tryGate(){if(RT.puzzleBusy||RT.paused)return;
  for(const g of RT.gates){if(g.open)continue;
   const gr={x:g.col*TILE-8,y:0,w:TILE+16,h:(g.row+1)*TILE};
   if(aabb(RT.player,gr)){AU.sfx('tap');
+   if(RT.tut===3){RT.tut=0;S.tutorial=true;save();}
    openPuzzle('✦ שער חוכמה ✦','עולמן של ה'+WORLDS[RT.level].learn,pzGate,(ok)=>{
     if(ok){g.open=true;g.anim=30;S.gates[RT.level+':'+g.num]=true;RT.gatesSolvedNow++;
      RT.score+=300;addText(g.col*TILE+22,g.row*TILE,'+300 ✦','#FFD76A');
@@ -150,6 +151,16 @@ export function update(){
  p.squash*=.85;
  if(Math.abs(p.vx)>.5&&p.onGround)p.runPhase+=Math.abs(p.vx)*.09;else p.runPhase*=.8;
  if(Math.random()<.006)p.blink=8;if(p.blink>0)p.blink--;
+ /* אונבורדינג מונחה (פעם ראשונה בעולם 1): ללכת ← לקפוץ ← לגעת בשער */
+ if(RT.tut>0){
+  if(RT.tut===1){RT.tutDist=(RT.tutDist||0)+Math.abs(p.vx);
+   RT.curHint='👟 לחצי על החצים כדי ללכת';RT.hintTimer=200;
+   if(RT.tutDist>130){RT.tut=2;AU.sfx('power');
+    TTS.say('מְצֻיֶּנֶת! עַכְשָׁיו קְפִיצָה — כַּפְתּוֹר הַקְּפִיצָה')}}
+  else if(RT.tut===2){RT.curHint='⤒ לחצי כדי לקפוץ!';RT.hintTimer=200;
+   if(p.vy<-2){RT.tut=3;AU.sfx('power');
+    TTS.say('וָואו! עַכְשָׁיו נִגְעִי בַּשַּׁעַר הַזּוֹהֵר')}}
+  else if(RT.tut===3){RT.curHint='✦ נגעי בשער הזוהר!';RT.hintTimer=200}}
  tryGate();
  for(let i=0;i<RT.ents.length;i++){const e=RT.ents[i];
   if(e.t==='move'){e.ph+=.02;const off=Math.sin(e.ph)*e.range;
@@ -188,7 +199,10 @@ export function startWorld(li){
  $$('.scr').forEach(s=>s.classList.remove('show'));
  document.getElementById('wrap').classList.add('show');
  document.getElementById('touch').style.display=isTouch?'block':'none';
- RT.invuln=60;TTS.say(WORLDS[li].name)}
+ RT.invuln=60;RT.tut=0;RT.tutDist=0;
+ if(li===0&&!S.tutorial){RT.tut=1;
+  later(()=>TTS.say('בְּרוּכָה הַבָּאָה! לַחֲצִי עַל הַחִצִּים כְּדֵי לָלֶכֶת'),700)}
+ TTS.say(WORLDS[li].name)}
 
 export function setJump(){if(RT.screen==='play'&&!RT.paused&&!RT.dying&&RT.player)RT.player.jbuf=S.mode==='חוקר'?12:8;}
 
