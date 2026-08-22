@@ -3,7 +3,7 @@ import {describe,it,expect,beforeEach} from 'vitest';
 import {S} from '../js/core/state.js';
 import {DOMAINS,getLevel,getScore,recordResult,resetModel,summary} from '../js/game/skill-model.js';
 
-beforeEach(()=>{S.skillModel={};});
+beforeEach(()=>{S.skillModel={};S.reviewQueue=[];});
 
 describe('מודל מיומנות',()=>{
  it('9 תחומים מוגדרים',()=>{
@@ -56,4 +56,14 @@ describe('מודל מיומנות',()=>{
   const s=summary();
   expect(s.length).toBe(9);
   expect(s.every(e=>e.level>=1&&e.level<=5)).toBe(true);});
+
+ it('תור חיזוק: שגיאה מכניסה, הצלחה מוציאה',()=>{
+  recordResult('math',false);
+  expect(S.reviewQueue).toContain('math');
+  recordResult('math',true);
+  expect(S.reviewQueue).not.toContain('math');});
+
+ it('weakestDomain מעדיף תור חיזוק על פני ניקוד',()=>{
+  S.reviewQueue=['letters'];S.skillModel={math:0};
+  expect(weakestDomain()).toBe('letters');});
 });
