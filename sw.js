@@ -1,6 +1,6 @@
 /* sw.js — Service Worker (offline-first) · גרסה עמידה 2.15
    שיפור קריטי: התקנה לא נכשלת על קובץ בודד, האצה מיידית (skipWaiting+claim) */
-const CACHE='leny-v2.18.0';
+const CACHE='leny-v2.19.0';
 const CORE=['/','/index.html','/css/main.css','/manifest.webmanifest',
  '/js/main.js','/js/core/utils.js','/js/core/bus.js','/js/core/state.js','/js/core/audio.js','/js/core/tts.js',
  '/js/game/levels.js','/js/game/runtime.js','/js/game/puzzles.js','/js/game/skill-model.js','/js/game/content-bank.js',
