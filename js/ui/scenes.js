@@ -96,6 +96,23 @@ function showWin(){
 /* ── אתחול: מנוי לאירועים + חיבור כפתורים ── */
 const DNAMES={animals:'חיות',shapes:'צורות',letters:'אותיות',music:'מוזיקה',emotions:'רגשות',math:'חשבון',colors:'צבעים',sizes:'גדלים',time:'שעות'};
 
+/* ── אווטר מתמונת הילד: צילום/העלאה → הקטנה ל-128px → שמירה ── */
+function fileToAvatar(file,cb){
+ const rd=new FileReader();
+ rd.onload=()=>{const img=new Image();
+  img.onload=()=>{const c=document.createElement('canvas');const SZ=128;
+   c.width=SZ;c.height=SZ;const x=c.getContext('2d');
+   const m=Math.min(img.width,img.height);
+   x.drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,SZ,SZ);
+   cb(c.toDataURL('image/jpeg',.82));};
+  img.onerror=()=>{};
+  img.src=rd.result;};
+ rd.onerror=()=>{};
+ rd.readAsDataURL(file);}
+function refreshAvatarUI(){const pv=$('#avatarPreview');if(!pv)return;
+ if(S.avatar){pv.innerHTML='<img src="'+S.avatar+'" alt="האווטר שלי"/>';pv.classList.add('has-img');}
+ else{pv.textContent='📷';pv.classList.remove('has-img');}}
+
 export function initScenes(){
  initGarden();
  on('levelup',d=>toast('⭐ לני עלתה רמה ב'+(DNAMES[d]||d)+'!'));
@@ -112,7 +129,7 @@ export function initScenes(){
  on('win',showWin);
  $('#btnStart').onclick=()=>{AU.ensure();AU.sfx('success');
   if(S.name.trim()){TTS.say('יַאלְלָה!');goHub();}
-  else{showScreen('name');TTS.say('אֵיךְ קוֹרְאִים לָךְ?');}};
+  else{showScreen('name');refreshAvatarUI();TTS.say('אֵיךְ קוֹרְאִים לָךְ?');}};
  /* בחירת שם: בועות מוכנות + שדה חופשי + דילוג */
  const presets=['לני','נועה','מאיה','אביב','שחר','יהלי','ליאם','דניאל','עמית','רני'];
  const namePresets=$('#namePresets');
@@ -127,6 +144,15 @@ export function initScenes(){
   AU.sfx('goal');TTS.say(v?('שָׁלוֹם '+v+'!'):'יַאלְלָה!');goHub();};
  $('#nameGo').onclick=goWithName;
  $('#nameSkip').onclick=()=>{AU.sfx('tap');goHub();};
+ /* אווטר: צילום/העלאה, הקטנה ושמירה */
+ const avIn=$('#avatarInput');
+ $('#avatarCam').onclick=()=>{try{avIn.setAttribute('capture','user');}catch(_){/*noop*/}avIn.click();};
+ avIn.addEventListener('change',()=>{const f=avIn.files&&avIn.files[0];
+  if(!f)return;
+  fileToAvatar(f,data=>{S.avatar=data;save();refreshAvatarUI();AU.sfx('power');
+   TTS.say('וָואוּ! אַתְּ נִרְאֵית מְדִים!');});
+  avIn.value='';});
+ $('#avatarClear').onclick=()=>{S.avatar='';save();refreshAvatarUI();AU.sfx('tap');};
  /* בחירת מצב רוח: צורך רגשי + אוטונומיה */
  const moods=[['🌊','רוֹגַע','בָּא לָךְ מַשֶּׁהוּ רָגוּעַ? גַּן הַצְּבָעִים מְחַכֶּה לָךְ'],
   ['🔥','הַרְפַּתְקָה','מַרְגִּישָׁה גִּבּוֹרָה? נַסִּי אֶת נִסְיוֹן הַגִּבּוֹרָה'],
