@@ -46,11 +46,14 @@
 | `core/tts` | `TTS.say()`, `praise()` — קול עברי | state, audio |
 | `game/levels` | `THEMES`, `WORLDS`, `LEVELS`, `TILE` — נתונים טהורים | — |
 | `game/runtime` | `RT` (מצב ריצה), `keys`, `LEN` (מופעי דמות) | — |
-| `game/puzzles` | בניית חידות, `openPuzzle/closePuzzle`, `pzGate`, `pzBoss` | state, audio, tts, utils, levels, runtime |
+| `game/puzzles` | בניית חידות, `openPuzzle/closePuzzle`, `pzGate`, `pzBoss`, אדפטיביות | state, audio, tts, utils, levels, runtime, skill-model, content-bank |
+| `game/skill-model` | מודל מיומנות 9 תחומים × 5 רמות, `weakestDomain` (ספייסינג) | state |
+| `game/content-bank` | בנק תוכן מרכזי + `validateBank` | — |
 | `engine/physics` | קבועי פיזיקה, `solidAt`, `rectVsMap`, `aabb` | runtime, levels |
 | `engine/renderer` | `resize`, `draw()` — Canvas | runtime, levels |
 | `engine/engine` | `startWorld`, `update`, `togglePause`, בוס, שערים, פגיעה | כמעט הכול + `bus.emit` |
 | `ui/lenny` | `lennySVG`, `makeLenny` (SVG + אנימציות) | — |
+| `ui/garden` | גינת היצירה: השמת מדבקות חופשית + שמירה | state, audio, utils |
 | `ui/scenes` | מסכים: בית/סיום/הפסד/ניצחון/מדבקות; נרשם ל-`bus` | engine, lenny, fx, state, audio, tts |
 | `ui/hud` | `hudSync()` | runtime, levels |
 | `ui/parent` | פינת הורים, החזקה, מצב לילה, איפוס | state, audio, tts, scenes, fx |
@@ -87,6 +90,10 @@ player → flag collision
   "night": false,
   "diff": "רגיל",
   "mode": "חוקר",
+  "tutorial": false,
+  "storySeen": false,
+  "garden": [{"e":"🌸","x":42.5,"y":61.2}],
+  "skillModel": {"math": 4, "shapes": 2},
   "name": "",
   "best": 4200
 }
@@ -95,6 +102,9 @@ player → flag collision
 - `gates` — שערים פתוחים, מפתח `"עולם:מספר"`
 - `stars` — כוכבי חוכמה (חידות שנפתרו) לכל עולם 0–3
 - `mode` — מצב משחק: `חוקר` (3–5, ללא כישלון) או `הרפתקן` (6–8, האתגר המלא)
+- `tutorial` / `storySeen` — דגלי חד-פעמיות (הדרכה, סיפור פתיחה)
+- `garden` — יצירות הילדה בגינת היצירה (מדבקות + מיקום באחוזים)
+- `skillModel` — ניקוד 0–10 פר-תחום למידה (רמה = 1+⌊ניקוד/2⌋)
 - **עמידות:** טעינה דרך `Object.assign(defState(), saved)` — גרסאות ישנות/שבורות נופלות לברירת מחדל בבטחה
 
 ### 5.2 מצב ריצה (`RT`)
@@ -147,8 +157,11 @@ RT = {
 
 **עקרונות פדגוגיים:**
 - אין "הפסד" בחידה — טעויות מניבות עידוד + רמז לאחר `DIFF.hint` טעויות
+- **פיגום אמיתי:** אחרי סף טעויות האפשרות השגויה שנלחצה נפסלת — לעולם לא מסמנים את התשובה הנכונה
 - כל חידה מוקראת ב-TTS ומלווה בצליל
-- מספר האפשרויות נגזר מרמת הקושי (2/3/4)
+- **אדפטיביות כפולה:** מספר אפשרויות/סבבים/גודל מספרים נגזר גם מהגדרת ההורה וגם מרמת התחום (`adaptLevel`)
+- **ספייסינג v1:** התחום החלש (`weakestDomain`) זוהה ברכזת בהילת זהב 🌸 להזמנת חזרה
+- סולמות התקדמות: אותיות (זיהוי←צליל), חשבון (ספירה←השוואה←חיבור←חיסור)
 
 ## 8. מודל קושי מסתגל (`skill`)
 
@@ -162,6 +175,9 @@ skill ∈ [0.7, 1.15]   (מתחיל ב-1)
   • מהירות אויבים ובוס × skill
   • רמת קושי נבחרת (קל/רגיל/מאתגר) מכפילה:
       מהירות ×0.7/×1/×1.25 · אופציות 2/3/4 · חיים 4/3/3 · סף רמז 1/2/3
+
+לצד זה פועל `skill-model` (התמדה): ניקוד 0–10 פר-תחום,
+נכונה +1 / שגויה −2, רמה 1–5 — מזין את אדפטיביות החידות ואת הספייסינג.
 ```
 
 ## 9. אודיו
