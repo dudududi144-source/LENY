@@ -21,7 +21,7 @@ describe('שערים',()=>{
   expect(solidAt(TILE+5,5)).toBe(true);});
  it('שער פתוח מאפשר מעבר',()=>{
   RT.gates=[{col:1,row:1,open:true}];
-  expect(solidAt(TILE+5,5)).toBe(false);});
+  expect(solidAt(TILE+5,TILE+6)).toBe(false);});
 });
 
 describe('rectVsMap',()=>{
