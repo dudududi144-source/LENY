@@ -42,14 +42,25 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
   </div>
 </div>
 
-<div class="scr show soft" id="scr-title">
-  <div class="title">LENY</div>
-  <div class="sub">✦ העולם של לני · הרפתקה ולמידה ✦</div>
-  <div id="titleLenny" style="width:min(30vmin,210px);height:min(40vmin,270px)"></div>
-  <div class="row">
-    <button class="btn" id="btnStart">▶ יאללה, מתחילים!</button>
+<div class="scr show" id="scr-title">
+  <div id="introFx" aria-hidden="true">
+    <div class="i-orb" style="left:12%;top:22%;--d:0s"></div>
+    <div class="i-orb" style="left:26%;top:64%;--d:1.2s"></div>
+    <div class="i-orb" style="left:44%;top:18%;--d:.6s"></div>
+    <div class="i-orb" style="left:62%;top:70%;--d:1.8s"></div>
+    <div class="i-orb" style="left:78%;top:30%;--d:.3s"></div>
+    <div class="i-orb" style="left:88%;top:62%;--d:2.2s"></div>
+    <div class="i-orb small" style="left:20%;top:42%;--d:1s"></div>
+    <div class="i-orb small" style="left:70%;top:48%;--d:1.5s"></div>
   </div>
-  <div class="sub" style="font-size:13px;opacity:.75">מקלדת: ← → לזוז · רווח לקפוץ (פעמיים!) · חידות פותחות שערים ומעניקות כוחות</div>
+  <div class="intro-wrap">
+    <div class="intro-kicker">✦ הַמַּסָּע שֶׁל הַגִּבּוֹרָה ✦</div>
+    <h1 class="intro-logo">LENY</h1>
+    <p class="intro-story">עֲשָׂרָה אוֹרוֹת נִגְנְּבוּ מֵהָעוֹלָם.<br>רַק גִּבּוֹרָה אַחַת יְכוֹלָה לְהַחֲזִיר אוֹתָם.</p>
+    <div id="titleLenny"></div>
+    <button id="btnStart" class="cta">יוצאים למסע ✨</button>
+    <div class="intro-foot">להורים: החזיקו ⚙️ ברכזת · מקלדת: ← → ורווח לקפיצה</div>
+  </div>
 </div>
 
 <div class="scr soft" id="scr-hub">
@@ -139,6 +150,18 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
   </div>
 </div>
 
+<div class="modal" id="rest">
+  <div class="mcard" style="text-align:center">
+    <div style="font-size:52px">🌙</div>
+    <h2>הַגִּיעַ הַזְּמַן לָנוּחַ</h2>
+    <p style="font-size:17px;font-weight:700;color:#5a4a6a;line-height:1.8">לני עייפה קצת... נחזור לשחק מחר?<br>האורות יחכו לנו בדיוק איפה שהשארנו אותם ✦</p>
+    <div class="row">
+      <button class="btn" id="restDone">סיימנו להיום 💤</button>
+      <button class="btn ghost" id="restMore">עוד 5 דקות 🙏</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="puzzle">
   <div class="mcard">
     <h2 id="pzTitle">✦ שער חוכמה ✦</h2>
@@ -164,6 +187,7 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
     <h2>פינת המבוגרים 🔒</h2>
     <label class="field">שם הילדה<input id="parName" maxlength="16" placeholder="לני"></label>
     <div class="field"><span>מצב משחק</span><div class="seg" id="modeSeg"></div></div>
+    <div class="field"><span>מגבלת זמן משחק</span><div class="seg" id="limitSeg"></div></div>
     <div class="field"><span>רמת קושי</span><div class="seg" id="diffSeg"></div></div>
     <div class="srow"><span>צלילים ומוזיקה</span><label class="sw"><input type="checkbox" id="tSound"><span class="sl"></span></label></div>
     <div class="srow"><span>מצב לילה</span><label class="sw"><input type="checkbox" id="tNight"><span class="sl"></span></label></div>
