@@ -63,6 +63,19 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
   </div>
 </div>
 
+<div class="scr" id="scr-name">
+  <div class="intro-wrap">
+    <h2 class="name-title">אֵיךְ קוֹרְאִים לָךְ?</h2>
+    <p class="name-sub">בחרו את השם שמרגיש בדיוק נכון ✦</p>
+    <input id="nameInput" class="name-input" maxlength="12" placeholder="כתבו שם כאן..." autocomplete="off"/>
+    <div id="namePresets" class="name-presets"></div>
+    <div class="row">
+      <button id="nameGo" class="cta">קָדִימָה! ✨</button>
+      <button id="nameSkip" class="btn ghost">דילוג</button>
+    </div>
+  </div>
+</div>
+
 <div class="scr soft" id="scr-hub">
   <div id="hubHead">
     <div id="hubTitle">העולם של לני</div>
@@ -76,6 +89,7 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
   </div>
   <div class="sub dark" id="hubHello"></div>
   <div id="hubLights" aria-label="האורות שנאספו"></div>
+  <div id="hubMoods" aria-label="מה בא לך עכשיו?"></div>
   <div id="hubLennyBox"></div>
   <div id="hubBubbles"></div>
   <div id="hubHint">בחרי עולם! פתרי חידות כדי לפתוח שערי קסם ✦</div>
@@ -100,6 +114,7 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
     <div id="doneName" style="font-weight:900;font-size:20px;color:#fff"></div>
     <div class="stat" id="doneStats"></div>
     <div class="stat" id="doneStars"></div>
+    <div class="done-meaning" id="doneMeaning"></div>
     <div class="row" style="margin-top:8px"><button class="btn" id="btnDoneHome">חזרה לעולמות 🌍</button></div>
   </div>
 </div>
