@@ -59,6 +59,7 @@ function tryGate(){if(RT.puzzleBusy||RT.paused)return;
    PZ.domain=RT.level<=8?DOMAINS[RT.level]:null;
    openPuzzle('✦ שער חוכמה ✦','עולמן של ה'+WORLDS[RT.level].learn,pzGate,(ok)=>{
     if(ok){g.open=true;g.anim=30;S.gates[RT.level+':'+g.num]=true;RT.gatesSolvedNow++;
+     if(RT.review){RT.score+=200;addText(g.col*TILE+22,g.row*TILE-40,'+200 חיזוק ✿','#FFD76A');}
      RT.score+=300;addText(g.col*TILE+22,g.row*TILE,'+300 ✦','#FFD76A');
      const pw=GATE_POWER[g.num];
      if(pw.k==='shield')RT.powers.shield=true;
@@ -97,6 +98,7 @@ function hitBoss(){
   RT.ents.push({t:'flag',x:b.x+b.w/2,y:b.y,w:TILE,h:TILE*2})}}
 
 /* ── פגיעה ── */
+const DPRAISE={animals:'קוֹלוֹת הַחַיּוֹת',shapes:'הַצּוּרוֹת',letters:'הָאוֹתִיּוֹת',music:'הַמּוּזִיקָה',emotions:'הָרְגָשׁוֹת',math:'הַחֶשְׁבּוֹן',colors:'הַצְּבָעִים',sizes:'הַגְּדָלִים',time:'הַשָּׁעוֹת'};
 const ENCOURAGE=['אַתְּ מַצְלִיחָה! בּוֹאִי נְנַסֶּה שׁוּב','כִּמְעַט! עוֹד קְצָת','כָּל הַכָּבוֹד שֶׁנִּסִּית!'];
 export function hurt(fell){
  if(RT.powers.star>0||RT.dying>0)return;
@@ -119,6 +121,7 @@ export function hurt(fell){
 
 /* ── סיום שלב ── */
 function levelDone(){AU.sfx('goal');RT.score+=500;
+ if(RT.level<=8&&DPRAISE[DOMAINS[RT.level]])TTS.say('הִתְקַדַּמְתְּ בְּ'+DPRAISE[DOMAINS[RT.level]]+'!');
  const first=!S.items.includes(RT.level);
  if(first)S.items.push(RT.level);
  S.stars[RT.level]=Math.max(S.stars[RT.level]||0,RT.gatesSolvedNow);
@@ -131,6 +134,10 @@ function gameOver(){S.best=Math.max(S.best,RT.score);save();emit('game-over')}
 /* ── עדכון פריים ── */
 export function update(){
  RT.time++;if(RT.shake>0)RT.shake*=.86;if(RT.invuln>0)RT.invuln--;
+ if(S.timeLimit>0&&RT.sessionStart){
+  const rem=S.timeLimit-(Date.now()-RT.sessionStart)/60000;
+  if(rem<=2&&rem>0&&!RT.restWarned){RT.restWarned=true;emit('rest-warn');}
+  if(rem<=0&&!RT.rested){RT.rested=true;emit('rest');}}
  if(RT.powers.magnet>0)RT.powers.magnet--;if(RT.powers.star>0)RT.powers.star--;
  if(RT.comboT>0){RT.comboT--;if(RT.comboT===0)RT.combo=0}
  for(let i=RT.parts.length-1;i>=0;i--){const q=RT.parts[i];q.x+=q.vx;q.y+=q.vy;q.vy+=q.g;q.life--;if(q.life<=0)RT.parts.splice(i,1)}
@@ -203,6 +210,9 @@ export function startWorld(li){
  document.getElementById('wrap').classList.add('show');
  document.getElementById('touch').style.display=isTouch?'block':'none';
  AU.setScale(li);RT.invuln=60;RT.tut=0;RT.tutDist=0;
+ RT.sessionStart=Date.now();RT.restWarned=false;RT.rested=false;
+ RT.review=li<=8&&(Array.isArray(S.reviewQueue))&&S.reviewQueue.includes(DOMAINS[li]);
+ if(RT.review)emit('review-toast');
  if(li===0&&!S.tutorial){RT.tut=1;
   later(()=>TTS.say('בְּרוּכָה הַבָּאָה! לַחֲצִי עַל הַחִצִּים כְּדֵי לָלֶכֶת'),700)}
  TTS.say(WORLDS[li].name)}
