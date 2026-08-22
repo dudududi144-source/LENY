@@ -150,7 +150,7 @@ function drawRange(off,base,amp,col){
 
 const CC={hair:'#6B4A33',skin:'#F6C39A',dress:'#F7A8C4'};
 function drawLenny(g,x,y,s,p){
- g.save();g.translate(x+s/2,y+s);
+ g.save();g.translate(x+s/2,y-5); /* תיקון יישור: הנעליים נוחתות בדיוק על קו האריח */
  if(RT.dying>0)g.rotate(RT.dying*.15);
  g.scale(p.face*s/44,s/44*(1+(p.squash||0)*.4));
  const run=p.runPhase,air=!p.onGround;
