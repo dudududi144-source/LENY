@@ -45,7 +45,7 @@ export function closePuzzle(ok){$('#puzzle').classList.remove('show');PZ.open=fa
 
 /* פיגום (סקפולדינג): אחרי סף הטעויות — האפשרות השגויה שנלחצה נפסלת,
    והרמז הטקסטואלי מכוון בלי לחשוף את התשובה. לעולם לא מסמנים את הנכונה. */
-function wrongFx(b,hintLine){AU.sfx('wrong');
+function wrongFx(b,hintLine){RT.levelFails=(RT.levelFails||0)+1;AU.sfx('wrong');
  if(b.classList){b.classList.add('shake');later(()=>b.classList.remove('shake'),420);}
  wrongCount++;
  if(wrongCount===2)TTS.say(reframe());
