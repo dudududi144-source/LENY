@@ -224,3 +224,22 @@ body.night #hubHint{color:#cfd6ff;background:rgba(24,30,62,.7)}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,215,106,.7)}50%{box-shadow:0 0 0 12px rgba(255,215,106,0)}}
 @keyframes confFall{0%{transform:translateY(-12vh) rotate(0)}100%{transform:translateY(114vh) rotate(720deg)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ── מסך בחירת שם (מותאם לכל ילד) ── */
+#scr-name{background:radial-gradient(900px 500px at 75% -10%,rgba(124,77,255,.35),transparent 60%),radial-gradient(700px 420px at 15% 110%,rgba(242,84,154,.28),transparent 60%),#0a0416}
+.name-title{font-size:clamp(32px,6.5vw,54px);font-weight:900;background:linear-gradient(90deg,#7dffb8,#b967ff,#ff2e88);-webkit-background-clip:text;background-clip:text;color:transparent;animation:fadeUp .7s var(--soft) both}
+.name-sub{color:#c9b8f0;font-weight:700;font-size:clamp(15px,2.6vw,19px);animation:fadeUp .8s .1s var(--soft) both}
+.name-input{width:min(80vw,340px);font-size:24px;font-weight:800;text-align:center;padding:14px;border-radius:18px;border:3px solid rgba(185,103,255,.6);background:rgba(20,10,40,.6);color:#fff;outline:none;animation:fadeUp .9s .2s var(--soft) both}
+.name-input:focus{border-color:#7dffb8}
+.name-input::placeholder{color:#8a7bb0}
+.name-presets{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:540px;animation:fadeUp 1s .3s var(--soft) both}
+.name-chip{padding:10px 22px;border-radius:999px;background:rgba(255,255,255,.12);color:#efe7ff;font-weight:800;font-size:17px;border:2px solid transparent;transition:all .15s var(--spring)}
+.name-chip.sel{border-color:#7dffb8;background:rgba(125,255,184,.15)}
+.name-chip:active{transform:scale(.93)}
+/* ── בחירת מצב רוח ברכז ── */
+#hubMoods{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;justify-content:center}
+.mood-btn{padding:8px 18px;border-radius:999px;background:rgba(255,255,255,.75);box-shadow:var(--shadow);font-weight:800;font-size:14px;color:#5a4a6a;transition:transform .15s var(--spring)}
+body.night .mood-btn{background:rgba(24,30,62,.8);color:#dfe6ff}
+.mood-btn:active{transform:scale(.93)}
+/* ── משפט משמעות בסיום עולם ── */
+.done-meaning{font-size:clamp(16px,3vw,21px);font-weight:900;color:#FFD76A;margin-top:6px;text-shadow:0 0 18px rgba(255,215,106,.4);animation:fadeUp .9s .4s var(--soft) both}
