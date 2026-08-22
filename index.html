@@ -57,6 +57,7 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
     <div id="hubTitle">העולם של לני</div>
     <div style="display:flex;gap:8px;align-items:center">
       <span class="chip" id="hubProgress">⭐ 0/5</span>
+      <button class="hub-btn" id="hubGarden" aria-label="גינת היצירה">🌸</button>
       <button class="hub-btn" id="hubStickers" aria-label="המדבקות שלי">📔</button>
       <button class="hub-btn" id="hubNight" aria-label="מצב לילה">🌙</button>
       <button class="hub-btn" id="hubGear" aria-label="פינת הורים"><span class="holdfill"></span>⚙️</button>
@@ -113,6 +114,21 @@ if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceW
     <div class="row"><button class="btn" id="btnWinHome">שחקי שוב 🌍</button></div>
   </div>
 </div>
+
+<div class="scr solid" id="scr-garden">
+  <div class="card" style="width:min(96vw,700px);display:flex;flex-direction:column;gap:10px;align-items:center">
+    <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+      <div style="font-size:22px;font-weight:900;color:var(--gold)">גינת היצירה 🌸</div>
+      <button class="btn ghost" id="gardenBack" style="padding:8px 18px">✖</button>
+    </div>
+    <div id="gardenStage"></div>
+    <div id="gardenPalette"></div>
+    <div class="stat" id="gardenCount"></div>
+    <div style="font-size:13px;color:#b7a8d9;font-weight:700">בחרי מדבקה ולחצי על הגינה · לחיצה על מדבקה תסיר אותה</div>
+  </div>
+</div>
+
+
 
 <div class="modal" id="story">
   <div class="mcard" style="text-align:center">
