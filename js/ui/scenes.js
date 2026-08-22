@@ -31,6 +31,7 @@ function renderHub(){
   for(let i=0;i<WORLDS.length;i++){const got=S.items.includes(i);
    lights.appendChild(el('div','orb'+(got?' lit':''),got?'✦':''));}}
  const wd=weakestDomain();const weakIdx=wd?DOMAINS.indexOf(wd):-1;
+ const queue=Array.isArray(S.reviewQueue)?S.reviewQueue:[];
  const n=S.name.trim();
  $('#hubHello').textContent=n?('הַי '+n+'! בְּחֲרִי עוֹלָם'):'הַי לֶנִי! בְּחֲרִי עוֹלָם';
  $('#hubProgress').textContent='⭐ '+S.items.length+'/'+WORLDS.length;
@@ -43,7 +44,7 @@ function renderHub(){
   b.setAttribute('aria-label',w.name);
   b.innerHTML='<span class="bi">'+(unlocked?w.icon:'🔒')+'</span><span class="bl">'+w.name+'</span><span class="bs">'+(done?'⭐'.repeat(Math.max(1,S.stars[i]||1)):'')+'</span>';
   if(done)b.appendChild(el('span','bdone','✓'));
-  if(i===weakIdx){b.classList.add('weak');b.appendChild(el('span','bdone','🌸'));}
+  if(i===weakIdx||queue.includes(DOMAINS[i])){b.classList.add('weak');b.appendChild(el('span','bdone','🌸'));}
   b.onclick=()=>{AU.ensure();
    if(!unlocked){AU.sfx('wrong');b.classList.add('shake');later(()=>b.classList.remove('shake'),420);
     toast('שַׂחֲקִי קוֹדֶם בָּעוֹלָם הַקּוֹדֵם! 🌟');return}
@@ -91,8 +92,16 @@ function showWin(){
  TTS.say('כָּל הַכָּבוֹד! לֶנִי נִצְּחָה!')}
 
 /* ── אתחול: מנוי לאירועים + חיבור כפתורים ── */
+const DNAMES={animals:'חיות',shapes:'צורות',letters:'אותיות',music:'מוזיקה',emotions:'רגשות',math:'חשבון',colors:'צבעים',sizes:'גדלים',time:'שעות'};
+
 export function initScenes(){
  initGarden();
+ on('levelup',d=>toast('⭐ לני עלתה רמה ב'+(DNAMES[d]||d)+'!'));
+ on('review-toast',()=>toast('🌸 שלב חיזוק! +200 על כל שער'));
+ on('rest-warn',()=>toast('⏰ עוד שתי דקות נחים יחד'));
+ on('rest',()=>{RT.paused=true;$('#rest').classList.add('show');TTS.say('הַגִּיעַ הַזְּמַן לָנוּחַ');});
+ $('#restDone').onclick=()=>{$('#rest').classList.remove('show');RT.paused=false;goTitle();};
+ $('#restMore').onclick=()=>{RT.sessionStart+=5*60000;RT.rested=false;RT.restWarned=false;$('#rest').classList.remove('show');RT.paused=false;toast('עוד 5 דקות ⏰');};
  LEN.hub.el.addEventListener('pointerdown',()=>{if(RT.screen!=='hub')return;
   LEN.hub.play(Math.random()<.5?'cheer':'spin');AU.sfx('success');
   const n=S.name.trim();TTS.say(n?('אֲנִי אוֹהֶבֶת אוֹתָךְ '+n+'!'):'כֵּיף לְשַׂחֵק אִתָּךְ!')});
