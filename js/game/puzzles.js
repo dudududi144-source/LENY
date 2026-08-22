@@ -251,5 +251,60 @@ function pzTime(box){let round=0;const R=2;
 export function pzMix(box){const pool=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor,pzSize,pzTime];
  pool[rnd(pool.length)](box)}
 
-export function pzGate(box){const builders=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor,pzSize,pzTime,pzMix];builders[RT.level](box)}
+/* ── מיני-משחקים נוספים (העמקה וגיוון) ── */
+function pzOpposite(box){let round=0;const R=3;
+ const OPP=[['🔥',''],['🌞',''],['🐘',''],['⬆️','⬇️'],['🥵','🥶'],['️','☀️']];
+ function next(){if(round>=R){closePuzzle(true);return}
+  box.innerHTML='';$('#pzHint').textContent='בַּחֲרִי אֶת הַהֶפֶךְ ('+(round+1)+'/'+R+')';
+  const pair=OPP[rnd(OPP.length)];
+  box.appendChild(el('div','pz-word',pair[0]));
+  const row=el('div','pz-row');box.appendChild(row);
+  const wrongs=shuffle(OPP.filter(p=>p[1]!==pair[1])).slice(0,2).map(p=>p[1]);
+  shuffle([pair[1],...wrongs]).forEach(v=>{const b=el('button','pz-opt',v);
+   b.onclick=()=>{if(v===pair[1]){AU.sfx('select');round++;next()}else wrongFx(b,b,'חִשְּׁבִי עַל הַהֶפֶךְ')};
+   row.appendChild(b)});}
+ next();TTS.say('בַּחֲרִי אֶת הַהֶפֶךְ');}
+function pzColorMix(box){let round=0;const R=3;
+ const MIX=[['🔴','','#ff8c00'],['🔵','','#22c55e'],['🔴','🔵','#8b5cf6']];
+ function next(){if(round>=R){closePuzzle(true);return}
+  box.innerHTML='';$('#pzHint').textContent='אֵיזֶה צֶבַע יוֹצֵא? ('+(round+1)+'/'+R+')';
+  const m=MIX[rnd(MIX.length)];
+  box.appendChild(el('div','pz-word',m[0]+' + '+m[1]));
+  const row=el('div','pz-row');box.appendChild(row);
+  const wrongs=['#ff0000','#0000ff','#ffff00'].filter(c=>c!==m[2]).slice(0,2);
+  shuffle([m[2],...wrongs]).forEach(c=>{const b=el('button','pz-opt');
+   b.innerHTML='<span style="display:block;width:52px;height:52px;border-radius:50%;background:'+c+'"></span>';
+   b.onclick=()=>{if(c===m[2]){AU.sfx('select');round++;next()}else wrongFx(b,b,'עַרְבְּבִי בָּרֹאשׁ')};
+   row.appendChild(b)});}
+ next();TTS.say('אֵיזֶה צֶבַע יוֹצֵא?');}
+function pzOddOneOut(box){let round=0;const R=3;
+ const GROUPS=[['🐶','','🐶',''],['🍎','','🍎',''],['🚗','','🚗',''],['🌸','','🌸','']];
+ function next(){if(round>=R){closePuzzle(true);return}
+  box.innerHTML='';$('#pzHint').textContent='מִי שׁוֹנֶה? ('+(round+1)+'/'+R+')';
+  const g=GROUPS[rnd(GROUPS.length)];const odd=g[3];
+  const row=el('div','pz-row');box.appendChild(row);
+  shuffle(g).forEach(v=>{const b=el('button','pz-opt',v);
+   b.onclick=()=>{if(v===odd){AU.sfx('select');round++;next()}else wrongFx(b,b,'חַפְּשִׂי אֶת מִי שֶׁלֹּא שַׁיָּךְ')};
+   row.appendChild(b)});}
+ next();TTS.say('מִי שׁוֹנֶה?');}
+function pzMemory(box){
+ const faces=shuffle(['🐶','','🐮','🐷']).slice(0,3);
+ const cards=shuffle([...faces,...faces]);
+ const row=el('div','pz-row');box.appendChild(row);
+ let sel=null,matched=0;$('#pzHint').textContent='מִצְאִי זוּגוֹת!';
+ cards.forEach(f=>{const b=el('button','pz-opt','❔');
+  b.onclick=()=>{if(b.classList.contains('done')||sel===b)return;
+   b.textContent=f;
+   if(!sel){sel=b;return;}
+   if(sel.textContent===f){sel.classList.add('done');b.classList.add('done');sel=null;matched+=2;
+    if(matched===cards.length)closePuzzle(true);}
+   else{const a=sel;sel=null;setTimeout(()=>{a.textContent='❔';b.textContent='❔';},600);}};
+  row.appendChild(b)});}
+const GATE_BUILDERS={
+ 0:[pzAnimals,pzOddOneOut],1:[pzShapes,pzOddOneOut],2:[pzLetters,pzMemory],
+ 3:[pzMusic],4:[pzEmo,pzMemory],5:[pzMath,pzColorMix],
+ 6:[pzColor,pzColorMix,pzOddOneOut],7:[pzSize,pzOpposite],8:[pzTime,pzOpposite],
+ 9:[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor,pzSize,pzTime,pzOpposite,pzColorMix,pzOddOneOut,pzMemory]};
+export function pzGate(box){const list=GATE_BUILDERS[RT.level]||[pzAnimals];
+ list[rnd(list.length)](box)}
 export function pzBoss(box){const pool=[pzAnimals,pzShapes,pzLetters,pzMusic,pzEmo,pzMath,pzColor,pzSize,pzTime];pool[rnd(pool.length)](box)}
