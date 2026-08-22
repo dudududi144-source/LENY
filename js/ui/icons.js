@@ -33,3 +33,15 @@ export const POWER_ICONS={
 };
 export function moodIcon(k){return MOOD_ICONS[k]||MOOD_ICONS.calm;}
 export function powerIcon(k){return POWER_ICONS[k]||POWER_ICONS.star;}
+
+/* אייקוני חיות וקטוריים בשפה האחידה (מחליפים אמוג'י בחידת החיות) */
+const A='fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"';
+const aw=(i)=>`<svg viewBox="0 0 48 48" ${A} aria-hidden="true">${i}</svg>`;
+export const ANIMAL_ICONS={
+ dog:aw('<circle cx="24" cy="26" r="12"/><path d="M14 18c-4-6 2-10 6-8M34 18c4-6-2-10-6-8"/><circle cx="20" cy="24" r="1.6" fill="currentColor"/><circle cx="28" cy="24" r="1.6" fill="currentColor"/><path d="M24 28v3M24 31c-2 2-4 2-5 1M24 31c2 2 4 2 5 1"/>'),
+ cat:aw('<circle cx="24" cy="26" r="12"/><path d="M14 20l-3-9 8 4M34 20l3-9-8 4"/><circle cx="20" cy="24" r="1.6" fill="currentColor"/><circle cx="28" cy="24" r="1.6" fill="currentColor"/><path d="M10 26h6M32 26h6"/>'),
+ cow:aw('<circle cx="24" cy="26" r="12"/><path d="M14 16c-3-4 1-7 4-6M34 16c3-4-1-7-4-6"/><ellipse cx="24" cy="30" rx="6" ry="4"/><circle cx="22" cy="30" r="1.2" fill="currentColor"/><circle cx="26" cy="30" r="1.2" fill="currentColor"/>'),
+ pig:aw('<circle cx="24" cy="26" r="12"/><path d="M15 16l-4-5M33 16l4-5"/><ellipse cx="24" cy="28" rx="5" ry="4"/><circle cx="22" cy="28" r="1.2" fill="currentColor"/><circle cx="26" cy="28" r="1.2" fill="currentColor"/>'),
+ rabbit:aw('<circle cx="24" cy="28" r="11"/><path d="M18 18c-3-8 1-12 4-10M30 18c3-8-1-12-4-10"/><circle cx="20" cy="26" r="1.6" fill="currentColor"/><circle cx="28" cy="26" r="1.6" fill="currentColor"/>')
+};
+export function animalIcon(k){return ANIMAL_ICONS[k]||ANIMAL_ICONS.dog;}
