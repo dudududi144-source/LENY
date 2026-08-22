@@ -156,7 +156,15 @@ function getAvatar(){
  if(S.avatar&&avatarSrc!==S.avatar){avatarImg=new Image();avatarImg.src=S.avatar;avatarSrc=S.avatar;}
  return(S.avatar&&avatarImg&&avatarImg.complete&&avatarImg.naturalWidth>0)?avatarImg:null;}
 function drawLenny(g,x,y,s,p){
- g.save();g.translate(x+s/2,y-5); /* תיקון יישור: הנעליים נוחתות בדיוק על קו האריח */
+ /* צל עיגון: מצטמצם ומתבהר כשקופצים — נותן עומק ו"מושיב" את הדמות על כל משטח */
+ const airNow=!p.onGround;
+ g.save();
+ g.translate(x+s/2,y+1.5);
+ g.scale(1,.35);
+ g.fillStyle='rgba(15,8,35,'+(airNow?.16:.3)+')';
+ g.beginPath();g.arc(0,0,airNow?11:16,0,7);g.fill();
+ g.restore();
+ g.save();g.translate(x+s/2,y-5.5); /* סוליית הנעל בדיוק על קו המשטח */
  if(RT.dying>0)g.rotate(RT.dying*.15);
  g.scale(p.face*s/44,s/44*(1+(p.squash||0)*.4));
  const run=p.runPhase,air=!p.onGround;
