@@ -1,5 +1,6 @@
 /* ui/parent.js — פינת הורים (מוגנת בהחזקה), מצב לילה, איפוס */
 import {$,el} from '../core/utils.js';
+import {toast} from './fx.js';
 import {S,save,saveSoon,resetState} from '../core/state.js';
 import {AU} from '../core/audio.js';
 import {TTS} from '../core/tts.js';
@@ -26,6 +27,10 @@ export function setNight(v){S.night=v;document.body.classList.toggle('night',v);
 
 function renderParent(){
  $('#parName').value=S.name;$('#tSound').checked=S.sound;$('#tNight').checked=S.night;
+ const mseg=$('#modeSeg');if(mseg){mseg.innerHTML='';
+  ['חוקר','הרפתקן'].forEach(md=>{const b=el('button',S.mode===md?'on':'',md+(md==='חוקר'?' · גיל 3-5':' · גיל 6-8'));
+   b.onclick=()=>{S.mode=md;save();renderParent();AU.sfx('tap');toast('המצב ישתנה מהשלב הבא 🌟')};
+   mseg.appendChild(b)});}
  const seg=$('#diffSeg');seg.innerHTML='';
  ['קל','רגיל','מאתגר'].forEach(d=>{const b=el('button',S.diff===d?'on':'',d);
   b.onclick=()=>{S.diff=d;save();renderParent();AU.sfx('tap')};seg.appendChild(b)});
