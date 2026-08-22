@@ -9,6 +9,7 @@ import {RT,keys} from '../game/runtime.js';
 import {TILE,THEMES,WORLDS,LEVELS} from '../game/levels.js';
 import {GRAV,MOVE,MAXV,FRIC,JUMP,rectVsMap,aabb} from './physics.js';
 import {openPuzzle,pzGate,pzBoss,PZ} from '../game/puzzles.js';
+import {DOMAINS} from '../game/skill-model.js';
 
 const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
 
@@ -54,6 +55,7 @@ function tryGate(){if(RT.puzzleBusy||RT.paused)return;
   const gr={x:g.col*TILE-8,y:0,w:TILE+16,h:(g.row+1)*TILE};
   if(aabb(RT.player,gr)){AU.sfx('tap');
    if(RT.tut===3){RT.tut=0;S.tutorial=true;save();}
+   PZ.domain=RT.level<=8?DOMAINS[RT.level]:null;
    openPuzzle('✦ שער חוכמה ✦','עולמן של ה'+WORLDS[RT.level].learn,pzGate,(ok)=>{
     if(ok){g.open=true;g.anim=30;S.gates[RT.level+':'+g.num]=true;RT.gatesSolvedNow++;
      RT.score+=300;addText(g.col*TILE+22,g.row*TILE,'+300 ✦','#FFD76A');
