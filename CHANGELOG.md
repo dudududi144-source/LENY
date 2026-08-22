@@ -1,6 +1,7 @@
 # CHANGELOG
 
 הפורמט מבוסס על Keep a Changelog.
+## [2.23.0] — העמקת תוכן: 4 מיני-משחקים חדשים + גיוון לכל עולם + 3 סבבים לחידה. נסגר #13.
 ## [2.22.0] — סט אייקונים וקטורי אחיד (Design System)
 ### Added
 - js/ui/icons.js — סט אייקונים וקטורי אחיד (viewBox 48, stroke=currentColor, עובי 3)
