@@ -20,7 +20,7 @@ export function tutorialUpdate(p){
  else if(RT.tut===2){
   RT.curHint='⤒ לחצי כדי לקפוץ!';RT.hintTimer=200;
   if(p.vy<-2){RT.tut=3;AU.sfx('power');
-   TTS.say('וָואו! עַכְשָׁיו נִגְעִי בַּשַּׁעַר הַזּוֹהֵר');}}
+   TTS.say('וָואוּ! עַכְשָׁיו נִגְעִי בַּשַּׁעַר הַזּוֹהֵר');}}
  else if(RT.tut===3){
   RT.curHint='✦ נגעי בשער הזוהר!';RT.hintTimer=200;}}
 
