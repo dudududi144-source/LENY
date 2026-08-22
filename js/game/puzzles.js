@@ -1,7 +1,7 @@
 /* game/puzzles.js — מערכת חידות חינוכיות
    עולם 1: חיות (צלילים) · 2: צורות · 3: אותיות · 4: מקצבים · 5: רגשות · בוס: מעורב */
 import {$,el,shuffle,rnd,later} from '../core/utils.js';
-import {animalIcon} from './icons.js';
+import {animalIcon} from '../ui/icons.js';
 import {S,DIFF,save} from '../core/state.js';
 import {AU} from '../core/audio.js';
 import {TTS} from '../core/tts.js';
