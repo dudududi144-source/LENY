@@ -8,7 +8,7 @@ import {TTS} from '../core/tts.js';
 import {toast,confetti} from './fx.js';
 import {RT,LEN} from '../game/runtime.js';
 import {WORLDS,MEANINGS,THEMES} from '../game/levels.js';
-import {worldIcon} from './icons.js';
+import {worldIcon,moodIcon,powerIcon} from './icons.js';
 import {startWorld,togglePause} from '../engine/engine.js';
 import {renderGarden,initGarden} from './garden.js';
 import {DOMAINS,weakestDomain} from '../game/skill-model.js';
@@ -159,12 +159,12 @@ export function initScenes(){
   avIn.value='';});
  $('#avatarClear').onclick=()=>{S.avatar='';save();refreshAvatarUI();AU.sfx('tap');};
  /* בחירת מצב רוח: צורך רגשי + אוטונומיה */
- const moods=[['🌊','רוֹגַע','בָּא לָךְ מַשֶּׁהוּ רָגוּעַ? גַּן הַצְּבָעִים מְחַכֶּה לָךְ'],
-  ['🔥','הַרְפַּתְקָה','מַרְגִּישָׁה גִּבּוֹרָה? נַסִּי אֶת נִסְיוֹן הַגִּבּוֹרָה'],
-  ['🎨','יְצִירָה','בָּא לָךְ לִיצֹר? גִּנַּת הַיְּצִירָה פְּתוּחָה']];
+ const moods=[['calm','רוֹגַע','בָּא לָךְ מַשֶּׁהוּ רָגוּעַ? גַּן הַצְּבָעִים מְחַכֶּה לָךְ'],
+  ['adventure','הַרְפַּתְקָה','מַרְגִּישָׁה גִּבּוֹרָה? נַסִּי אֶת נִסְיוֹן הַגִּבּוֹרָה'],
+  ['create','יְצִירָה','בָּא לָךְ לִיצֹר? גִּנַּת הַיְּצִירָה פְּתוּחָה']];
  const hubMoods=$('#hubMoods');
  if(hubMoods){hubMoods.innerHTML='';
-  moods.forEach(m=>{const b=el('button','mood-btn',m[0]+' '+m[1]);
+  moods.forEach(m=>{const b=el('button','mood-btn');b.innerHTML='<span class="mi">'+moodIcon(m[0])+'</span> '+m[1];
    b.setAttribute('aria-label',m[1]);
    b.onclick=()=>{AU.sfx('tap');toast(m[2]);TTS.say(m[2])};
    hubMoods.appendChild(b)});}
