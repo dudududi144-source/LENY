@@ -2,7 +2,7 @@
 import {$,el} from '../core/utils.js';
 import {toast} from './fx.js';
 import {S,save,saveSoon,resetState} from '../core/state.js';
-import {summaryStats} from '../core/stats.js';
+import {summaryStats,reportJSON} from '../core/stats.js';
 import {AU} from '../core/audio.js';
 import {TTS} from '../core/tts.js';
 import {goTitle} from './scenes.js';
@@ -69,6 +69,9 @@ function renderParent(){
   b.onclick=()=>{S.access.speed=v;save();renderParent();AU.sfx('tap')};acc.appendChild(b)});
  const nf=el('button',(S.access&&S.access.noFail)?'on':'','ללא כישלון');
  nf.onclick=()=>{S.access.noFail=!(S.access.noFail);save();renderParent();AU.sfx('tap')};acc.appendChild(nf);
+ const rb=$('#reportBtn');if(rb)rb.onclick=()=>{const blob=new Blob([reportJSON()],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='leny-playtest-report.json';a.click();
+  toast('הדוח ירד ⬇️');};
  const stars=Object.values(S.stars).reduce((a,b)=>a+b,0);
  const ps=$('#parStats');if(ps)ps.textContent='התקדמות: '+S.items.length+'/10 עולמות · '+stars+'✦ שערי חוכמה · שיא '+S.best;}
 
